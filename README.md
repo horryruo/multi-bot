@@ -23,7 +23,7 @@
 #### Feature
 1. Enter the actor id to get all the cid of the actor in dmm.
 2. Query the movie parameters in ikoa (refer to mahuteng)
-3.Enter javlibary actor url to get all the actor's number.
+3. Enter javlibary actor url to get all the actor's number.
 4. query the cid information in dmm alone, preview film, preview image
 5. Search by keyword in sukebei's magnetism
 6. Search in dmm according to keywords and limit up to 30 items.
