@@ -13,7 +13,8 @@
 6. &nbsp;Edit config.ini
 
 ### Start  
-`python3 mybot.py`  
+`python3 mybot.py` 
+*Please /help to the robot for specific use.*
 
 ### Start via screen  
 
@@ -29,4 +30,4 @@
 7. Enter a list of dmm links to list all items.
 8. Search current dmm hot and newest movies, limit 30 (beta)
 9. Control cloudflare domain resolution
-*Please /help to the robot for specific use.*
+
