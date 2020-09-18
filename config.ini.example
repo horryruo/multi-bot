@@ -1,0 +1,12 @@
+[default]
+#According to the example, in order. Whether to enable proxy, proxy software ip address and port, telegram bot token, user id
+ifproxy = False
+proxy = 127.0.0.1:1080
+tgtoken = 12312313123
+userid = 12312313123
+
+
+[cloudflare]
+#This project is to control the cloudflare api, in order. cloudflare account email, global key. not needed can not be configured.
+email = 12312313123
+globalkey = 12312313123
