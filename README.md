@@ -1,6 +1,6 @@
 # Multi-bot  1.1 beta
-[![multi-bot Telegram-Bot](https://img.shields.io/badge/multi-Telegram%20BOT-red?style=flat-square&logo=appveyor)]
-[![Programming Language](https://img.shields.io/badge/LANGUAGE-Python%203.6%2B-success?style=flat-square&logo=appveyor)]
+[multi-bot Telegram-Bot](https://img.shields.io/badge/multi-Telegram%20BOT-red?style=flat-square&logo=appveyor)
+[Programming Language](https://img.shields.io/badge/LANGUAGE-Python%203.6%2B-success?style=flat-square&logo=appveyor)
 
 **Send commands to [Telegram](http://telegram.org) BOT for get a _convience way communicate with_ get information about dmm, javlibray, ikoa, magnet, and control cloudflare api compatibility!**  
 
