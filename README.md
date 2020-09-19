@@ -9,7 +9,7 @@
 2. `git clone https://github.com/horryruo/multi-bot.git && cd multi-bot` 
 3. `chmod +x multi-bot`  
 4. `pip3 install -r requirements.txt`  
-5. cp config.ini.example config.ini`  
+5. `cp config.ini.example config.ini` 
 6. &nbsp;Edit config.ini
 
 ### Start  
