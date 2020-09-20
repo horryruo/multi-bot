@@ -1,4 +1,4 @@
-# Multi-bot  1.1 beta
+# iMulti-bot  1.1 beta
 ![multi-Telegram BOT](https://img.shields.io/badge/multi-Telegram%20BOT-red?style=flat-square&logo=appveyor)
 ![Python 3.6](https://img.shields.io/badge/LANGUAGE-Python%203.6%2B-success?style=flat-square&logo=appveyor)
 
