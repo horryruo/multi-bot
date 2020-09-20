@@ -1,6 +1,6 @@
 # iMulti-bot  1.1 beta
-![imulti-Telegram BOT](https://img.shields.io/badge/imulti-Telegram%20BOT-red?style=flat-square&logo=appveyor)
-![Python 3.6](https://img.shields.io/badge/LANGUAGE-Python%203.6%2B-success?style=flat-square&logo=appveyor)
+[![iMulti-Telegram BOT](https://img.shields.io/badge/iMulti-Telegram%20BOT-red?style=flat-square&logo=appveyor)](https://github.com/horryruo/multi-bot/)
+[![Python 3.6](https://img.shields.io/badge/LANGUAGE-Python%203.6%2B-success?style=flat-square&logo=appveyor)](https://www.python.org/downloads/)
 
 **Send commands to [Telegram](http://telegram.org) BOT for get a information way which communicate with about dmm, javlibray, ikoa, magnet, and control cloudflare api compatibility!**  
 
