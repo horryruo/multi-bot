@@ -4,6 +4,18 @@
 
 **Send commands to [Telegram](http://telegram.org) BOT for get a information way which communicate with about dmm, javlibray, ikoa, magnet, and control cloudflare api compatibility!**  
 
+## Feature
+1. Enter the actor id to get all the cid of the actor in dmm.
+2. Query the movie parameters in ikoa (refer to mahuteng)
+3. Enter javlibary actor url to get all the actor's number.
+4. query the cid information in dmm alone, preview film, preview image
+5. Search by keyword in sukebei's magnetism
+6. Search in dmm according to keywords and limit up to 30 items.
+7. Enter a list of dmm links to list all items.
+8. Search current dmm hot and newest movies, limit 30 (beta)
+9. Control cloudflare domain resolution
+
+
 ## Install  
 1. Python 3.6+ is Required  
 2. `git clone https://github.com/horryruo/multi-bot.git && cd multi-bot` 
@@ -21,14 +33,5 @@
 
 ``screen -dmS multi-bot `which python3` mybot.py``  
 
-#### Feature
-1. Enter the actor id to get all the cid of the actor in dmm.
-2. Query the movie parameters in ikoa (refer to mahuteng)
-3. Enter javlibary actor url to get all the actor's number.
-4. query the cid information in dmm alone, preview film, preview image
-5. Search by keyword in sukebei's magnetism
-6. Search in dmm according to keywords and limit up to 30 items.
-7. Enter a list of dmm links to list all items.
-8. Search current dmm hot and newest movies, limit 30 (beta)
-9. Control cloudflare domain resolution
+
 
