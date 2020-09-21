@@ -1,9 +1,14 @@
 [default]
 #According to the example, in order. Whether to enable proxy, proxy software ip address and port, telegram bot token, user id
+
+#Whether to enable proxy
 ifproxy = False
+#Proxy Software Addresses and Ports
 proxy = 127.0.0.1:1080
+#telegram bot token
 tgtoken = 12312313123
-userid = 12312313123
+#user 's id,It can be more than one, with the first being an administrator with reboot privileges.
+userid = 12312313123,12322332,2332233
 
 
 [cloudflare]
