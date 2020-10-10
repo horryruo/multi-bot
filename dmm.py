@@ -231,7 +231,7 @@ def dmmsearch_data(searchstr):
     try:
         stitle = searchbody.find('span',string = re.compile('の検索結果')).string.replace('\n','').strip()
     except Exception:
-        pass
+        stitle = '検索結果'
     boxall = searchbody.find_all('li',attrs = {'style' : 'width: 130px;'})
     onebox = str(boxall).split('</div></li>')
     boxlist = []
