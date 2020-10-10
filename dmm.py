@@ -229,7 +229,7 @@ def dmmsearch_data(searchstr):
     soup = BeautifulSoup(html,'lxml')
     searchbody = soup.find('div',attrs = {'class' : 'd-area'})
     try:
-        stitle = searchbody.find('span',string = re.compile('の検索結果')).string.replace('\n','').strip()
+        stitle = re.findall(r'<title>(.*?)</title>',html)[0]
     except Exception:
         stitle = '検索結果'
     boxall = searchbody.find_all('li',attrs = {'style' : 'width: 130px;'})
@@ -314,10 +314,10 @@ def dmmlinks_data(links):
     soup = BeautifulSoup(html,'lxml')
     searchbody = soup.find('div',attrs = {'class' : 'd-area'})
     try:
-        stitle = searchbody.find('h1',attrs = {'style' : 'display: none;'}).string
+        stitle = re.findall(r'<title>(.*?)</title>',html)[0]
         #print(stitle)
     except Exception:
-        pass
+        stitle = '検索結果'
     boxall = searchbody.find_all('li',attrs = {'style' : 'width: 130px;'})
     onebox = str(boxall).split('</div></li>')
     boxlist = []
