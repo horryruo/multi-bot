@@ -8,10 +8,10 @@ proxy = 127.0.0.1:1080
 #telegram bot token
 tgtoken = 12312313123
 #user 's id,It can be more than one, with the first being an administrator with reboot privileges.
-userid = 12312313123,12322332,2332233
+userid = 1231231,12322332,2332233
 
 
 [cloudflare]
 #This project is to control the cloudflare api, in order. cloudflare account email, global key. not needed can not be configured.
-email = 12312313123
-globalkey = 12312313123
+email = 12312313123@gmail.com
+globalkey = ad32sddf2334sd
