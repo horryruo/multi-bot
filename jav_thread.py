@@ -108,8 +108,8 @@ def thread_javlib(inurl):
 
 
 if __name__ == '__main__':
-    #inurl = 'https://www.g46e.com/cn/vl_star.php?s=afpuo'
-    inurl = 'http://www.g46e.com/cn/vl_star.php?s=aebq4'
+    
+    inurl = 'http://?/cn/vl_star.php?s=aebq4'
     url, page, headers, actor = javlib_page(inurl)
     #print('传出页数' + page)
     start = time.time()
