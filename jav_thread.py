@@ -146,13 +146,13 @@ if __name__ == '__main__':
     print('总耗时：%s' % (end - start))
     #print('queue 结束大小 %d' % queue.qsize())
     #print('result_queue 结束大小 %d' % result_queue.qsize())
-    #inurl = 'https://www.g46e.com/cn/vl_star.php?s=azfuu'
+    
     #result = javlib(inurl)
     #print(result)
     #inurl = input('url=')
     #alllist,actor = javlib(str(inurl))
     #save(alllist,actor)
-    #urlbus = 'https://www.javbus.com/star/n5q'
+    
     #alllist,actor = javbus(urlbus)
     #save(alllist,actor)
 
