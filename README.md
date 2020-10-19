@@ -3,7 +3,7 @@
 [![Python 3.6](https://img.shields.io/badge/LANGUAGE-Python%203.6%2B-success?style=flat-square&logo=appveyor)](https://www.python.org/downloads/)
 [![BSD-3](https://img.shields.io/badge/LICENSE-BSD3-brightgreen.svg)](https://github.com/horryruo/multi-bot/blob/master/LICENSE)
 
-**Send commands to [Telegram](http://telegram.org) BOT for get a information way which communicate with about dmm, javlibray, ikoa, magnet, and control cloudflare api compatibility!**  
+**Send commands to [Telegram](http://telegram.org) BOT for get a information way which communicate with about dmm, libray, ikoa, magnet, and control cloudflare api compatibility!**  
 
 ## Feature
 1. Enter the actor id to get all the cid of the actor in dmm.
