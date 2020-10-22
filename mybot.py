@@ -98,11 +98,11 @@ def help(update, context):
     *cf* -  `operation cloudflare dns only admin`
     *restart* - `only admin useful `
 
-    *cf help* ==>  `ls` => lsallzome
-                   `dns domain` => *load dns for domain*
-                   `add type domain host ` => *add dns records for domain*
-                   `edit type domain host (option:cloudon/off ,ttl = ini)` => *edit dns records for domain*
-                   `del domain` => *delete dns for domain*
+    *cf help* ==>  `ls` => lsallzome    example: /cf ls
+                   `dns domain` => *load dns for domain*   example:  /cf dns domain
+                   `add type domain host ` => *add dns records for domain*   example: /cf add A test.domain.com ip-adress
+                   `edit type domain host (option:cloudon/off ,ttl = ini)` => *edit dns records for domain*   example:/cf edit A test.domain.com ip-adress cloudon
+                   `del domain` => *delete dns for domain*  example: /cf del test.domain.com
     '''
     update.message.reply_markdown(text)
 
