@@ -12,7 +12,7 @@ from magnet import sukebei
 from dmm import dmm_thread, prevideo, prephotos, dmmonecid, prevideolow, dmmsearch, dmmlinks
 from cloudflare import CloudFlare_handler
 from loadini import read_config
-
+import time
 
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -68,6 +68,27 @@ def restricted(func):
         return func(update, context, *args, **kwargs)
     return wrapped
 
+def long_message(update, context, text: str):
+    max_length = telegram.constants.MAX_MESSAGE_LENGTH
+    if len(text) <= max_length:
+        
+        return update.message.reply_markdown(text)
+
+    parts = []
+    while len(text) > max_length:
+        parts.append(text[:max_length])
+        text = text[max_length:]
+    parts.append(text)
+    msg = None
+    for part in parts:
+        update.message.reply_text(part)
+        time.sleep(3)
+    return msg
+
+
+
+        
+    
 
 @send_typing_action
 def start(update, context):
@@ -76,6 +97,7 @@ def start(update, context):
     欢迎使用ruo bot，请输入/help查看指令
     ******
     '''
+    #print(telegram.constants.MAX_MESSAGE_LENGTH)
     update.message.reply_markdown(text)
 
 @send_typing_action
@@ -147,24 +169,46 @@ def monthlyy(update, context):
             update.message.reply_text(usetime)
     
 @restricted
-@send_typing_action    
+@send_typing_action  
+ 
 def dmmid(update, context):
     searchid = context.args[0]
     update.message.reply_text('search items for %s please wait...'%searchid)
     
     result,time = dmm_thread(searchid)
-    usetime = '耗时:' + time + '秒'
-    update.message.reply_text(result)
+    usetime = '搜索完成，耗时:' + time + '秒'
     update.message.reply_text(usetime)
+    #update.message.reply_text(result)
+    if len(result) > 4096:
+        mssg = '超出telegram消息限制，将分段截取，取最后10字符用于校验：' + result[-10:]
+        update.message.reply_text(mssg)
+    msg = long_message(update,context,result)
+
     
 @restricted
 @send_typing_action
 def dmmcid(update,context):
     searchid = context.args[0]
-    
+    if len(context.args) == 1:
+        searchidd = context.args[0]
+        searchidd = searchidd.replace('-',' ')
+    else:
+        searchidd = ' '.join(context.args[:])
     text, notitle = dmmonecid(searchid)
     if notitle == 1:
-        update.message.reply_text('没有找到%s的cid信息' %searchid)
+        #update.message.reply_text('没有找到%s的cid信息，自动尝试使用/search功能搜索' %searchid)
+        boxlist,stitle = dmmsearch(searchidd,'onlysearch')
+        if boxlist == '選択した条件で商品は存在しませんでした':
+            update.message.reply_text('没有找到 %s 的cid信息,自动搜索无结果:%s' % (searchid, boxlist))
+            return
+        #print(boxlist)
+        firstlist = boxlist[0]
+        wcid = firstlist.get('cid')
+        text, notitle = dmmonecid(wcid)
+
+        update.message.reply_markdown(text)
+
+
     else:
         update.message.reply_markdown(text)
     
@@ -220,8 +264,9 @@ def magnet(update, context):
     else:
         searchid = ' '.join(context.args[:])
     
-    text = sukebei(searchid)
-    update.message.reply_markdown(text)
+    result = sukebei(searchid)
+
+    msg = long_message(update, context, result)
     
 @restricted
 @send_typing_action
@@ -249,7 +294,8 @@ def dmmlink(update, context):
     #print(searchlink)
     
     text = dmmlinks(searchlink)
-    update.message.reply_markdown(text)
+
+    msg = long_message(update, context, text)
 
 @restricted
 @send_typing_action 
