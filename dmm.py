@@ -80,6 +80,16 @@ def dmm_thread(articleid):
 def ciddata(html):
     notitle = 0
     soup = BeautifulSoup(html,'lxml')
+    ifresult = re.findall(r'(指定されたページが見つかりません)', html)
+    noresult = '指定されたページが見つかりません'
+    try:
+        if noresult in ifresult:
+            notitle = 1
+            return (noresult, notitle)
+    except Exception:
+        pass
+
+
     ciddata = {}
     allper = soup.find_all(name='span', id='performer')
     sortper = re.findall(r'<a href="/digital/videoa/-/list/=/article=actress/id=(\d+)/">(.*?)</a>', str(allper))
@@ -205,13 +215,16 @@ def template_cid(ciddataa):
         
     #print(Substitute)
 def dmmonecid(searchcid):
-    searchcid = searchcid.replace('-','00').replace(' ','00')
+    searchcid = searchcid.replace('-','00')
     searchurl = 'https://www.dmm.co.jp/digital/videoa/-/detail/=/cid={}/'.format(searchcid)
     html = get_html_jp(searchurl)
     ciddataa,notitle = ciddata(html)
+    if ciddataa == '指定されたページが見つかりません':
+        return ciddataa,notitle
     temp_out = template_cid(ciddataa)
     return temp_out, notitle
-      
+
+
 def dmmsearch_data(searchstr):
     #url = 'https://www.dmm.co.jp/digital/videoa/-/list/search/=/?searchstr=乙白さやか'
     url = 'https://www.dmm.co.jp/digital/videoa/-/list/search/=/limit=30/?searchstr={}'.format(searchstr)
@@ -295,9 +308,11 @@ def template_search(resultdataa,stitlee):
     temp_out = template.render(resultdata = resultdataa,stitle = stitlee) 
     #print(temp_out)  # 渲染
     return (temp_out)
-def dmmsearch(searchstr):
+def dmmsearch(searchstr,mode='temp'):
     
     result, stitle = dmmsearch_data(searchstr)
+    if mode == 'onlysearch':
+        return result, stitle
     noresult = '選択した条件で商品は存在しませんでした'
     if result == noresult:
         return noresult
