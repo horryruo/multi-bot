@@ -94,7 +94,7 @@ def long_message(update, context, text: str):
 def start(update, context):
     text = '''
     ******
-    欢迎使用ruo bot，请输入/help查看指令
+    欢迎使用imulti bot，请输入/help查看指令
     ******
     '''
     #print(telegram.constants.MAX_MESSAGE_LENGTH)
@@ -104,16 +104,16 @@ def start(update, context):
 def help(update, context):
     text = '''
     *all command for bot*
-    *start* - `welcome`
-    *help* - `get help`
-    *m* - `m cid|num,`
-    *uid* - `uid performer id in dmm`
-    *lib* - `library url for performer`
-    *video* - `video cid for preview`
-    *photo* - `photo cid for preview`
-    *cid* -  `cid for cid detail`
-    *magnet* -  `search magnet in sukebei`
-    *search* -  `search keyword in dmm limit in 30 project`
+    *start* - `欢迎  `
+    *help* - `帮助`
+    *m* - `查询是否ikoa月额，num/cid皆可   /m ssni-520`
+    *uid* - `查询女优在dmm所有番号，需女优id  /uid 2333`
+    *lib* - `查询女优在library所有番号，需女优页面链接  /lib https://*****`
+    *video* - `dmm预览视频，需准确cid，且不完善`
+    *photo* - `dmm预览图片，需准确cid`
+    *cid* -  `查询番号具体信息，支持cid/num `
+    *magnet* -  `搜索关键词在sukebei`
+    *search* -  `搜索关键词在dmm，dmm官方支持正则`
     *links* -  `demo for links in dmm limit 30 project`
     *new* -  `dmm new video limit 30`
     *top* -  `dmm hot video limit 30`
