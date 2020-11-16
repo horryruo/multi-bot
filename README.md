@@ -9,7 +9,7 @@
 ## 免责声明：本代码仅用于学习，下载后请勿用于商业用途，本人对此有最终解释权。
 ## Disclaimer:  This code is only for learning, please do not use it for commercial purposes after downloading, I have the final right of interpretation.
 
-##update
+## Update
 2020/11/16 add support find video with selenium(chromedriver 86.0.4240.22)
 
 ## Feature
