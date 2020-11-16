@@ -103,28 +103,29 @@ def start(update, context):
 @send_typing_action
 def help(update, context):
     text = '''
-    *all command for bot*
+    *bot命令帮助*
     *start* - `欢迎  `
     *help* - `帮助`
-    *m* - `查询是否ikoa月额，num/cid皆可   /m ssni-520`
-    *uid* - `查询女优在dmm所有番号，需女优id  /uid 2333`
-    *lib* - `查询女优在library所有番号，需女优页面链接  /lib https://*****`
+    *m* - `查询是否ikoa月额，num/cid皆可，可批量查询，半角逗号分隔   /m ssni-520,ssni-521`
+    *uid* - `查询女优在dmm所有番号，需女优在dmm的数字id  /uid 2333`
+    *lib* - `查询女优在library所有番号，需女优页面完整https链接  /lib https://*****`
     *video* - `dmm预览视频，需准确cid，且不完善`
     *photo* - `dmm预览图片，需准确cid`
     *cid* -  `查询番号具体信息，支持cid/num `
     *magnet* -  `搜索关键词在sukebei`
-    *search* -  `搜索关键词在dmm，dmm官方支持正则`
+    *search* -  `搜索关键词在dmm，dmm官方支持正则，例如当长字符无结果，可利用空格分割`
     *links* -  `demo for links in dmm limit 30 project`
     *new* -  `dmm new video limit 30`
     *top* -  `dmm hot video limit 30`
-    *cf* -  `operation cloudflare dns only admin`
-    *restart* - `only admin useful `
+    *cf option* -  `控制cf域名解析`
+    *restart* - `重启机器人`
 
-    *cf help* ==>  `ls` => lsallzome    example: /cf ls
-                   `dns domain` => *load dns for domain*   example:  /cf dns domain
-                   `add type domain host ` => *add dns records for domain*   example: /cf add A test.domain.com ip-adress
-                   `edit type domain host (option:cloudon/off ,ttl = ini)` => *edit dns records for domain*   example:/cf edit A test.domain.com ip-adress cloudon
-                   `del domain` => *delete dns for domain*  example: /cf del test.domain.com
+    *cf help* ==>  
+       1、 *ls* => `列出所有已拥有域名    example: /cf ls`
+       2、 *dns domain* => `查看单个域名解析情况   example:  /cf dns domain`
+       3、 *add type domain host* => `添加域名解析   example: /cf add A test.domain.com ip-adress`
+       4、 *edit type domain host * => `编辑域名解析(option:cloudon/off ,ttl = ini)   example:/cf edit A test.domain.com ip-adress cloudon`
+       5、 *del domain* => `删除域名解析  example: /cf del test.domain.com`
     '''
     update.message.reply_markdown(text)
 
