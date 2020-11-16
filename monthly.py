@@ -11,7 +11,10 @@ from loadini import read_config
 
 
 
-ifproxy,proxy,token,users = read_config()
+allconfig = read_config()
+ifproxy = allconfig['ifproxy'] 
+proxy = allconfig['proxy'] 
+
 proxies = {'http': 'http://%s'%proxy, 'https': 'http://%s'%proxy}
 headers = {'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.89 Safari/537.36'}
            
@@ -19,7 +22,7 @@ def monthly(in_q, mon,nomon,jsondata):
     searchid = in_q.get()
     url = 'https://v2.mahuateng.cf/isMonthly/%s' %searchid
     #print(url)
-    if ifproxy == True:
+    if ifproxy == 'true':
         response = requests.get(url,headers=headers,proxies=proxies)
     else:
         response = requests.get(url,headers=headers)

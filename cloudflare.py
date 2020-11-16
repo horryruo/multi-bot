@@ -6,7 +6,10 @@ from loadini import read_config_cf,read_config
 '''
 https://api.cloudflare.com/#
 '''
-ifproxy,proxy,token,users = read_config()
+allconfig = read_config()
+ifproxy = allconfig['ifproxy'] 
+proxy = allconfig['proxy'] 
+
 email,globalkey = read_config_cf()
 proxies = {'http': 'http://%s'%proxy, 'https': 'http://%s'%proxy}
 
@@ -31,7 +34,7 @@ class CloudFlare(object):
         method = method.lower()
         requests_method = getattr(self.s, method)
         #print(url)
-        if ifproxy == True:
+        if ifproxy == 'true':
             response = requests_method(url, headers=self.headers, proxies = self.proxies, data=json.dumps(params) if params else None)
         else:
             response = requests_method(url, headers=self.headers, data=json.dumps(params) if params else None)

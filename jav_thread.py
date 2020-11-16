@@ -10,13 +10,16 @@ from loadini import read_config
 
 
 
-ifproxy,proxy,token,users = read_config()
+allconfig = read_config()
+ifproxy = allconfig['ifproxy'] 
+proxy = allconfig['proxy'] 
+
 proxies = {'http': 'http://%s'%proxy, 'https': 'http://%s'%proxy}
 headers = {'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.89 Safari/537.36'}
 def javlib_page(inurl):
     url = inurl + '&page={}'
     headers1 = steal_library_header(url)
-    if ifproxy == True:
+    if ifproxy == 'true':
         req = requests.get(inurl, headers=headers1, proxies=proxies)
     else:
         req = requests.get(inurl, headers=headers1)
@@ -37,7 +40,7 @@ def javlib(in_q, out_q, headers):
     #print('正在获取%s的番号列表，共%d页' %(actor,int(page)))
     #print(in_q.get())
     while in_q.empty() is not True:
-        if ifproxy == True:
+        if ifproxy == 'true':
             req = requests.get(url=in_q.get(), headers=headers, proxies=proxies)
         else:
             req = requests.get(url=in_q.get(), headers=headers)

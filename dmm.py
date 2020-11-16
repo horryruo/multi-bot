@@ -10,6 +10,8 @@ from queue import Queue
 #from lxml import etree
 from function_requests import get_html_jp
 from function_requests import get_html_jp_html
+from loadini import read_config
+from selenium import webdriver
 
 def findinfo(articleid):
     url = "https://www.dmm.co.jp/digital/videoa/-/list/=/article=actress/id=%s/" %articleid
@@ -411,17 +413,52 @@ def dmmlinks(links):
     temp_out = template_links(result, stitle)
     return temp_out
 
-def testvideo():
-    url = 'https://www.dmm.co.jp/digital/videoa/-/detail/=/cid=mide00819/'
-    #html = get_html_jp(url)
-    #soup = BeautifulSoup(html,'lxml')
-    #video = soup.find('a', attrs = {'class':'d-btn'})
-    r = get_html_jp_html(url)
-    video = r.html.find('d-btn a',first=True)
-    print(video)
+def truevideo(searchcid):
+    url = 'https://www.dmm.co.jp/digital/videoa/-/detail/ajax-movie/=/cid={}'.format(searchcid)
+    #coding=utf-8
+
+    allconfig = read_config()
+    ifproxy = allconfig['ifproxy'] 
+    proxy = allconfig['proxy'] 
+    system = allconfig['system'] 
+    
+
+    # 进入浏览器设置
+    options = webdriver.ChromeOptions()
+    #谷歌无头模式
+    options.add_argument('--headless')
+    options.add_argument('--disable-gpu')
+    # options.add_argument('window-size=1200x600')
+    # 设置语言
+    options.add_argument('lang=ja_JP.UTF-8')
+    # 更换头部
+    options.add_argument('user-agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.89 Safari/537.36"')
+    #设置代理
+    if ifproxy == 'true':
+        options.add_argument('proxy-server=' + proxy)
+
+    if system == 'linux':
+        browser = webdriver.Chrome(executable_path=r'./chromedriver',options=options)
+    elif system == 'windows':
+        browser = webdriver.Chrome(executable_path=r'./chromedriver.exe',options=options)
+    #browser.set_page_load_timeout(5)    
+    
+    browser.get(url)
+    #print(browser.page_source)
+    browser.switch_to.default_content()
+    browser.switch_to.frame('DMMSample_player_now')
+    video = browser.find_element_by_xpath('//*[contains(@id,"video-video")]')
+    
+    # 返回播放文件地址
+    videourl = browser.execute_script("return arguments[0].currentSrc;",video)
+    browser.quit()
+    return videourl
+
+
+
        
 
-    print(video)
+    
     
     
 if __name__ == "__main__":

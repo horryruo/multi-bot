@@ -9,7 +9,7 @@ from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 from monthly import monthly_thread
 from jav_thread import thread_javlib
 from magnet import sukebei
-from dmm import dmm_thread, prevideo, prephotos, dmmonecid, prevideolow, dmmsearch, dmmlinks
+from dmm import dmm_thread, prevideo, prephotos, dmmonecid, prevideolow, dmmsearch, dmmlinks,truevideo
 from cloudflare import CloudFlare_handler
 from loadini import read_config
 import time
@@ -23,7 +23,11 @@ logger = logging.getLogger(__name__)
 
 
 
-ifproxy,proxy,token,users = read_config()
+allconfig = read_config()
+ifproxy = allconfig['ifproxy'] 
+proxy = allconfig['proxy'] 
+token = allconfig['token']
+users = allconfig['userid'] 
 TOKEN = token
 userid = users.split(',')
 userss = []
@@ -231,15 +235,26 @@ def dmmvideo(update, context):
     searchid = context.args[0]
     #text = str(prevideo(searchid))
     #update.message.reply_video(text)
-    text1 = str(prevideo(searchid))
+    try:
+        result = str(truevideo(searchid))
+    except:
+        print('selenium引擎失败')
+        result = str(prevideo(searchid))
+
+
     try:
         
-        update.message.reply_video(text1)
+        update.message.reply_video(result)
 
     except:
-        update.message.reply_text('video too large!---%s'%text1)
-        text = str(prevideolow(searchid))
-        update.message.reply_video(text)
+        result_hd = result
+        update.message.reply_text('原视频超出telegram大小限制，将发送低画质版本，可复制原画质链接到浏览器查看!---%s'%result_hd)
+        result = result.replace('mhb','dmb')
+        try:
+            update.message.reply_video(result)
+        except:
+            result = result.replace('dmb','sm')
+            update.message.reply_video(result)
 
 @restricted      
 @send_typing_action
@@ -321,7 +336,7 @@ def cf(update, context):
     update.message.reply_markdown(text)
 
 def main():
-    if ifproxy == True:
+    if ifproxy == 'true':
         updater = Updater(TOKEN, use_context=True,request_kwargs=REQUEST_KWARGS)
     else:
         updater = Updater(TOKEN, use_context=True)
