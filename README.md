@@ -28,9 +28,10 @@
 1. Python 3.6+ is Required  
 2. `git clone https://github.com/horryruo/multi-bot.git && chmod +x multi-bot` 
 3. `cd multi-bot`  
-4. `pip3 install -r requirements.txt`  
-5. `cp config.ini.example config.ini` 
-6. &nbsp;Edit config.ini
+4. `pip3 install -r requirements.txt`
+5. `yum install https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm`
+6. `cp config.ini.example config.ini` 
+7. &nbsp;Edit config.ini
 
 ### Start  
 `python3 mybot.py` 
