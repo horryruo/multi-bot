@@ -29,7 +29,9 @@
 2. `git clone https://github.com/horryruo/multi-bot.git && chmod +x multi-bot` 
 3. `cd multi-bot`  
 4. `pip3 install -r requirements.txt`
-5. install chrome   centos:`yum install https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm`   debian or ubuntu:`wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && sudo apt install ./google-chrome-stable_current_amd64.deb`
+5. install chrome   
+   centos:`yum install https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm`   
+   debian or ubuntu:`wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && sudo apt install ./google-chrome-stable_current_amd64.deb`
 6. `cp config.ini.example config.ini` 
 7. &nbsp;Edit config.ini
 
