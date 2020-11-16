@@ -428,6 +428,7 @@ def truevideo(searchcid):
     #谷歌无头模式
     options.add_argument('--headless')
     options.add_argument('--disable-gpu')
+    options.add_argument('--no-sandbox')
     # options.add_argument('window-size=1200x600')
     # 设置语言
     options.add_argument('lang=ja_JP.UTF-8')
