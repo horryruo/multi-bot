@@ -1,15 +1,16 @@
 [default]
 #According to the example, in order. Whether to enable proxy, proxy software ip address and port, telegram bot token, user id
 
-#Whether to enable proxy|是否启用代理
-ifproxy = False
+#Whether to enable proxy|是否启用代理,小写
+ifproxy = false
 #Proxy Software Addresses and Port|代理地址与端口
 proxy = 127.0.0.1:1080
 #telegram bot token|telegram 机器人的密钥
 tgtoken = 12312313123
 #user 's id,It can be more than one, with the first being an administrator with reboot privileges.|用户id，处于第一个的可以重启机器人
 userid = 1231231,12322332,2332233
-
+#使用的系统，linux | windows
+system = linux
 
 [cloudflare]
 #This project is to control the cloudflare api, in order. cloudflare account email, global key. not needed can not be configured.

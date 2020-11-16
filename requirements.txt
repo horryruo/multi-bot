@@ -6,3 +6,4 @@ requests==2.23.0
 python_telegram_bot==12.8
 beautifulsoup4==4.9.1
 telegram==0.0.1
+selenium==3.141.0

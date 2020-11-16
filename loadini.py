@@ -7,13 +7,15 @@ def read_config():
     proxy = config['default']['proxy']
     token = config['default']['tgtoken']
     userid = config['default']['userid']
-    if ifproxy == 'True':
-        ifproxy = True
-    elif ifproxy == 'False':
-        ifproxy = False
-    else:
-        print('配置文件proxy项出错')
-    return (ifproxy,proxy,token,userid)
+    system = config['default']['system']
+    
+    allconfig = {}
+    allconfig['ifproxy'] = ifproxy
+    allconfig['proxy'] = proxy
+    allconfig['token'] = token
+    allconfig['userid'] = userid
+    allconfig['system'] = system
+    return allconfig
     
 def read_config_cf():
     config = configparser.ConfigParser()

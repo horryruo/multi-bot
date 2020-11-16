@@ -6,7 +6,10 @@ from re import search, findall
 from requests_html import HTMLSession
 from loadini import read_config
 
-ifproxy,proxy,token,users = read_config()
+allconfig = read_config()
+ifproxy = allconfig['ifproxy'] 
+proxy = allconfig['proxy'] 
+
 proxies = {'http': 'http://%s'%proxy, 'https': 'http://%s'%proxy}
 headers = {'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.89 Safari/537.36'}
 headers_jp = {
@@ -23,7 +26,7 @@ headers_jp_phone = {
     'accept-encoding': 'gzip, deflate, br',
     }
 def get_html(url):
-    if ifproxy == True:
+    if ifproxy == 'true':
         rqs = requests.get(url,headers=headers,proxies=proxies)
     else:
         rqs = requests.get(url,headers=headers)
@@ -35,7 +38,7 @@ def get_html_html(url):
     session = HTMLSession()
     session.headers.update(headers)
     #session = requests.session()
-    if ifproxy == True:
+    if ifproxy == 'true':
         rqs = session.get(url,proxies=proxies)
     else:
         rqs = session.get(url)
@@ -45,7 +48,7 @@ def get_html_html(url):
 
 def get_html_jp(url):
     session = requests.session()
-    if ifproxy == True:
+    if ifproxy == 'true':
         rqs = session.get(url,headers=headers_jp,proxies=proxies).content
     else:
         rqs = session.get(url,headers=headers_jp).content
@@ -57,7 +60,7 @@ def get_html_jp_html(url):
     session = HTMLSession()
     session.headers.update(headers_jp)
     #session = requests.session()
-    if ifproxy == True:
+    if ifproxy == 'true':
         rqs = session.get(url,proxies=proxies)
     else:
         rqs = session.get(url)
@@ -68,7 +71,7 @@ def get_html_jp_html(url):
 def get_html_jp_cookies(url):
     cookie_value, user_agent = get_cookies_jp(url)
     headers_cookies_jp = {'User-Agent': user_agent, 'Cookie': cookie_value, 'Accept-Language': 'ja;q=0.9'}
-    if ifproxy == True:
+    if ifproxy == 'true':
         rqs = requests.get(url,headers=headers_cookies_jp,proxies=proxies)
     else:
         rqs = requests.get(url,headers=headers_cookies_jp)
@@ -80,7 +83,7 @@ def get_cookies_jp(url):
 
     for retry in range(10):
         try:
-            if ifproxy == True:
+            if ifproxy == 'true':
                 cookie_value, user_agent = get_cookie_string(url, proxies=proxies, timeout=15)
             else:
 
@@ -96,7 +99,7 @@ def steal_library_header(url):
     #print('\n正在尝试通过', url, '的5秒检测...如果超过20秒卡住...重启程序...')
     for retry in range(10):
         try:
-            if ifproxy == True:
+            if ifproxy == 'true':
                 cookie_value, user_agent = get_cookie_string(url, proxies=proxies, timeout=15)
             else:
 
@@ -115,7 +118,7 @@ def steal_library_header(url):
 def get_library_html(url, header):
     for retry in range(10):
         try:
-            if ifproxy == True:
+            if ifproxy == 'true':
                 rqs = requests.get(url, headers=header, proxies=proxies, timeout=(6, 7), allow_redirects=False)
 
             else:
