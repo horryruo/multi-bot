@@ -1,4 +1,4 @@
-# iMulti-bot  1.3 beta
+# iMulti-bot  1.4 beta
 [![iMulti-Telegram BOT](https://img.shields.io/badge/iMulti-Telegram%20BOT-red?style=flat-square&logo=appveyor)](https://github.com/horryruo/multi-bot/)
 [![Python 3.6](https://img.shields.io/badge/LANGUAGE-Python%203.6%2B-success?style=flat-square&logo=appveyor)](https://www.python.org/downloads/)
 [![BSD-3](https://img.shields.io/badge/LICENSE-BSD3-brightgreen.svg)](https://github.com/horryruo/multi-bot/blob/master/LICENSE)
@@ -10,7 +10,7 @@
 ## Disclaimer:  This code is only for learning, please do not use it for commercial purposes after downloading, I have the final right of interpretation.
 
 ## Update
-2020/11/16 add support find video with selenium(chromedriver 86.0.4240.22)
+*2020/11/16* add support find video with selenium(chromedriver 86.0.4240.22)
 
 ## Feature
 1. Enter the actor id to get all the cid of the actor in dmm.
