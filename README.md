@@ -10,7 +10,7 @@
 ## Disclaimer:  This code is only for learning, please do not use it for commercial purposes after downloading, I have the final right of interpretation.
 
 ## Update
-**2020/11/16** add support find video with selenium(chromedriver 86.0.4240.22)
+**2020/11/16**     1.5beta---add support find video with selenium(chromedriver 86.0.4240.22)
 
 ## Feature
 1. Enter the actor id to get all the cid of the actor in dmm.

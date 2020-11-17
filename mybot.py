@@ -261,14 +261,18 @@ def dmmvideo(update, context):
 def dmmphoto(update, context):
     searchid = context.args[0]
     #chat_id = update.message.chat_id
-    urls = prephotos(searchid)
+    list_of_urls = prephotos(searchid)
+    media_group = list()
+    for number, url in enumerate(list_of_urls):
+        media_group.append(telegram.InputMediaPhoto(media=url, caption="Turtle" + str(number)))
+    update.message.reply_media_group(media=media_group)
     #print(telegram.InputMediaPhoto(urls))
     #context.bot.send_media_group(chat_id,media = telegram.InputMediaPhoto(media = urls, parse_mode = telegram.ParseMode.markdown))
     #update.message.reply_media_group(media = telegram.InputMediaPhoto(urls))
-    for i in urls:
+    
         #context.bot.send_media_group(chat_id,media = telegram.InputMediaPhoto(i))
         #update.message.reply_media_group(media = telegram.InputMediaPhoto(i))
-        update.message.reply_photo(i)
+       
     #url = ','.join(urls)
 
 @restricted    

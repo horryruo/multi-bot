@@ -201,6 +201,7 @@ def prephotos(searchcid):
         ii = list(i)
         ii.insert(-6,'jp')
         iii = ''.join(ii)
+        iii = iii.replace('-jp10','jp-10',1)
         jpg.append(iii)
         
 
