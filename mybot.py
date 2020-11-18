@@ -235,10 +235,28 @@ def dmmvideo(update, context):
     searchid = context.args[0]
     #text = str(prevideo(searchid))
     #update.message.reply_video(text)
+    nocid = 0
+    if len(context.args) == 1:
+        gang = '-'
+        searchidd = context.args[0]
+        if gang in searchidd:
+            nocid = 1
+            searchidd = searchidd.replace('-',' ')
+    else:
+        nocid = 1
+        searchidd = ' '.join(context.args[:])
+    if nocid == 1:
+        boxlist,stitle = dmmsearch(searchidd,'onlysearch')
+        if boxlist == '選択した条件で商品は存在しませんでした':
+            update.message.reply_text('没有找到 %s 预览视频'%searchid)
+            return
+        #print(boxlist)
+        firstlist = boxlist[0]
+        searchid = firstlist.get('cid')
     try:
         result = str(truevideo(searchid))
     except:
-        print('selenium引擎失败')
+        print('尝试使用selenium引擎失败')
         result = str(prevideo(searchid))
 
 
@@ -262,18 +280,24 @@ def dmmphoto(update, context):
     searchid = context.args[0]
     #chat_id = update.message.chat_id
     list_of_urls = prephotos(searchid)
+    if list_of_urls == []:
+        if len(context.args) == 1:
+            searchidd = context.args[0]
+            searchidd = searchidd.replace('-',' ')
+        else:
+            searchidd = ' '.join(context.args[:])
+        boxlist,stitle = dmmsearch(searchidd,'onlysearch')
+        if boxlist == '選択した条件で商品は存在しませんでした':
+            update.message.reply_text('没有找到 %s 预览图片'%searchid)
+            return
+        #print(boxlist)
+        firstlist = boxlist[0]
+        wcid = firstlist.get('cid')
+        list_of_urls = prephotos(wcid)
     media_group = list()
     for number, url in enumerate(list_of_urls):
         media_group.append(telegram.InputMediaPhoto(media=url, caption="Turtle" + str(number)))
     update.message.reply_media_group(media=media_group)
-    #print(telegram.InputMediaPhoto(urls))
-    #context.bot.send_media_group(chat_id,media = telegram.InputMediaPhoto(media = urls, parse_mode = telegram.ParseMode.markdown))
-    #update.message.reply_media_group(media = telegram.InputMediaPhoto(urls))
-    
-        #context.bot.send_media_group(chat_id,media = telegram.InputMediaPhoto(i))
-        #update.message.reply_media_group(media = telegram.InputMediaPhoto(i))
-       
-    #url = ','.join(urls)
 
 @restricted    
 @send_typing_action
