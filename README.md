@@ -3,7 +3,7 @@
 [![Python 3.6](https://img.shields.io/badge/LANGUAGE-Python%203.6%2B-success?style=flat-square&logo=appveyor)](https://www.python.org/downloads/)
 [![BSD-3](https://img.shields.io/badge/LICENSE-BSD3-brightgreen.svg)](https://github.com/horryruo/multi-bot/blob/master/LICENSE)
 
-**发送命令到 [Telegram](http://telegram.org) BOT，以获得与dmm、libray、ikoa、magnet信息以及控制cloudflare api。**
+**发送命令到 [Telegram](http://telegram.org) BOT，以获得有关dmm、libray、ikoa、magnet的信息以及控制cloudflare api。**
 
 **Send commands to [Telegram](http://telegram.org) BOT for get a information way which communicate with about dmm, libray, ikoa, magnet, and control cloudflare api compatibility!**  
 
