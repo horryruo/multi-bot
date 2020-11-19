@@ -88,7 +88,12 @@ def long_message(update, context, text: str):
         update.message.reply_text(part)
         time.sleep(3)
     return msg
-
+def split_list(init_list, children_list_len):
+    _list_of_groups = zip(*(iter(init_list),) *children_list_len)
+    end_list = [list(i) for i in _list_of_groups]
+    count = len(init_list) % children_list_len
+    end_list.append(init_list[-count:]) if count !=0 else end_list
+    return end_list
 
 
         
@@ -294,10 +299,21 @@ def dmmphoto(update, context):
         firstlist = boxlist[0]
         wcid = firstlist.get('cid')
         list_of_urls = prephotos(wcid)
-    media_group = list()
-    for number, url in enumerate(list_of_urls):
-        media_group.append(telegram.InputMediaPhoto(media=url, caption="Turtle" + str(number)))
-    update.message.reply_media_group(media=media_group)
+    
+    if len(list_of_urls)<=10:
+
+        for number, url in enumerate(list_of_urls):
+            media_group.append(telegram.InputMediaPhoto(media=url, caption="Turtle" + str(number)))
+        update.message.reply_media_group(media=media_group)
+    else:
+        list_of_urls = split_list(list_of_urls,10) 
+        for i in list_of_urls:
+            media_group = []
+            for number, url in enumerate(i):
+            #print(telegram.InputMediaPhoto(media=url, caption="Photos" + str(number)))
+                media_group.append(telegram.InputMediaPhoto(media=url, caption="Photos" + str(number)))
+        #print(media_group)
+            update.message.reply_media_group(media=media_group)
 
 @restricted    
 @send_typing_action
