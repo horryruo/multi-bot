@@ -1,4 +1,4 @@
-# iMulti-bot  1.5 beta
+# iMulti-bot  1.5.1 beta
 [![iMulti-Telegram BOT](https://img.shields.io/badge/iMulti-Telegram%20BOT-red?style=flat-square&logo=appveyor)](https://github.com/horryruo/multi-bot/)
 [![Python 3.6](https://img.shields.io/badge/LANGUAGE-Python%203.6%2B-success?style=flat-square&logo=appveyor)](https://www.python.org/downloads/)
 [![BSD-3](https://img.shields.io/badge/LICENSE-BSD3-brightgreen.svg)](https://github.com/horryruo/multi-bot/blob/master/LICENSE)
@@ -13,6 +13,7 @@
 
 ## 更新|Update
 **2020/11/19**     1.5.1beta
+
 **2020/11/16**     1.5beta---增加利用selenium进行提取资源|add support find video with selenium(chromedriver 86.0.4240.22)
 
 ## 功能|Feature
