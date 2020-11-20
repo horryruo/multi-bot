@@ -301,7 +301,7 @@ def dmmphoto(update, context):
         list_of_urls = prephotos(wcid)
     
     if len(list_of_urls)<=10:
-
+        media_group = []
         for number, url in enumerate(list_of_urls):
             media_group.append(telegram.InputMediaPhoto(media=url, caption="Turtle" + str(number)))
         update.message.reply_media_group(media=media_group)
