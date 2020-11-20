@@ -33,7 +33,7 @@
 1. 需要python3.6以上版本| Python 3.6+ is Required  
 2. 克隆项目| `git clone https://github.com/horryruo/multi-bot.git && chmod +x multi-bot && cd multi-bot`   
 3. 安装依赖 | `pip3 install -r requirements.txt`
-4. 安装google chrome ，如不需要准确预览影片地址可不安装 | install chrome (If you don't need accurate preview video function, you can skip it)  
+4. **安装google chrome** ，如不需要准确预览影片地址可不安装(本引擎是获取正确视频链接的关键，当没有安装chrome时，会采取正则规律类比链接，因此番号奇特以及年代久远的影片可能无法获取正确的链接) | install chrome (If you don't need accurate preview video function, you can skip it)  
    centos:`yum install https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm`   
    debian or ubuntu:`wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && sudo apt install ./google-chrome-stable_current_amd64.deb`
 5. 复制一份配置 | `cp config.ini.example config.ini` 
