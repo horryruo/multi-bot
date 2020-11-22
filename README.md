@@ -14,16 +14,16 @@
 ## 更新|Update
 **2020/11/19**     1.5.1beta
 
-**2020/11/16**     1.5beta---增加利用selenium进行提取资源|add support find video with selenium(chromedriver 86.0.4240.22)
+**2020/11/16**     1.5beta---增加利用selenium进行提取预览视频链接|add support find video with selenium(chromedriver 86.0.4240.22)
 
 ## 功能|Feature
  
 1. 输入演员ID，即可获得该演员在dmm中的所有cid。| Enter the actor id to get all the cid of the actor in dmm.
-2. 查询 "ikoa "中的影片参数(利用mahuteng)| Query the movie parameters in ikoa' video  (refer to mahuteng)
+2. 查询 "ikoa "中的影片参数(利用mahuateng)| Query the movie parameters in ikoa' video  (refer to mahuateng)
 3. 输入javlibary演员网址，即可获得所有演员的编号。| Enter javlibary actor url to get all the actor's number.
 4. 查询dmm cid信息、预览影片、预览图片。| Query the cid information in dmm alone, preview film, preview image
 5. 在sukebei中按关键词搜索。| Search by keyword in sukebei's magnet
-6. 根据关键词在dmm中搜索，最多限制30项。| Search in dmm according to keywords and limit up to 30 items.
+6. 根据关键词在dmm中搜索，最多30项。| Search in dmm according to keywords and limit up to 30 items.
 7. 输入dmm链接，列出所有项目。| Enter a list of dmm links to list all items.
 8. 搜索当前dmm热门和最新电影，限制30条(测试版)| Search current dmm hot and newest movies, limit 30 (beta)
 9. 控制cloudflare域名解析。| Control cloudflare domain resolution
@@ -33,7 +33,7 @@
 1. 需要python3.6以上版本| Python 3.6+ is Required  
 2. 克隆项目| `git clone https://github.com/horryruo/multi-bot.git && chmod +x multi-bot && cd multi-bot`   
 3. 安装依赖 | `pip3 install -r requirements.txt`
-4. **安装google chrome** ，如不需要准确预览影片地址可不安装(本引擎是获取正确视频链接的关键，当没有安装chrome时，会采取正则规律类比链接，因此番号奇特以及年代久远的影片可能无法获取正确的链接) | install chrome (If you don't need accurate preview video function, you can skip it)  
+4. **安装google chrome** ，如不需要准确预览视频地址可不安装(本引擎是获取正确预览视频链接的关键，当没有安装chrome时，会进行正则规律类比获得链接，因此番号奇特以及年代久远的影片可能无法获取正确的链接) | install chrome (If you don't need accurate preview video function, you can skip it)  
    centos:`yum install https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm`   
    debian or ubuntu:`wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && sudo apt install ./google-chrome-stable_current_amd64.deb`
 5. 复制一份配置 | `cp config.ini.example config.ini` 
