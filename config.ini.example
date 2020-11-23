@@ -3,12 +3,16 @@
 
 #Whether to enable proxy|是否启用代理,小写
 ifproxy = false
-#Proxy Software Addresses and Port|代理地址与端口
+
+#Proxy Software Addresses and Port|代理地址与端口，半角符号
 proxy = 127.0.0.1:1080
-#telegram bot token|telegram 机器人的密钥
+
+#telegram bot token|telegram 机器人的密钥， telegram内通过 @BotFather  创建机器人后获取
 tgtoken = 12312313123
-#user 's id,It can be more than one, with the first being an administrator with reboot privileges.|用户id，处于第一个的可以重启机器人
+
+#user 's id,It can be more than one, with the first being an administrator with reboot privileges.|可使用该机器人的用户id，启动程序后，随便发送消息会返回一串数字就是userid，可多个，英文逗号隔开，处于第一个的才有权限在telegram内重启机器人
 userid = 1231231,12322332,2332233
+
 #使用的系统，linux | windows
 system = linux
 
