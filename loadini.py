@@ -8,9 +8,11 @@ def read_config():
     token = config['default']['tgtoken']
     userid = config['default']['userid']
     system = config['default']['system']
+    tb = config['default']['tb']
     
     allconfig = {}
     allconfig['ifproxy'] = ifproxy
+    allconfig['tb'] = tb
     allconfig['proxy'] = proxy
     allconfig['token'] = token
     allconfig['userid'] = userid
