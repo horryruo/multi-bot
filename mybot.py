@@ -28,6 +28,7 @@ ifproxy = allconfig['ifproxy']
 proxy = allconfig['proxy'] 
 token = allconfig['token']
 users = allconfig['userid'] 
+iftb = allconfig['tb'] 
 TOKEN = token
 userid = users.split(',')
 userss = []
@@ -161,21 +162,24 @@ def monthlyy(update, context):
             update.message.reply_text(result)
         else:
             result1 = '非月额list (%s) => %s' %(leng1,nomon)
-            update.message.reply_text(tb)
-            update.message.reply_text(result1)
+            if iftb == 'true':
+                msg = long_message(update,context,tb)
+            msg = long_message(update,context,result1)
             update.message.reply_text(usetime)
     else:
         if leng1 == 0:
-            update.message.reply_text(tb)
+            if iftb == 'true':
+                msg = long_message(update,context,tb)
             result = '月额list (%s) => %s' %(leng,mon)
-            update.message.reply_text(result)
+            msg = long_message(update,context,result)
             update.message.reply_text(usetime)
         else:
             result = '月额list (%s) => %s' %(leng,mon)
             result1 = '非月额list (%s) => %s' %(leng1,nomon)
-            update.message.reply_text(tb)
-            update.message.reply_text(result)
-            update.message.reply_text(result1)
+            if iftb == 'true':
+                msg = long_message(update,context,tb)
+            msg = long_message(update,context,result)
+            msg = long_message(update,context,result1)
             update.message.reply_text(usetime)
     
 @restricted
