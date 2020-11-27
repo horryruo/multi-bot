@@ -8,7 +8,7 @@ ifproxy = false
 proxy = 127.0.0.1:1080
 
 #查询月额时，是否需要详细的码率表格
-tb = true
+tb = false
 
 #telegram bot token|telegram 机器人的密钥， telegram内通过 @BotFather  创建机器人后获取
 tgtoken = 12312313123

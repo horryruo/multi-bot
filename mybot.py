@@ -73,11 +73,13 @@ def restricted(func):
         return func(update, context, *args, **kwargs)
     return wrapped
 
-def long_message(update, context, text: str):
+def long_message(update, context, text: str,mtype):
     max_length = telegram.constants.MAX_MESSAGE_LENGTH
     if len(text) <= max_length:
-        
-        return update.message.reply_markdown(text)
+        if mtype=='markdown':
+            return update.message.reply_markdown(text)
+        else:
+            return update.message.reply_text(text)
 
     parts = []
     while len(text) > max_length:
@@ -163,23 +165,23 @@ def monthlyy(update, context):
         else:
             result1 = '非月额list (%s) => %s' %(leng1,nomon)
             if iftb == 'true':
-                msg = long_message(update,context,tb)
-            msg = long_message(update,context,result1)
+                msg = long_message(update,context,tb,'text')
+            msg = long_message(update,context,result1,'text')
             update.message.reply_text(usetime)
     else:
         if leng1 == 0:
             if iftb == 'true':
-                msg = long_message(update,context,tb)
+                msg = long_message(update,context,tb,'text')
             result = '月额list (%s) => %s' %(leng,mon)
-            msg = long_message(update,context,result)
+            msg = long_message(update,context,result,'text')
             update.message.reply_text(usetime)
         else:
             result = '月额list (%s) => %s' %(leng,mon)
             result1 = '非月额list (%s) => %s' %(leng1,nomon)
             if iftb == 'true':
-                msg = long_message(update,context,tb)
-            msg = long_message(update,context,result)
-            msg = long_message(update,context,result1)
+                msg = long_message(update,context,tb,'text')
+            msg = long_message(update,context,result,'text')
+            msg = long_message(update,context,result1,'text')
             update.message.reply_text(usetime)
     
 @restricted
@@ -196,7 +198,7 @@ def dmmid(update, context):
     if len(result) > 4096:
         mssg = '超出telegram消息限制，将分段截取，取最后10字符用于校验：' + result[-10:]
         update.message.reply_text(mssg)
-    msg = long_message(update,context,result)
+    msg = long_message(update,context,result,'markdown')
 
     
 @restricted
@@ -330,7 +332,7 @@ def magnet(update, context):
     
     result = sukebei(searchid)
 
-    msg = long_message(update, context, result)
+    msg = long_message(update, context, result,'markdown')
     
 @restricted
 @send_typing_action
@@ -359,7 +361,7 @@ def dmmlink(update, context):
     
     text = dmmlinks(searchlink)
 
-    msg = long_message(update, context, text)
+    msg = long_message(update, context, text,'markdown')
 
 @restricted
 @send_typing_action 
