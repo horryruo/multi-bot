@@ -238,7 +238,7 @@ def lib(update, context):
     
     result, time = thread_javlib(url)
     text = str(result) + '\n' + str(time)
-    update.message.reply_text(text)
+    msg = long_message(update,context,text,'text')
 
 @restricted    
 @send_typing_action
@@ -346,7 +346,7 @@ def dmmsearchh(update, context):
     #print(searchstr)
     
     text = dmmsearch(searchstr)
-    update.message.reply_markdown(text)
+    msg = long_message(update,context,text,'markdown')
 
 @restricted
 @send_typing_action 
