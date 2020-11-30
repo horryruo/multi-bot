@@ -198,7 +198,7 @@ def dmmid(update, context):
     if len(result) > 4096:
         mssg = '超出telegram消息限制，将分段截取，取最后10字符用于校验：' + result[-10:]
         update.message.reply_text(mssg)
-    msg = long_message(update,context,result,'markdown')
+    msg = long_message(update,context,result,'text')
 
     
 @restricted
