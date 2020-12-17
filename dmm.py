@@ -457,6 +457,104 @@ def truevideo(searchcid):
     return videourl
 
 
+def dmmsearchall_data(searchstr):
+    #url = 'https://www.dmm.co.jp/digital/videoa/-/list/search/=/?searchstr=乙白さやか'
+    url = 'https://www.dmm.co.jp/search/=/searchstr={}/sort=rankprofile/'.format(searchstr)
+    html = get_html_jp(url)
+    #判断有无结果
+    result = re.findall(r'(に一致する商品は見つかりませんでした。)',html)
+    noresult = 'に一致する商品は見つかりませんでした。'
+    try:
+        if noresult in result:
+            stitle = 1
+            return (noresult,stitle)
+    except Exception:
+        pass
+    
+    soup = BeautifulSoup(html,'lxml')
+    searchbody = soup.find('div',attrs = {'class' : 'd-area'})
+    try:
+        stitle = re.findall(r'<title>(.*?)</title>',html)[0]
+    except Exception:
+        stitle = '検索結果'
+    boxall = searchbody.find('div',attrs = {'class' : 'd-sect'})
+    onebox = str(boxall).split('<div>')
+    
+    boxlist = []
+    for box in onebox:
+        boxdict = {}
+        notitle = 0
+        if box:
+            try:
+                litetitle = re.findall(r'<span class=\"txt\">(.*?)</span>',box)[0]
+                #print(litetitle)
+                if litetitle == None:
+                    notitle = 1
+            except:
+                notitle = 1
+            try:
+                cid = re.findall(r'<a href=\"https://www\.dmm\.co\.jp/.*?/cid=(\w+)/\?.*?\">',box)[0]
+                boxdict['cid'] = cid
+            except:
+                boxdict['cid'] = '-'
+            try:
+                keywords = re.findall(r'<span class=\"ico-\w+-\w+\"><span>(.*?)</span></span>',box)
+                keyword = ','.join(keywords)
+                boxdict['keyword'] = keyword
+            except:
+                boxdict['keyword'] = '-'
+            try:
+                links = re.findall(r'<a href=\"(https://www\.dmm\.co\.jp/.*?-/detail/=/cid=\w+/\?.*?)\">',box)[0]
+                boxdict['links'] = links
+            except:
+                boxdict['links'] = '-'
+            try:
+                img = re.findall(r'(pics\.dmm\.co\.jp/.*?/\w+/\w+.jpg)',box)[0]
+                boxdict['img'] = img
+            except Exception as e:
+                
+                boxdict['img'] = '-'
+            try:   
+                title = re.findall(r'alt=\"(.*)\" src',box)[0]
+                boxdict['title'] = title
+            except Exception as e:
+                
+                boxdict['title'] = '-'
+            try:   
+                sublinks = re.findall(r'<span><a href=\"(.*?)\">.*?</a></span>',box)
+                boxdict['sublinks'] = sublinks
+            except Exception as e:
+                
+                boxdict['sublinks'] = '-'
+            try:    
+                subtexts = re.findall(r'<span><a href=\".*?\">(.*?)</a></span>',box)[0]
+                boxdict['subtexts'] = subtexts
+            except:
+                boxdict['subtexts'] = '-'
+            
+            if notitle == 0:
+                #print(boxdict)
+                boxlist.append(boxdict)
+    return (boxlist,stitle)
+def template_searchall(resultdataa,stitlee):
+    
+    env = Environment(loader=PackageLoader('dmm','templates'))    # 创建一个包加载器对象
+    template = env.get_template('searchall.md')    # 获取一个模板文件
+    temp_out = template.render(resultdata = resultdataa,stitle = stitlee) 
+    #print(temp_out)  # 渲染
+    return (temp_out)
+def dmmsearchall(searchstr,mode='temp'):
+    
+    result, stitle = dmmsearchall_data(searchstr)
+    if mode == 'onlysearch':
+        return result, stitle
+    noresult = 'に一致する商品は見つかりませんでした。'
+    if result == noresult:
+        return noresult
+    
+    temp_out = template_searchall(result, stitle)
+    return temp_out
+
 
        
 
@@ -464,6 +562,7 @@ def truevideo(searchcid):
     
     
 if __name__ == "__main__":
+    
     print('1')
     
     

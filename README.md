@@ -12,6 +12,8 @@
 ## Disclaimer:  This code is only for learning, please do not use it for commercial purposes after downloading, I have the final right of interpretation.
 
 ## 更新|Update
+**2020/12/17**     1.6beta 新增搜索dmm全站内容，test版本
+
 **2020/11/19**     1.5.1beta
 
 **2020/11/16**     1.5beta---增加利用selenium进行提取预览视频链接|add support find video with selenium(chromedriver 86.0.4240.22)
