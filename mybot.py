@@ -9,7 +9,7 @@ from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 from monthly import monthly_thread
 from jav_thread import thread_javlib
 from magnet import sukebei
-from dmm import dmm_thread, prevideo, prephotos, dmmonecid, prevideolow, dmmsearch, dmmlinks,truevideo
+from dmm import dmm_thread, prevideo, prephotos, dmmonecid, prevideolow, dmmsearch, dmmlinks,truevideo,dmmsearchall
 from cloudflare import CloudFlare_handler
 from loadini import read_config
 import time
@@ -126,6 +126,7 @@ def help(update, context):
     *cid* -  `查询番号具体信息，支持cid/num `
     *magnet* -  `搜索关键词在sukebei`
     *search* -  `搜索关键词在dmm，dmm官方支持正则，例如当长字符无结果，可利用空格分割`
+    *all* -  `搜索关键词在dmm所有区域的内容，dmm官方支持正则，例如当长字符无结果，可利用空格分割`
     *links* -  `demo for links in dmm limit 30 project`
     *new* -  `dmm new video limit 30`
     *top* -  `dmm hot video limit 30`
@@ -349,6 +350,20 @@ def dmmsearchh(update, context):
     msg = long_message(update,context,text,'markdown')
 
 @restricted
+@send_typing_action
+def searchall(update,context):
+    if len(context.args) == 1:
+        searchstr = context.args[0]
+        
+    else:
+        searchstr = ' '.join(context.args[:])
+        
+    #print(searchstr)
+    
+    text = dmmsearchall(searchstr)
+    msg = long_message(update,context,text,'markdown')
+
+@restricted
 @send_typing_action 
 def dmmlink(update, context):
     if len(context.args) == 1:
@@ -416,6 +431,7 @@ def main():
     dp.add_handler(CommandHandler("new", new30))
     dp.add_handler(CommandHandler("top", top30))
     dp.add_handler(CommandHandler("cf", cf))
+    dp.add_handler(CommandHandler("all", searchall))
     dp.add_handler(CommandHandler('restart', restart, filters=Filters.user(user_id=LIST_OF_ADMINS[0])))
     dp.add_error_handler(error)
     updater.start_polling()
