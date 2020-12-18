@@ -522,7 +522,7 @@ def dmmsearchall_data(searchstr):
                 boxdict['title'] = '-'
             try:   
                 sublinks = re.findall(r'<span><a href=\"(.*?)\">.*?</a></span>',box)
-                boxdict['sublinks'] = sublinks
+                boxdict['sublinks'] = sublinks[0]
             except Exception as e:
                 
                 boxdict['sublinks'] = '-'
