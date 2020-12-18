@@ -1,4 +1,4 @@
-# iMulti-bot  1.5.1 beta
+# iMulti-bot  1.6 beta
 [![iMulti-Telegram BOT](https://img.shields.io/badge/iMulti-Telegram%20BOT-red?style=flat-square&logo=appveyor)](https://github.com/horryruo/multi-bot/)
 [![Python 3.6](https://img.shields.io/badge/LANGUAGE-Python%203.6%2B-success?style=flat-square&logo=appveyor)](https://www.python.org/downloads/)
 [![BSD-3](https://img.shields.io/badge/LICENSE-BSD3-brightgreen.svg)](https://github.com/horryruo/multi-bot/blob/master/LICENSE)
@@ -12,20 +12,20 @@
 ## Disclaimer:  This code is only for learning, please do not use it for commercial purposes after downloading, I have the final right of interpretation.
 
 ## 更新|Update
-**2020/12/17**     1.6beta 新增搜索dmm全站内容，test版本
+**2020/12/17**     1.6beta——新增搜索dmm全站功能
 
 **2020/11/19**     1.5.1beta
 
-**2020/11/16**     1.5beta---增加利用selenium进行提取预览视频链接|add support find video with selenium(chromedriver 86.0.4240.22)
+**2020/11/16**     1.5beta——增加利用selenium进行提取预览视频链接|add support find video with selenium(chromedriver 86.0.4240.22)
 
 ## 功能|Feature
- 
+
 1. 输入演员ID，即可获得该演员在dmm中的所有cid。| Enter the actor id to get all the cid of the actor in dmm.
 2. 查询 "ikoa "中的影片参数(利用mahuateng)| Query the movie parameters in ikoa' video  (refer to mahuateng)
 3. 输入javlibary演员网址，即可获得所有演员的编号。| Enter javlibary actor url to get all the actor's number.
 4. 查询dmm cid信息、预览影片、预览图片。| Query the cid information in dmm alone, preview film, preview image
 5. 在sukebei中按关键词搜索。| Search by keyword in sukebei's magnet
-6. 根据关键词在dmm中搜索，最多30项。| Search in dmm according to keywords and limit up to 30 items.
+6. 根据关键词在dmm中搜索，最多30项。（video区或全站）| Search in dmm according to keywords and limit up to 30 items.
 7. 输入dmm链接，列出所有项目。| Enter a list of dmm links to list all items.
 8. 搜索当前dmm热门和最新电影，限制30条(测试版)| Search current dmm hot and newest movies, limit 30 (beta)
 9. 控制cloudflare域名解析。| Control cloudflare domain resolution
