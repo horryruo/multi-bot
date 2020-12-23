@@ -156,17 +156,20 @@ def monthlyy(update, context):
     leng3 = len(searchlist1)
     update.message.reply_text('正在查询%s个...请稍候......' %leng3)
     
-    mon,leng,nomon,leng1,time,tbb,tbbb = monthly_thread(idlist)
+    mon,leng,nomon,leng1,time,tbb,tbbb,noresult = monthly_thread(idlist)
     tb = str(tbb)
     usetime = '耗时:' + time + '秒'
     if leng == 0:
         if leng1 == 0:
-            result = '无结果'
-            update.message.reply_text(result)
+            noresult = '无结果 => %s' %(noresult)
+            msg = long_message(update, context, result, 'text')
         else:
             result1 = '非月额list (%s) => %s' %(leng1,nomon)
             if iftb == 'true':
                 msg = long_message(update,context,tb,'text')
+            if len(noresult)>0:
+                noresult = '无结果 => %s' % (noresult)
+                msg = long_message(update, context, noresult, 'text')
             msg = long_message(update,context,result1,'text')
             update.message.reply_text(usetime)
     else:
@@ -175,6 +178,9 @@ def monthlyy(update, context):
                 msg = long_message(update,context,tb,'text')
             result = '月额list (%s) => %s' %(leng,mon)
             msg = long_message(update,context,result,'text')
+            if len(noresult)>0:
+                noresult = '无结果 => %s' % (noresult)
+                msg = long_message(update, context, noresult, 'text')
             update.message.reply_text(usetime)
         else:
             result = '月额list (%s) => %s' %(leng,mon)
@@ -183,6 +189,9 @@ def monthlyy(update, context):
                 msg = long_message(update,context,tb,'text')
             msg = long_message(update,context,result,'text')
             msg = long_message(update,context,result1,'text')
+            if len(noresult)>0:
+                noresult = '无结果 => %s' % (noresult)
+                msg = long_message(update, context, noresult, 'text')
             update.message.reply_text(usetime)
     
 @restricted

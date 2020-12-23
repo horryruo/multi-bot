@@ -82,8 +82,11 @@ def dmm_thread(articleid):
 def ciddata(html):
     notitle = 0
     soup = BeautifulSoup(html,'lxml')
-    ifresult = re.findall(r'(指定されたページが見つかりません)', html)
-    noresult = '指定されたページが見つかりません'
+    try:
+        ifresult = re.findall(r'(指定されたページが見つかりません)', html)
+        noresult = '指定されたページが見つかりません'
+    except:
+        pass
     try:
         if noresult in ifresult:
             notitle = 1
@@ -233,8 +236,11 @@ def dmmsearch_data(searchstr):
     url = 'https://www.dmm.co.jp/digital/videoa/-/list/search/=/limit=30/?searchstr={}'.format(searchstr)
     html = get_html_jp(url)
     #判断有无结果
-    result = re.findall(r'(選択した条件で商品は存在しませんでした)',html)
-    noresult = '選択した条件で商品は存在しませんでした'
+    try:
+        result = re.findall(r'(選択した条件で商品は存在しませんでした)',html)
+        noresult = '選択した条件で商品は存在しませんでした'
+    except:
+        pass
     try:
         if noresult in result:
             stitle = 1
@@ -562,8 +568,8 @@ def dmmsearchall(searchstr,mode='temp'):
     
     
 if __name__ == "__main__":
-    
-    print('1')
+    print(dmmonecid('ssni00973'))
+    #print('1')
     
     
     

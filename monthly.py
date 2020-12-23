@@ -18,7 +18,7 @@ proxy = allconfig['proxy']
 proxies = {'http': 'http://%s'%proxy, 'https': 'http://%s'%proxy}
 headers = {'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.89 Safari/537.36'}
            
-def monthly(in_q, mon,nomon,jsondata):
+def monthly(in_q, mon,nomon,noresult,jsondata):
     searchid = in_q.get()
     url = 'https://v2.mahuateng.cf/isMonthly/%s' %searchid
     #print(url)
@@ -41,7 +41,8 @@ def monthly(in_q, mon,nomon,jsondata):
         elif monthly == False:
             nomon.append(searchid)
         else:
-            pass
+            noresult.append(searchid)
+
     in_q.task_done() 
 def producer(in_q, searchlist):  # 生产者
     
@@ -56,6 +57,7 @@ def monthly_thread(searchid):
     
     mon = []
     nomon = []
+    noresult = []
     jsondata = []
     queue = Queue(maxsize=10)
     producer_thread = threading.Thread(target=producer, args=(queue,searchlist))
@@ -63,7 +65,7 @@ def monthly_thread(searchid):
     producer_thread.start()
 
     for i in range(1,int(leng2)+1):
-        consumer_thread = threading.Thread(target=monthly, args=(queue,mon,nomon,jsondata))
+        consumer_thread = threading.Thread(target=monthly, args=(queue,mon,nomon,noresult,jsondata))
         consumer_thread.daemon = True
         consumer_thread.start()
     queue.join()
@@ -72,6 +74,7 @@ def monthly_thread(searchid):
     leng1 = len(nomon)
     mon = ','.join(mon)
     nomon = ','.join(nomon)
+    noresult = ','.join(noresult)
     tb = pt.PrettyTable()
     tb.field_names = ["id", "if?monthly", "bitrate"]
     for id in jsondata:
@@ -81,33 +84,10 @@ def monthly_thread(searchid):
     tbb = tb.get_string()
     end = time.time()
     usetime = str(end - start)
-    return (mon,leng,nomon,leng1,usetime,tb,tbb)
+    return (mon,leng,nomon,leng1,usetime,tb,tbb,noresult)
 
     
-def monthly_test(searchid):
-    searchlist = searchid.split(',')
-    alldata = []
-    for id in searchlist:
-        url = 'https://v2.mahuateng.cf/isMonthly/%s' %id
-        #print(url)
-        response = requests.get(url,headers=headers,proxies=proxies)
-        mjson = response.json()
-        bitrate = mjson.get('bitrate')
-        monthly = mjson.get('monthly')
-        data = {}
-        data['id'] = id
-        data['monthly'] = monthly
-        data['bitrate'] = bitrate
-        alldata.append(data)
-    tb = pt.PrettyTable()
-    tb.field_names = ["id", "是否月额", "码率"]
-    for id in alldata:
-        tb.add_row([id['id'],id['monthly'],id['bitrate']])
-    tb.align["id", "是否月额", "码率"] = "c"
-    print(tb)
-    #print(alldata)
-    #data2 = json.dumps(alldata)
-    #print(data2)
+
 
 def abp(input1):
     
