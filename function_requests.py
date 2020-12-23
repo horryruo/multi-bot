@@ -18,6 +18,7 @@ headers_jp = {
     'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
     'accept-encoding': 'gzip, deflate, br',
     'Referer' : 'http://www.dmm.co.jp/digital/videoa/',
+    'cookie' : 'age_check_done=1',
     }
 headers_jp_phone = {
     'User-Agent':'Mozilla/5.0 (iPhone; CPU iPhone OS 12_3_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.1 Mobile/15E148 Safari/604.1',
