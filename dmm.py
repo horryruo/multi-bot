@@ -30,15 +30,18 @@ def findinfo(articleid):
     title1 = title[0]
     return (page1,title1)
 def producer(in_q,articleid, page):
-    for i in range(1, int(page)+1):
+    url1 = "https://www.dmm.co.jp/digital/videoa/-/list/=/article=actress/id={}/".format(articleid)
+    in_q.put(url1)
+    for i in range(2, int(page)+1):
         url = "https://www.dmm.co.jp/digital/videoa/-/list/=/article=actress/id={}/page={}/".format(articleid,i)
         #print(url)
         in_q.put(url)
 def dmmcid(in_q, out_q):
     while in_q.empty() is not True:
         url = in_q.get()
+        #url = 'https://www.dmm.co.jp/digital/videoa/-/list/=/article=actress/id=1060823/'
         html = get_html_jp(url)
-        list = re.findall(r'https://www\.dmm\.co\.jp/digital/videoa/-/detail/=/cid=([_0-9a-z]+)/',html)
+        list = re.findall(r'https://www.dmm.co.jp/digital/videoa/-/detail/=/cid=([_0-9a-z]+)/',html)
         #print(list)
         out_q.append(list)
         in_q.task_done()
@@ -233,7 +236,7 @@ def dmmonecid(searchcid):
 
 def dmmsearch_data(searchstr):
     #url = 'https://www.dmm.co.jp/digital/videoa/-/list/search/=/?searchstr=乙白さやか'
-    url = 'https://www.dmm.co.jp/digital/videoa/-/list/search/=/limit=30/?searchstr={}'.format(searchstr)
+    url = 'https://www.dmm.co.jp/digital/videoa/-/list/search/=/?searchstr={}'.format(searchstr)
     html = get_html_jp(url)
     #判断有无结果
     try:
@@ -269,9 +272,11 @@ def dmmsearch_data(searchstr):
             except:
                 notitle = 1
             try:
-                cid = re.findall(r'<a href=\"https://www\.dmm\.co\.jp/digital/videoa/-/detail/=/cid=(\w+)/\?.*?\">',box)[0]
+                cid = re.findall(r'https://www\.dmm\.co\.jp/.*?/cid=(\w+)/',box)[0]
+
                 boxdict['cid'] = cid
-            except:
+            except Exception as e:
+
                 boxdict['cid'] = '-'
             try:
                 keywords = re.findall(r'<span class=\"ico-st-\w+\"><span>(.*?)</span></span>',box)
@@ -280,7 +285,7 @@ def dmmsearch_data(searchstr):
             except:
                 boxdict['keyword'] = '-'
             try:
-                links = re.findall(r'<a href=\"(https://www\.dmm\.co\.jp/digital/videoa/-/detail/=/cid=\w+/\?.*?)\">',box)[0]
+                links = re.findall(r'(https://www\.dmm\.co\.jp/.*?/cid=\w+/)',box)[0]
                 boxdict['links'] = links
             except:
                 boxdict['links'] = '-'
@@ -295,13 +300,13 @@ def dmmsearch_data(searchstr):
             except:
                 boxdict['title'] = '-'
             try:   
-                sublinks = re.findall(r'<span><a href=\"(/digital/videoa/-/list/search/=/limit=30/.*?)/\">.*?</a></span>',box)
+                sublinks = re.findall(r'span><a href=\"(.*?)\">.*?</a></span>',box)
                 sublink = 'https://www.dmm.co.jp' + sublinks[0]
                 boxdict['sublinks'] = sublink
             except:
                 boxdict['sublinks'] = '-'
             try:    
-                subtexts = re.findall(r'<span><a href=\"/digital/videoa/-/list/search/=/limit=30/.*?/\">(.*?)</a></span>',box)
+                subtexts = re.findall(r'<span><a href=\".*?\">(.*?)</a></span>',box)
                 boxdict['subtexts'] = subtexts[0]
             except:
                 boxdict['subtexts'] = '-'
@@ -350,56 +355,51 @@ def dmmlinks_data(links):
         notitle = 0
         if box:
             try:
-                litetitle = re.findall(r'<span class=\"txt\">(.*?)</span>',box)[0]
-                #print(litetitle)
+                litetitle = re.findall(r'<span class=\"txt\">(.*?)</span>', box)[0]
+                # print(litetitle)
                 if litetitle == None:
                     notitle = 1
             except:
                 notitle = 1
-            try:    
-                cid = re.findall(r'<a href=\"https://www\.dmm\.co\.jp/digital/videoa/-/detail/=/cid=(\w+)/\?.*?\">',box)[0]
-                #print(cid)
+            try:
+                cid = re.findall(r'https://www\.dmm\.co\.jp/.*?/cid=(\w+)/', box)[0]
+
                 boxdict['cid'] = cid
-            except:
+            except Exception as e:
+
                 boxdict['cid'] = '-'
             try:
-                keywords = re.findall(r'<span class=\"ico-st-\w+\"><span>(.*?)</span></span>',box)
+                keywords = re.findall(r'<span class=\"ico-\w+-\w+\"><span>(.*?)</span></span>', box)
                 keyword = ','.join(keywords)
                 boxdict['keyword'] = keyword
             except:
                 boxdict['keyword'] = '-'
             try:
-                links = re.findall(r'<a href=\"(https://www\.dmm\.co\.jp/digital/videoa/-/detail/=/cid=\w+/\?.*?)\">',box)[0]
+                links = re.findall(r'(https://www\.dmm\.co\.jp/.*?/cid=\w+/)', box)[0]
                 boxdict['links'] = links
             except:
                 boxdict['links'] = '-'
             try:
-                img = re.findall(r'<span class=\"img\"><img alt=\".*?\" src=\"(https://pics.dmm.co.jp/digital/video/\w+/\w+.jpg)\"/></span>',box)
+                img = re.findall(r'(pics\.dmm\.co\.jp/.*?/\w+/\w+.jpg)',box)
                 boxdict['img'] = img[0]
             except:
                 boxdict['img'] = '-'
-            try:   
-                title = re.findall(r'<span class=\"img\"><img alt=\"(.*?)\" src=\"https://pics.dmm.co.jp/digital/video/\w+/\w+.jpg\"/></span>',box)
+            try:
+                title = re.findall(
+                    r'alt=\"(.*)\" src',
+                    box)
                 boxdict['title'] = title[0]
             except:
                 boxdict['title'] = '-'
-            try:   
-                souplink = BeautifulSoup(box,'lxml')
-                slink = souplink.find('p',attrs = {'class' : 'sublink'})
-                #print(slink)
-                #sublinks = re.findall(r'',box)
-            except:
-                pass
             try:
-                sslink = slink.find('a').get('href')
-                sublink = 'https://www.dmm.co.jp' + sslink
+                sublinks = re.findall(r'span><a href=\"(.*?)\">.*?</a></span>', box)
+                sublink = 'https://www.dmm.co.jp' + sublinks[0]
                 boxdict['sublinks'] = sublink
             except:
                 boxdict['sublinks'] = '-'
-            try: 
-                sstext = slink.find('a').string
-                #subtexts = re.findall(r'',box)
-                boxdict['subtexts'] = sstext
+            try:
+                subtexts = re.findall(r'<span><a href=\".*?\">(.*?)</a></span>', box)
+                boxdict['subtexts'] = subtexts[0]
             except:
                 boxdict['subtexts'] = '-'
             
@@ -568,7 +568,7 @@ def dmmsearchall(searchstr,mode='temp'):
     
     
 if __name__ == "__main__":
-    print(dmmonecid('ssni00973'))
+    print(dmmsearch('ssni 400'))
     #print('1')
     
     
