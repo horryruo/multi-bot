@@ -162,15 +162,15 @@ def monthlyy(update, context):
     if leng == 0:
         if leng1 == 0:
             noresult = '无结果 => %s' %(noresult)
-            msg = long_message(update, context, result, 'text')
+            msg = long_message(update, context, noresult, 'text')
         else:
             result1 = '非月额list (%s) => %s' %(leng1,nomon)
             if iftb == 'true':
                 msg = long_message(update,context,tb,'text')
+            msg = long_message(update,context,result1,'text')
             if len(noresult)>0:
                 noresult = '无结果 => %s' % (noresult)
                 msg = long_message(update, context, noresult, 'text')
-            msg = long_message(update,context,result1,'text')
             update.message.reply_text(usetime)
     else:
         if leng1 == 0:
