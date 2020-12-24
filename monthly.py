@@ -72,6 +72,7 @@ def monthly_thread(searchid):
     #print(mon,nomon)
     leng = len(mon)
     leng1 = len(nomon)
+    leng2= len(noresult)
     mon = ','.join(mon)
     nomon = ','.join(nomon)
     noresult = ','.join(noresult)
@@ -84,7 +85,7 @@ def monthly_thread(searchid):
     tbb = tb.get_string()
     end = time.time()
     usetime = str(end - start)
-    return (mon,leng,nomon,leng1,usetime,tb,tbb,noresult)
+    return (mon,leng,nomon,leng1,usetime,tb,tbb,noresult,leng2)
 
     
 
