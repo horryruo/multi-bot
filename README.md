@@ -1,4 +1,4 @@
-# iMulti-bot  1.6 beta
+# iMulti-bot  1.7 beta
 [![iMulti-Telegram BOT](https://img.shields.io/badge/iMulti-Telegram%20BOT-red?style=flat-square&logo=appveyor)](https://github.com/horryruo/multi-bot/)
 [![Python 3.6](https://img.shields.io/badge/LANGUAGE-Python%203.6%2B-success?style=flat-square&logo=appveyor)](https://www.python.org/downloads/)
 [![BSD-3](https://img.shields.io/badge/LICENSE-BSD3-brightgreen.svg)](https://github.com/horryruo/multi-bot/blob/master/LICENSE)
@@ -12,6 +12,8 @@
 ## Disclaimer:  This code is only for learning, please do not use it for commercial purposes after downloading, I have the final right of interpretation.
 
 ## 更新|Update
+**2020/12/24**     1.7beta——部分功能优化
+
 **2020/12/17**     1.6beta——新增搜索dmm全站功能
 
 **2020/11/19**     1.5.1beta
