@@ -41,7 +41,7 @@
    centos:`yum install https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm`   
    debian or ubuntu:`wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && sudo apt install ./google-chrome-stable_current_amd64.deb`
 5. 复制一份配置 | `cp config.ini.example config.ini` 
-6. telegram内通过 @BotFather  创建机器人后获取（具体也可以谷歌如何创建telegram机器人并获得token，教程很多），然后telegram内 私聊 @get_id_bot  获取chat id，获取的这两个都要填到下一步的配置文件里。
+6. telegram内通过 @BotFather  创建机器人后获取token（具体也可以谷歌如何创建telegram机器人并获得token，教程很多），然后telegram内 私聊 @get_id_bot  获取chat id，获取的这两个都要填到下一步的配置文件里。
 7. 根据配置文件描述配置设置（自行谷歌linux如何编辑文件，一般是使用vim或者nano） | &nbsp;Edit config.ini
 
 ### 开启|Start  
