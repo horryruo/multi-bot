@@ -35,17 +35,17 @@
 
 ## 安装|Install  
 1. 需要python3.6以上版本| Python 3.6+ is Required  
-2. 克隆项目| `git clone https://github.com/horryruo/multi-bot.git && chmod +x multi-bot && cd multi-bot`   
-3. 安装依赖 | `pip3 install -r requirements.txt`
-4. **安装google chrome** ，如不需要准确预览视频地址可不安装(本引擎是获取正确预览视频链接的关键，当没有安装chrome时，会进行正则规律类比获得链接，因此番号奇特以及年代久远的影片可能无法获取正确的链接) | install chrome (If you don't need accurate preview video function, you can skip it)  
+2. 克隆项目（windows用户可直接github页面下载zip解压使用）| `git clone https://github.com/horryruo/multi-bot.git && chmod +x multi-bot && cd multi-bot`   
+3. 安装依赖（pip3这个3取决与你的系统关联的python名字，比如系统python就等于python3，那么就不需要加这个3） | `pip3 install -r requirements.txt`
+4. **安装google chrome** ，如不需要准确预览视频地址可不安装(本引擎是获取正确预览视频链接的关键，当没有安装chrome时，会进行正则规律类比获得链接，因此番号奇特以及年代久远的影片可能无法获取正确的链接，windows用户可自行谷歌下载安装最新版chrome) | install chrome (If you don't need accurate preview video function, you can skip it)  
    centos:`yum install https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm`   
    debian or ubuntu:`wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && sudo apt install ./google-chrome-stable_current_amd64.deb`
 5. 复制一份配置 | `cp config.ini.example config.ini` 
-6. telegram内通过 @BotFather  创建机器人后获取token（具体也可以谷歌如何创建telegram机器人并获得token，教程很多），然后telegram内 私聊 @get_id_bot  获取chat id，获取的这两个都要填到下一步的配置文件里。
+6. telegram内通过 **@BotFather**  创建机器人后获取token（具体也可以谷歌如何创建telegram机器人并获得token，教程很多），然后telegram内 私聊 **@get_id_bot**  获取chat id，获取的这两个都要填到下一步的配置文件里。
 7. 根据配置文件描述配置设置（自行谷歌linux如何编辑文件，一般是使用vim或者nano） | &nbsp;Edit config.ini
 
 ### 开启|Start  
-`python3 mybot.py` 
+`python3 mybot.py`   （python3这个3取决与你的系统关联的python名字，比如系统python就等于python3，那么就不需要加这个3）
 
 *具体使用时请向机器人输入"/help"获取命令使用指示。|Please type "/help" to the robot for specific use.*
 
