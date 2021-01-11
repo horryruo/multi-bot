@@ -21,6 +21,6 @@ system = linux
 
 [cloudflare]
 #This project is to control the cloudflare api, in order. cloudflare account email, global key. not needed can not be configured.
-#cloudflare的邮箱、密钥，可以控制cloudflare域名解析，仅支持非免费域名
+#cloudflare的邮箱、密钥，可以控制cloudflare域名解析，仅支持非免费域名（不需要本功能的可以不管，但不要留空）
 email = 12312313123@gmail.com
 globalkey = ad32sddf2334sd
