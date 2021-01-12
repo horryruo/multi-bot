@@ -5,13 +5,14 @@ import sys
 from threading import Thread
 import logging
 from functools import wraps
-from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
+from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, ConversationHandler, CallbackQueryHandler
 from monthly import monthly_thread
 from jav_thread import thread_javlib
 from magnet import sukebei
 from dmm import dmm_thread, prevideo, prephotos, dmmonecid, prevideolow, dmmsearch, dmmlinks,truevideo,dmmsearchall
 from cloudflare import CloudFlare_handler
 from loadini import read_config
+from identify import girl, acg
 import time
 
 
@@ -20,7 +21,7 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 
 logger = logging.getLogger(__name__)
 
-
+CHOOSE,GIRL,ACG = range(3)
 
 
 allconfig = read_config()
@@ -128,6 +129,7 @@ def help(update, context):
     *search* -  `搜索关键词在dmm，dmm官方支持正则，例如当长字符无结果，可利用空格分割`
     *all* -  `搜索关键词在dmm所有区域的内容，dmm官方支持正则，例如当长字符无结果，可利用空格分割`
     *links* -  `demo for links in dmm limit 30 project`
+    *face* - `根据提示发送图片进行人脸识别`
     *new* -  `dmm new video limit 30`
     *top* -  `dmm hot video limit 30`
     *cf option* -  `控制cf域名解析`
@@ -413,6 +415,58 @@ def cf(update, context):
     text = cf.option()
     update.message.reply_markdown(text)
 
+@restricted
+@send_typing_action     
+def startface(update, context):
+    keyboard = [
+        [
+            telegram.InlineKeyboardButton('识别女优',callback_data="girl"),
+            telegram.InlineKeyboardButton('识别二次元图片(未完成)',callback_data="acg"),
+        ],
+        ]
+    update.message.reply_text(
+        '选择你要识别图片的类型',
+        reply_markup=telegram.InlineKeyboardMarkup(keyboard),
+    )
+    return CHOOSE
+def choosegirl(update, context):
+    update.callback_query.answer()
+    update.callback_query.edit_message_text('请发送图片',)
+
+    return GIRL
+def chooseacg(update, context):
+    update.callback_query.answer()
+    update.callback_query.edit_message_text('请发送图片',)
+
+    return ACG
+@send_typing_action  
+def girl_ide(update, context):
+    try:
+        photo_file = update.message.effective_attachment.get_file()
+    except:
+        photo_file = update.message.photo[-1].get_file()
+    photo_file.download('user_photo.jpg')
+    update.message.reply_text('正在识别，请稍候')
+    result = girl()
+    msg = long_message(update, context, result,'markdown')
+    return ConversationHandler.END
+@send_typing_action  
+def acg_ide(update, context):
+    try:
+        photo_file = update.message.effective_attachment.get_file()
+    except:
+        photo_file = update.message.photo[-1].get_file()
+    photo_file.download('user_photo.jpg')
+    update.message.reply_text('本功能未完成，请等待作者咕咕咕')
+
+    return ConversationHandler.END
+def cancel(update, context):
+    update.message.reply_text(
+        '已取消', reply_markup=telegram.ReplyKeyboardRemove()
+    )
+
+    return ConversationHandler.END
+
 def main():
     if ifproxy == 'true':
         updater = Updater(TOKEN, use_context=True,request_kwargs=REQUEST_KWARGS)
@@ -445,9 +499,25 @@ def main():
     dp.add_handler(CommandHandler("top", top30))
     dp.add_handler(CommandHandler("cf", cf))
     dp.add_handler(CommandHandler("all", searchall))
+    
+    conv_handler = ConversationHandler(
+        entry_points=[CommandHandler('face',startface)],
+        states={
+            CHOOSE:[
+                CallbackQueryHandler(choosegirl, pattern="girl"),
+                CallbackQueryHandler(chooseacg, pattern="acg"),
+                ],
+            GIRL:[MessageHandler(Filters.photo|Filters.document,girl_ide)],
+            ACG:[MessageHandler(Filters.photo,acg_ide)],
+        },
+        fallbacks=[CommandHandler('cancel',cancel)],
+    )
+
+    dp.add_handler(conv_handler)
     dp.add_handler(CommandHandler('restart', restart, filters=Filters.user(user_id=LIST_OF_ADMINS[0])))
     dp.add_error_handler(error)
     updater.start_polling()
+    logger.info("iMulti-bot started")
     updater.idle()
 
 if __name__ == '__main__':

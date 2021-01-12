@@ -4,12 +4,12 @@ import re
 import json
 import threading 
 import time
+import platform
 from jinja2 import PackageLoader,Environment
 from bs4 import BeautifulSoup
 from queue import Queue
 #from lxml import etree
-from function_requests import get_html_jp
-from function_requests import get_html_jp_html
+from function_requests import get_html_jp,get_html_jp_html
 from loadini import read_config
 from selenium import webdriver
 
@@ -427,7 +427,7 @@ def truevideo(searchcid):
     allconfig = read_config()
     ifproxy = allconfig['ifproxy'] 
     proxy = allconfig['proxy'] 
-    system = allconfig['system'] 
+    system = platform.system()
     
 
     # 进入浏览器设置
@@ -445,9 +445,9 @@ def truevideo(searchcid):
     if ifproxy == 'true':
         options.add_argument('proxy-server=' + proxy)
 
-    if system == 'linux':
+    if system == 'Linux':
         browser = webdriver.Chrome(executable_path=r'./chromedriver',options=options)
-    elif system == 'windows':
+    elif system == 'Windows':
         browser = webdriver.Chrome(executable_path=r'./chromedriver.exe',options=options)
     #browser.set_page_load_timeout(5)    
     
@@ -568,8 +568,8 @@ def dmmsearchall(searchstr,mode='temp'):
     
     
 if __name__ == "__main__":
-    print(dmmsearch('ssni 400'))
-    #print('1')
+    
+    print(platform.system())
     
     
     
