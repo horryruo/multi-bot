@@ -1,4 +1,4 @@
-# iMulti-bot  1.7 beta
+# iMulti-bot  1.8 beta
 [![iMulti-Telegram BOT](https://img.shields.io/badge/iMulti-Telegram%20BOT-red?style=flat-square&logo=appveyor)](https://github.com/horryruo/multi-bot/)
 [![Python 3.6](https://img.shields.io/badge/LANGUAGE-Python%203.6%2B-success?style=flat-square&logo=appveyor)](https://www.python.org/downloads/)
 [![BSD-3](https://img.shields.io/badge/LICENSE-BSD3-brightgreen.svg)](https://github.com/horryruo/multi-bot/blob/master/LICENSE)
@@ -12,6 +12,8 @@
 ## Disclaimer:  This code is only for learning, please do not use it for commercial purposes after downloading, I have the final right of interpretation.
 
 ## 更新|Update
+**2021/1/12**      1.8beta——新增识别图鉴别女朋友功能，预计新增识别二次元图片寻找pixiv图片功能
+
 **2020/12/24**     1.7beta——部分功能优化
 
 **2020/12/17**     1.6beta——新增搜索dmm全站功能
@@ -31,7 +33,7 @@
 7. 输入dmm链接，列出所有项目。| Enter a list of dmm links to list all items.
 8. 搜索当前dmm热门和最新电影，限制30条(测试版)| Search current dmm hot and newest movies, limit 30 (beta)
 9. 控制cloudflare域名解析。| Control cloudflare domain resolution
-
+10. 识别图片寻找相似度最高的女朋友。
 
 ## 安装|Install  
 1. 需要python3.6以上版本| Python 3.6+ is Required  

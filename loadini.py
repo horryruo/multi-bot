@@ -7,7 +7,6 @@ def read_config():
     proxy = config['default']['proxy']
     token = config['default']['tgtoken']
     userid = config['default']['userid']
-    system = config['default']['system']
     tb = config['default']['tb']
     
     allconfig = {}
@@ -16,7 +15,7 @@ def read_config():
     allconfig['proxy'] = proxy
     allconfig['token'] = token
     allconfig['userid'] = userid
-    allconfig['system'] = system
+    
     return allconfig
     
 def read_config_cf():

@@ -144,4 +144,10 @@ def get_library_html(url, header):
             print('    >打开网页失败，空返回...重新尝试...')
             continue
     
-    
+def post_photo(url,image,headers=headers):
+    if ifproxy == 'true':
+        res = requests.post(url,proxies=proxies,files=image,headers=headers)
+    else:
+        res = requests.post(url,files=image,headers=headers)
+    res.encoding = 'utf-8'
+    return res.text
