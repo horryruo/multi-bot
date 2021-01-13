@@ -55,5 +55,6 @@
    请先安装screen 
 ``screen -dmS multi-bot `which python3` mybot.py``  
 
-
+### 更新|update
+  ctrl+z停止项目，使用screen的先`screen -r multi-bot`进入screen进程再停止。然后在项目文件夹`git pull`即可更新，然后再启动。本方法适用于只配置了config.ini而没有更改其他任何参与git的文件的用户，如果更改过，git pull会冲突，请谷歌如何git merge合并更新或删除项目再clone。
 
