@@ -129,7 +129,7 @@ def help(update, context):
     *search* -  `搜索关键词在dmm，dmm官方支持正则，例如当长字符无结果，可利用空格分割`
     *all* -  `搜索关键词在dmm所有区域的内容，dmm官方支持正则，例如当长字符无结果，可利用空格分割`
     *links* -  `demo for links in dmm limit 30 project`
-    *face* - `根据提示发送图片进行人脸识别`
+    *face* - `根据提示发送图片进行人脸识别,输入/cancel取消`
     *new* -  `dmm new video limit 30`
     *top* -  `dmm hot video limit 30`
     *cf option* -  `控制cf域名解析`
