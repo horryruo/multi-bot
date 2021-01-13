@@ -461,9 +461,7 @@ def acg_ide(update, context):
 
     return ConversationHandler.END
 def cancel(update, context):
-    update.message.reply_text(
-        '已取消', reply_markup=telegram.ReplyKeyboardRemove()
-    )
+    update.message.reply_text('已取消')
 
     return ConversationHandler.END
 
@@ -508,7 +506,7 @@ def main():
                 CallbackQueryHandler(chooseacg, pattern="acg"),
                 ],
             GIRL:[MessageHandler(Filters.photo|Filters.document,girl_ide)],
-            ACG:[MessageHandler(Filters.photo,acg_ide)],
+            ACG:[MessageHandler(Filters.photo|Filters.document,acg_ide)],
         },
         fallbacks=[CommandHandler('cancel',cancel)],
     )
