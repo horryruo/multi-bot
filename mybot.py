@@ -122,10 +122,10 @@ def help(update, context):
     *m* - `查询是否ikoa月额，num/cid皆可，可批量查询，半角逗号分隔   /m ssni-520,ssni-521`
     *uid* - `查询女优在dmm所有番号，需女优在dmm的数字id  /uid 2333`
     *lib* - `查询女优在library所有番号，需女优页面完整https链接  /lib https://*****`
-    *video* - `dmm预览视频，需准确cid，且不完善`
-    *photo* - `dmm预览图片，需准确cid`
-    *cid* -  `查询番号具体信息，支持cid/num `
-    *magnet* -  `搜索关键词在sukebei`
+    *video* - `dmm预览视频，cid(准确)，num(可能查询不到)`
+    *photo* - `dmm预览图片，cid(准确)，num(可能查询不到)`
+    *cid* -  `查询番号具体信息，cid(准确)，num(可能查询不到) `
+    *magnet* -  `搜索关键词在sukebei（磁力）`
     *search* -  `搜索关键词在dmm，dmm官方支持正则，例如当长字符无结果，可利用空格分割`
     *all* -  `搜索关键词在dmm所有区域的内容，dmm官方支持正则，例如当长字符无结果，可利用空格分割`
     *links* -  `demo for links in dmm limit 30 project`
