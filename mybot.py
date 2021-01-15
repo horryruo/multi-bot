@@ -220,30 +220,30 @@ def dmmid(update, context):
 @restricted
 @send_typing_action
 def dmmcid(update,context):
-    searchid = context.args[0]
-    if len(context.args) == 1:
-        searchidd = context.args[0]
-        searchidd = searchidd.replace('-',' ')
-    else:
-        searchidd = ' '.join(context.args[:])
-    text, notitle = dmmonecid(searchid)
-    if notitle == 1:
+    allid = ' '.join(context.args[:])
+    searchidlist = allid.split(',')
+    for cid in searchidlist:
+        searchidd = cid.replace('-',' ')
+        
+
+        text, notitle = dmmonecid(cid)
+        if notitle == 1:
         #update.message.reply_text('没有找到%s的cid信息，自动尝试使用/search功能搜索' %searchid)
-        boxlist,stitle = dmmsearch(searchidd,'onlysearch')
-        if boxlist == '選択した条件で商品は存在しませんでした':
-            update.message.reply_text('没有找到 %s 的cid信息,自动搜索无结果:%s' % (searchid, boxlist))
-            return
+            boxlist,stitle = dmmsearch(searchidd,'onlysearch')
+            if boxlist == '選択した条件で商品は存在しませんでした':
+                update.message.reply_text('没有找到 %s 的cid信息,自动搜索无结果:%s' % (cid, boxlist))
+                return
         #print(boxlist)
-        firstlist = boxlist[0]
-        wcid = firstlist.get('cid')
-        text, notitle = dmmonecid(wcid)
+            firstlist = boxlist[0]
+            wcid = firstlist.get('cid')
+            text, notitle = dmmonecid(wcid)
 
-        update.message.reply_markdown(text)
+            update.message.reply_markdown(text)
 
 
-    else:
-        update.message.reply_markdown(text)
-    
+        else:
+            update.message.reply_markdown(text)
+        time.sleep(2)
         
 @restricted    
 @send_typing_action 
