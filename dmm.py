@@ -427,7 +427,7 @@ def truevideo(searchcid):
     allconfig = read_config()
     ifproxy = allconfig['ifproxy'] 
     proxy = allconfig['proxy'] 
-    system = platform.system()
+    system = allconfig['system']
     
 
     # 进入浏览器设置

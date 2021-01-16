@@ -23,14 +23,18 @@ headers_jp_phone = {
     'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
     'accept-encoding': 'gzip, deflate, br',
     }
-def get_html(url):
+def get_html(url,typee='text'):
     if ifproxy == 'true':
         rqs = requests.get(url,headers=headers,proxies=proxies)
     else:
         rqs = requests.get(url,headers=headers)
     rqs.encoding = 'utf-8'
-    html = rqs.text
+    if typee == 'text':
+        html = rqs.text
+    elif typee == 'json':
+        html = rqs.json()
     return html
+    
 
 def get_html_html(url):
     session = HTMLSession()
