@@ -1,4 +1,4 @@
-# iMulti-bot  1.8 beta
+# iMulti-bot  2.0 beta
 [![iMulti-Telegram BOT](https://img.shields.io/badge/iMulti-Telegram%20BOT-red?style=flat-square&logo=appveyor)](https://github.com/horryruo/multi-bot/)
 [![Python 3.6](https://img.shields.io/badge/LANGUAGE-Python%203.6%2B-success?style=flat-square&logo=appveyor)](https://www.python.org/downloads/)
 [![BSD-3](https://img.shields.io/badge/LICENSE-BSD3-brightgreen.svg)](https://github.com/horryruo/multi-bot/blob/master/LICENSE)
@@ -12,6 +12,8 @@
 ## Disclaimer:  This code is only for learning, please do not use it for commercial purposes after downloading, I have the final right of interpretation.
 
 ## 更新|Update
+**2021/1/16**      2.0beta——新增bot内自主git pull更新功能(test功能，**需再执行安装依赖命令** `pip3 install -r requirements.txt`，若实现不了，还请手动更新)
+
 **2021/1/12**      1.8beta——新增识别图鉴别女朋友功能，预计新增识别二次元图片寻找pixiv图片功能
 
 **2020/12/24**     1.7beta——部分功能优化
