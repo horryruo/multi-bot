@@ -134,6 +134,7 @@ def help(update, context):
     *new* -  `dmm new video limit 30`
     *top* -  `dmm hot video limit 30`
     *cf option* -  `控制cf域名解析`
+    *update* - `更新机器人`
     *restart* - `重启机器人`
 
     *cf help* ==>  
@@ -505,7 +506,7 @@ def main():
         os.execl(sys.executable, sys.executable, *sys.argv)
 
     def restart(update, context):
-        update.message.reply_text('Bot is restarting...')
+        update.message.reply_text('Bot 正在重启，请等待5~10秒')
         Thread(target=stop_and_restart).start()
 
     dp.add_handler(CommandHandler("start", start))
