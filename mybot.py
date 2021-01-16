@@ -11,6 +11,7 @@ from jav_thread import thread_javlib
 from magnet import sukebei
 from dmm import dmm_thread, prevideo, prephotos, dmmonecid, prevideolow, dmmsearch, dmmlinks,truevideo,dmmsearchall
 from cloudflare import CloudFlare_handler
+from get_update import Version
 from loadini import read_config
 from identify import girl, acg
 import time
@@ -21,7 +22,7 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 
 logger = logging.getLogger(__name__)
 
-CHOOSE,GIRL,ACG = range(3)
+CHOOSE,GIRL,ACG,GITUPDATE = range(4)
 
 
 allconfig = read_config()
@@ -414,6 +415,31 @@ def cf(update, context):
     cf = CloudFlare_handler(args)
     text = cf.option()
     update.message.reply_markdown(text)
+@restricted
+@send_typing_action 
+def getupdate(update, context):
+    repo = Version('https://github.com/horryruo/multi-bot.git')
+    updatetime,localcm = repo.get_time()
+    text = '最新版本：{} (UTC+8),本地版本：{} (UTC+8)'.format(updatetime,localcm)
+    keyboard = [
+        [
+            telegram.InlineKeyboardButton('更新并重启程序',callback_data="goupdate"),
+            telegram.InlineKeyboardButton('取消',callback_data="cancel"),
+        ],
+        ]
+    update.message.reply_markdown(text,reply_markup=telegram.InlineKeyboardMarkup(keyboard))
+    
+    return GITUPDATE
+
+def gitupdate(update, context):
+    repo = Version('https://github.com/horryruo/multi-bot.git')
+    pull = repo.pull()
+    if pull == None:
+        update.callback_query.edit_message_text('版本已是最新，无需更新')
+        
+    else:
+        update.callback_query.edit_message_text('更新完成，请输入/restart 重启程序完成更新')
+        
 
 @restricted
 @send_typing_action     
@@ -499,7 +525,9 @@ def main():
     dp.add_handler(CommandHandler("all", searchall))
     
     conv_handler = ConversationHandler(
-        entry_points=[CommandHandler('face',startface)],
+        entry_points=[CommandHandler('face',startface),
+            CommandHandler('update',getupdate),
+        ],
         states={
             CHOOSE:[
                 CallbackQueryHandler(choosegirl, pattern="girl"),
@@ -507,6 +535,10 @@ def main():
                 ],
             GIRL:[MessageHandler(Filters.photo|Filters.document,girl_ide)],
             ACG:[MessageHandler(Filters.photo|Filters.document,acg_ide)],
+            GITUPDATE:[
+                CallbackQueryHandler(gitupdate, pattern="goupdate"),
+                CallbackQueryHandler(cancel, pattern="cancel"),
+                ],
         },
         fallbacks=[CommandHandler('cancel',cancel)],
     )
