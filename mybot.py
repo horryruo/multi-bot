@@ -435,7 +435,8 @@ def getupdate(update, context):
 def gitupdate(update, context):
     repo = Version('https://github.com/horryruo/multi-bot.git')
     pull = repo.pull()
-    if pull == None:
+    print(pull)
+    if pull == 'None':
         update.callback_query.edit_message_text('版本已是最新，无需更新')
         
     else:

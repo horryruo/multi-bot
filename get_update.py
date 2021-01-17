@@ -9,7 +9,8 @@ class Version(object):
         self.local_path = os.getcwd()
         self.repo_url = repo_url
         self.repo = None
-        self.initial(repo_url, branch)
+        self.repo = Repo(self.local_path)
+        self.remote = self.repo.remote()
 
     def get_time(self):
         html = get_html('https://api.github.com/repos/horryruo/multi-bot','json')
@@ -62,15 +63,17 @@ class Version(object):
         if not is_git_dir(git_local_path):
             self.repo = Repo.clone_from(repo_url, to_path=self.local_path, branch=branch)
         else:
-            '''
+            
         self.repo = Repo(self.local_path)
+        '''
+        pass
 
     def pull(self):
         """
         从线上拉最新代码
         :return:
         """
-        self.repo.git.pull()
+        return self.remote.pull()
 
     def branches(self):
         """
@@ -129,6 +132,6 @@ class Version(object):
 
 if __name__ == "__main__":
     repo = Version('https://github.com/horryruo/multi-bot.git')
-    repo.get_time()
+    repo.pull()
     
     
