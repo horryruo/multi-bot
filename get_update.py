@@ -12,7 +12,7 @@ class Version(object):
         self.repo = Repo(self.local_path)
         self.remote = self.repo.remote()
 
-    def get_time(self):
+    def get_time(self,log='false'):
         html = get_html('https://api.github.com/repos/horryruo/multi-bot','json')
         updatetime = html.get('pushed_at')
         #转换成时间数组
@@ -26,8 +26,10 @@ class Version(object):
         #换回+8时间格式
         #timeArray_8 = time.strptime(str(dt),"%Y-%m-%d %H:%M:%S")
         #timestamp_8 = time.mktime(timeArray_8)
-        commit_all = self.commits()
-        commitlastest = commit_all[0].get('date')
+        if log =='true':
+            commit_all = self.commits()
+            commitlastest = commit_all[0].get('date')
+            return dt,commitlastest
         '''
         if timestamp_8 and commitlastest:
             commit_stamp = time.mktime(time.strptime(commitlastest, '%Y-%m-%d %H:%M'))
@@ -37,7 +39,7 @@ class Version(object):
             else:
                 uptime=2
                 '''
-        return dt,commitlastest
+        return dt
         '''
     def git_repo(self):
         repo = Repo(self.dir)#config="http.proxy='http://127.0.0.1:7890'")
