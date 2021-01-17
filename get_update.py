@@ -70,12 +70,15 @@ class Version(object):
         '''
         pass
 
-    def pull(self):
+    def pull(self,mode='git'):
         """
         从线上拉最新代码
         :return:
         """
-        return self.remote.pull()
+        if mode=='repo':
+            return self.remote.pull()
+        elif mode=='git':
+            return self.repo.git.pull()
 
     def branches(self):
         """
@@ -134,6 +137,6 @@ class Version(object):
 
 if __name__ == "__main__":
     repo = Version('https://github.com/horryruo/multi-bot.git')
-    repo.pull()
+    print(repo.pull())
     
     
