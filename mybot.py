@@ -436,7 +436,7 @@ def gitupdate(update, context):
     repo = Version('https://github.com/horryruo/multi-bot.git')
     pull = repo.pull()
     print(pull)
-    if pull == 'None':
+    if pull == 'Already up to date.':
         update.callback_query.edit_message_text('版本已是最新，无需更新')
         
     else:
@@ -450,6 +450,9 @@ def startface(update, context):
         [
             telegram.InlineKeyboardButton('识别女优',callback_data="girl"),
             telegram.InlineKeyboardButton('识别二次元图片(未完成)',callback_data="acg"),
+        ],
+        [
+            telegram.InlineKeyboardButton('取消',callback_data="cancel"),
         ],
         ]
     update.message.reply_text(
@@ -540,6 +543,7 @@ def main():
             CHOOSE:[
                 CallbackQueryHandler(choosegirl, pattern="girl"),
                 CallbackQueryHandler(chooseacg, pattern="acg"),
+                CallbackQueryHandler(cancell, pattern="cancel"),
                 ],
             GIRL:[MessageHandler(Filters.photo|Filters.document,girl_ide)],
             ACG:[MessageHandler(Filters.photo|Filters.document,acg_ide)],
