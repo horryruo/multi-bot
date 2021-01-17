@@ -493,6 +493,12 @@ def cancel(update, context):
 
     return ConversationHandler.END
 
+def cancell(update, context):
+    update.callback_query.edit_message_text('已取消')
+
+    return ConversationHandler.END
+
+
 def main():
     if ifproxy == 'true':
         updater = Updater(TOKEN, use_context=True,request_kwargs=REQUEST_KWARGS)
@@ -539,7 +545,7 @@ def main():
             ACG:[MessageHandler(Filters.photo|Filters.document,acg_ide)],
             GITUPDATE:[
                 CallbackQueryHandler(gitupdate, pattern="goupdate"),
-                CallbackQueryHandler(cancel, pattern="cancel"),
+                CallbackQueryHandler(cancell, pattern="cancel"),
                 ],
         },
         fallbacks=[CommandHandler('cancel',cancel)],
