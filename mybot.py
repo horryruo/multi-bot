@@ -424,7 +424,7 @@ def getupdate(update, context):
     text = '最新版本：{} (UTC+8)'.format(updatetime)
     keyboard = [
         [
-            telegram.InlineKeyboardButton('更新并重启程序',callback_data="goupdate"),
+            telegram.InlineKeyboardButton('更新程序',callback_data="goupdate"),
             telegram.InlineKeyboardButton('取消',callback_data="cancel"),
         ],
         ]
