@@ -442,7 +442,7 @@ def gitupdate(update, context):
     else:
         update.callback_query.edit_message_text('更新完成，请输入/restart 重启程序完成更新')
         
-
+    return ConversationHandler.END
 @restricted
 @send_typing_action     
 def startface(update, context):
