@@ -420,8 +420,8 @@ def cf(update, context):
 @send_typing_action 
 def getupdate(update, context):
     repo = Version('https://github.com/horryruo/multi-bot.git')
-    updatetime,localcm = repo.get_time()
-    text = '最新版本：{} (UTC+8),本地版本：{} (UTC+8)'.format(updatetime,localcm)
+    updatetime = repo.get_time()
+    text = '最新版本：{} (UTC+8)'.format(updatetime)
     keyboard = [
         [
             telegram.InlineKeyboardButton('更新并重启程序',callback_data="goupdate"),
