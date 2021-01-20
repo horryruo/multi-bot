@@ -440,7 +440,7 @@ def gitupdate(update, context):
     pull = repo.pull()
     print(pull)
     matchline = re.search( r'file changed|Already|merge failed', pull, re.M|re.I).group()
-    print(matchline)
+    #print(matchline)
     if matchline == 'Already':
         update.callback_query.edit_message_text('版本已是最新，无需更新')
         
