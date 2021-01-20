@@ -1,7 +1,7 @@
 [default]
 #According to the example, in order. Whether to enable proxy, proxy software ip address and port, telegram bot token, user id
 
-#Whether to enable proxy|是否启用代理,小写
+#Whether to enable proxy|是否启用代理,小写。
 ifproxy = false
 
 #Proxy Software Addresses and Port|代理地址与端口，半角符号
