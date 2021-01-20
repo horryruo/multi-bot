@@ -15,6 +15,7 @@ from get_update import Version
 from loadini import read_config
 from identify import girl, acg
 import time
+import re
 
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -45,7 +46,9 @@ REQUEST_KWARGS={
     'proxy_url': 'http://%s/'%proxy,
 }   
 
-
+class Msg:
+    def __init__(self):
+        self.chat_id = update.effective_chat.id
 
 
 
@@ -107,9 +110,9 @@ def split_list(init_list, children_list_len):
 @send_typing_action
 def start(update, context):
     text = '''
-    ******
+    **
     欢迎使用imulti bot，请输入/help查看指令
-    ******
+    **
     '''
     #print(telegram.constants.MAX_MESSAGE_LENGTH)
     update.message.reply_markdown(text)
@@ -436,11 +439,17 @@ def gitupdate(update, context):
     repo = Version('https://github.com/horryruo/multi-bot.git')
     pull = repo.pull()
     print(pull)
-    if pull == 'Already up to date.' or 'Already up-to-date.':
+    matchline = re.search( r'file changed|Already|merge failed', pull, re.M|re.I).group()
+    print(matchline)
+    if matchline == 'Already':
         update.callback_query.edit_message_text('版本已是最新，无需更新')
         
-    else:
+    elif matchline == 'file changed':
         update.callback_query.edit_message_text('更新完成，请输入/restart 重启程序完成更新')
+    elif matchline == 'merge failed':
+        update.callback_query.edit_message_text('你可能修改过项目文件，无法自动更新，请手动解决或重新下载程序')
+    else:
+        update.callback_query.edit_message_text('未知错误，请手动更新')
         
     return ConversationHandler.END
 @restricted
