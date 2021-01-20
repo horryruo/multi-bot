@@ -136,12 +136,13 @@ def help(update, context):
     *search* -  `搜索关键词在dmm，dmm官方支持正则，例如当长字符无结果，可利用空格分割`
     *all* -  `搜索关键词在dmm所有区域的内容，dmm官方支持正则，例如当长字符无结果，可利用空格分割`
     *links* -  `demo for links in dmm limit 30 project`
-    *face* - `根据提示发送图片进行人脸识别,输入/cancel取消`
+    *face* - `根据提示发送图片进行人脸识别`
     *new* -  `dmm new video limit 30`
     *top* -  `dmm hot video limit 30`
     *cf option* -  `控制cf域名解析`
     *update* - `更新机器人`
     *restart* - `重启机器人`
+    *cancel* - `处在对话命令内时，提前结束对话`
 
     *cf help* ==>  
        1、 *ls* => `列出所有已拥有域名    example: /cf ls`
@@ -454,7 +455,7 @@ def gitupdate(update, context):
     elif matchline == 'merge':
         update.callback_query.edit_message_text('你可能修改过项目文件，无法自动更新，请手动解决或重新下载程序')
     else:
-        update.callback_query.edit_message_text('未知错误，请手动更新')
+        update.callback_query.edit_message_text('未知错误，请重新配置项目')
         
     return ConversationHandler.END
 @restricted
