@@ -55,7 +55,10 @@ class Msg:
 def error(update, context):
     logger.warning('Update "%s" caused error "%s"', update, context.error)
     #update.message.reply_text(str(update.message.text))
-    update.message.reply_text(str(context.error))
+    try:
+        update.message.reply_text(str(context.error))
+    except:
+        update.callback_query.edit_message_text(str(context.error))
 
 def send_typing_action(func):
     """Sends typing action while processing func command."""
@@ -437,16 +440,18 @@ def getupdate(update, context):
 
 def gitupdate(update, context):
     repo = Version('https://github.com/horryruo/multi-bot.git')
-    pull = repo.pull()
+    try:
+        pull = repo.pull()
+    except Exception as e:
+        pull = str(e)
     print(pull)
-    matchline = re.search( r'file changed|Already|merge failed', pull, re.M|re.I).group()
+    matchline = re.search( r'file changed|Already|merge', pull, re.M|re.I).group()
     #print(matchline)
     if matchline == 'Already':
         update.callback_query.edit_message_text('版本已是最新，无需更新')
-        
     elif matchline == 'file changed':
         update.callback_query.edit_message_text('更新完成，请输入/restart 重启程序完成更新')
-    elif matchline == 'merge failed':
+    elif matchline == 'merge':
         update.callback_query.edit_message_text('你可能修改过项目文件，无法自动更新，请手动解决或重新下载程序')
     else:
         update.callback_query.edit_message_text('未知错误，请手动更新')
