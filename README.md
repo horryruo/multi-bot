@@ -11,7 +11,7 @@
 ## 免责声明：本代码仅用于学习，下载后请勿用于商业用途，本人对此有最终解释权。
 ## Disclaimer:  This code is only for learning, please do not use it for commercial purposes after downloading, I have the final right of interpretation.
 
-## 更新|Update
+## 更新日志|Update log
 **2021/1/17**      2.0beta——新增程序内更新，**需再执行**`pip3 install -r requirements.txt`，若不能实现还请继续手动更新。
 
 **2021/1/12**      1.8beta——新增识别图鉴别女朋友功能，预计新增识别二次元图片寻找pixiv图片功能
@@ -57,7 +57,7 @@
    请先安装screen 
 ``screen -dmS multi-bot `which python3` mybot.py``  
 
-### 更新|update
+### 更新程序|update program
   1、直接telegram内发送命令/update根据提示更新（若无法更新请使用方法2）
   
   2、ctrl+z停止项目，使用screen的先`screen -r multi-bot`进入screen进程再停止。然后在项目文件夹`git pull`即可更新，然后再启动。本方法适用于只配置了config.ini而没有更改其他任何参与git的文件的用户，如果更改过，git pull会冲突，输入`git reset --hard origin/master ` （本条命令将放弃本地所有更改）后再进行git pull。
