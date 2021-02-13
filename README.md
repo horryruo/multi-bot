@@ -8,8 +8,8 @@
 **Send commands to [Telegram](http://telegram.org) BOT for get a information way which communicate with about dmm, libray, ikoa, magnet, and control cloudflare api compatibility!**  
 
 
-## 免责声明：本代码仅用于学习，下载后请勿用于商业用途，本人对此有最终解释权。
-## Disclaimer:  This code is only for learning, please do not use it for commercial purposes after downloading, I have the final right of interpretation.
+## 免责声明：本代码仅用于学习，下载后请勿用于商业以及违反使用者所在地法律用途，本人对此有最终解释权。
+## Disclaimer:  This code is only for learning. Please do not use it for commercial purposes or violate the laws of the user’s location after downloading. I have the final right of interpretation.
 
 ## 更新日志|Update log
 **2021/1/17**      2.0beta——新增程序内更新，**需再执行**`pip3 install -r requirements.txt`，若不能实现还请继续手动更新。
