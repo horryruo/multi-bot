@@ -1,9 +1,9 @@
-Jinja2==2.11.2
+Jinja2==2.11.3
 cfscrape==2.1.1
-prettytable==0.7.2
+prettytable==2.0.0
 requests_html==0.10.0
-requests==2.23.0
-python_telegram_bot==13.0
-beautifulsoup4==4.9.1
+requests==2.25.1
+python_telegram_bot==13.2
+beautifulsoup4==4.9.3
 selenium==3.141.0
-GitPython==3.1.12
+GitPython==3.1.13
