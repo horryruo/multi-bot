@@ -5,8 +5,8 @@ import os
 import time
 import threading 
 from queue import Queue
-from function_requests import steal_library_header
-from loadini import read_config
+from app.utils.requests import steal_library_header
+from app.utils.loadini import read_config
 
 
 

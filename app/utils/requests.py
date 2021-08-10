@@ -4,7 +4,7 @@ from traceback import format_exc
 from time import sleep
 from re import search, findall
 from requests_html import HTMLSession
-from loadini import read_config
+from app.utils.loadini import read_config
 
 allconfig = read_config()
 ifproxy = allconfig['ifproxy'] 

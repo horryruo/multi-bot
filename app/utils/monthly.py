@@ -7,7 +7,7 @@ import time
 import json
 from queue import Queue
 import prettytable as pt
-from loadini import read_config
+from app.utils.loadini import read_config
 
 
 

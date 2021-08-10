@@ -6,14 +6,14 @@ from threading import Thread
 import logging
 from functools import wraps
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, ConversationHandler, CallbackQueryHandler
-from monthly import monthly_thread
-from jav_thread import thread_javlib
-from magnet import sukebei
-from dmm import dmm_thread, prevideo, prephotos, dmmonecid, prevideolow, dmmsearch, dmmlinks,truevideo,dmmsearchall
-from cloudflare import CloudFlare_handler
-from get_update import Version
-from loadini import read_config
-from identify import girl, acg
+from app.utils.loadini import read_config
+from app.utils.monthly import monthly_thread
+from app.utils.jav_thread import thread_javlib
+from app.utils.magnet import sukebei
+from app.utils.dmm import dmm_thread, prevideo, prephotos, dmmonecid, prevideolow, dmmsearch, dmmlinks,truevideo,dmmsearchall
+from app.utils.cloudflare import CloudFlare_handler
+from app.utils.get_update import Version
+from app.utils.identify import girl, acg
 import time
 import re
 
@@ -144,7 +144,7 @@ def help(update, context):
     *restart* - `重启机器人`
     *cancel* - `处在对话命令内时，提前结束对话`
 
-    *cf help* ==>  
+    *cloudflare help* ==>  
        1、 *ls* => `列出所有已拥有域名    example: /cf ls`
        2、 *dns domain* => `查看单个域名解析情况   example:  /cf dns domain`
        3、 *add type domain host* => `添加域名解析   example: /cf add A test.domain.com ip-adress`

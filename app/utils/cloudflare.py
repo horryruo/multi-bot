@@ -1,8 +1,7 @@
 import requests
 import json
-import datetime
 import prettytable as pt
-from loadini import read_config_cf,read_config
+from app.utils.loadini import read_config_cf,read_config
 '''
 https://api.cloudflare.com/#
 '''

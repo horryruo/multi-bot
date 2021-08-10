@@ -1,4 +1,4 @@
-from function_requests import post_photo
+from app.utils.requests import post_photo
 import json, re
 from bs4 import BeautifulSoup
 from jinja2 import PackageLoader,Environment
@@ -29,7 +29,7 @@ def girl():
             #boxdict['img'] = img
             boxlist.append(boxdict)
 
-    env = Environment(loader=PackageLoader('identify','templates'))    # 创建一个包加载器对象
+    env = Environment(loader=PackageLoader(__name__,'templates'))    # 创建一个包加载器对象
     template = env.get_template('face_girl.md')    # 获取一个模板文件
     temp_out = template.render(resultdata = boxlist) 
     #print(temp_out)  # 渲染

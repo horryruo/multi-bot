@@ -1,16 +1,13 @@
 # -*- coding: utf-8 -*-
-import requests
-import re
-import json
+import re, os
 import threading 
 import time
-import platform
 from jinja2 import PackageLoader,Environment
 from bs4 import BeautifulSoup
 from queue import Queue
 #from lxml import etree
-from function_requests import get_html_jp,get_html_jp_html
-from loadini import read_config
+from app.utils.requests import get_html_jp,get_html_jp_html
+from app.utils.loadini import read_config
 from selenium import webdriver
 
 def findinfo(articleid):
@@ -216,8 +213,8 @@ def template_cid(ciddataa):
     ciddataa_performers = ciddataa.get('performers')
     ciddataa_keyword = ciddataa.get('keyword')
     #print(ciddataa_performers)
-    env = Environment(loader=PackageLoader('dmm','templates'))    # 创建一个包加载器对象
-    template = env.get_template('base.md')    # 获取一个模板文件
+    env = Environment(loader=PackageLoader(__name__,"templates"))    # 创建一个包加载器对象
+    template = env.get_template('cid.md')    # 获取一个模板文件
     temp_out = template.render(ciddata = ciddataa, ciddata_performers = ciddataa_performers, ciddata_keyword = ciddataa_keyword) 
     #print(temp_out)  # 渲染
     return (temp_out)
@@ -317,7 +314,7 @@ def dmmsearch_data(searchstr):
     return (boxlist,stitle)
 def template_search(resultdataa,stitlee):
     
-    env = Environment(loader=PackageLoader('dmm','templates'))    # 创建一个包加载器对象
+    env = Environment(loader=PackageLoader(__name__,"templates"))   # 创建一个包加载器对象
     template = env.get_template('search.md')    # 获取一个模板文件
     temp_out = template.render(resultdata = resultdataa,stitle = stitlee) 
     #print(temp_out)  # 渲染
@@ -409,7 +406,7 @@ def dmmlinks_data(links):
     return (boxlist,stitle)
 def template_links(resultdataa,stitlee):
     
-    env = Environment(loader=PackageLoader('dmm','templates'))    # 创建一个包加载器对象
+    env = Environment(loader=PackageLoader(__name__,"templates"))   # 创建一个包加载器对象
     template = env.get_template('search.md')    # 获取一个模板文件
     temp_out = template.render(resultdata = resultdataa,stitle = stitlee) 
     #print(temp_out)  # 渲染
@@ -436,7 +433,7 @@ def truevideo(searchcid):
     options.add_argument('--headless')
     options.add_argument('--disable-gpu')
     options.add_argument('--no-sandbox')
-    # options.add_argument('window-size=1200x600')
+    options.add_argument('--disable-software-rasterizer ')
     # 设置语言
     options.add_argument('lang=ja_JP.UTF-8')
     # 更换头部
@@ -446,9 +443,9 @@ def truevideo(searchcid):
         options.add_argument('proxy-server=' + proxy)
 
     if system == 'Linux':
-        browser = webdriver.Chrome(executable_path=r'./chromedriver',options=options)
+        browser = webdriver.Chrome(executable_path=os.path.abspath(os.path.join("app", "bin","chromedriver")),options=options)
     elif system == 'Windows':
-        browser = webdriver.Chrome(executable_path=r'./chromedriver.exe',options=options)
+        browser = webdriver.Chrome(executable_path=os.path.abspath(os.path.join("app", "bin","chromedriver.exe")),options=options)
     #browser.set_page_load_timeout(5)    
     
     browser.get(url)
@@ -544,7 +541,7 @@ def dmmsearchall_data(searchstr):
     return (boxlist,stitle)
 def template_searchall(resultdataa,stitlee):
     
-    env = Environment(loader=PackageLoader('dmm','templates'))    # 创建一个包加载器对象
+    env = Environment(loader=PackageLoader(__name__,"templates"))   # 创建一个包加载器对象
     template = env.get_template('searchall.md')    # 获取一个模板文件
     temp_out = template.render(resultdata = resultdataa,stitle = stitlee) 
     #print(temp_out)  # 渲染

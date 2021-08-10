@@ -2,7 +2,7 @@ import sys, os
 from git import Repo
 import time
 from datetime import datetime, timedelta
-from function_requests import get_html
+from app.utils.requests import get_html
 
 class Version(object):
     def __init__(self, repo_url, branch='master'):

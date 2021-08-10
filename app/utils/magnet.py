@@ -1,11 +1,9 @@
 #  coding: utf-8
-import requests
-import re 
-import json
+import re, os
 import time
 from queue import Queue
 import threading 
-from function_requests import get_html_html
+from app.utils.requests import get_html_html
 from requests_html import HTMLSession
 from bs4 import BeautifulSoup
 from jinja2 import PackageLoader,Environment
@@ -80,7 +78,7 @@ def sukebei_one(in_q, jsondata):
     except:
         pass
     try:
-        nolike_list = ["第一会所","宣传","論壇","澳门皇冠赌场"]
+        nolike_list = ["第一会所","宣传","論壇","澳门皇冠赌场","0.85或以上版本","魔王","赌场"]
         for i in nolike_list:
             if i in strfileindex:
                 nolike = 1
@@ -115,7 +113,7 @@ def sukebei_thread(searchid):
     return (jsondata,usetime)
 def template_magnet(alldataa,usetimee,searchidd):
     #print(ciddataa_performers)
-    env = Environment(loader=PackageLoader('magnet','templates'))    # 创建一个包加载器对象
+    env = Environment(loader=PackageLoader(__name__,"templates"))  # 创建一个包加载器对象
     template = env.get_template('magnet.md')    # 获取一个模板文件
     temp_out = template.render(alldata = alldataa,usetime = usetimee, searchid = searchidd) 
     #print(temp_out)  # 渲染
