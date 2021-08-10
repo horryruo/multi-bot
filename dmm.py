@@ -100,7 +100,7 @@ def ciddata(html):
 
     ciddata = {}
     allper = soup.find_all(name='span', id='performer')
-    sortper = re.findall(r'<a href="/digital/videoa/-/list/=/article=actress/id=(\d+)/">(.*?)</a>', str(allper))
+    sortper = re.findall(r'<a href=\"/digital/videoa/-/list/=/article=actress/id=(\d+)/\".*>(.*)</a>', str(allper))
     perfordata = {}
     for i in sortper:
         perfordata[i[0]] = i[1]
@@ -109,7 +109,7 @@ def ciddata(html):
     else:
         ciddata['performers'] = '---'
     allkey = soup.find('table', attrs = {'class':'mg-b20'}).find_all('a', href = re.compile('article=keyword'))
-    sortkey = re.findall(r'<a href="/digital/videoa/-/list/=/article=keyword/id=(\d+)/">(.*?)</a>', str(allkey))
+    sortkey = re.findall(r'<a href="/digital/videoa/-/list/=/article=keyword/id=(\d+)/".*>(.*?)</a>', str(allkey))
     keyworddata = {}
     for i in sortkey:
         keyworddata[i[0]] = i[1]
@@ -148,19 +148,19 @@ def ciddata(html):
     except:   
         ciddata['time'] = '---'
     try:   
-        ciddata['directorid'] = re.findall(r'<td align=\"right\" valign=\"top\" class=\"nw\">監督：</td>\n?<td><a href=\"/digital/videoa/-/list/=/article=director/id=(\d+)/\">.*</a></td>',html)[0]
+        ciddata['directorid'] = re.findall(r'<td align=\"right\" valign=\"top\" class=\"nw\">監督：</td>\n?<td><a href=\"/digital/videoa/-/list/=/article=director/id=(\d+)/\".*>.*</a></td>',html)[0]
     except:   
         ciddata['directorid'] = '---'
     try:     
-        ciddata['director'] = re.findall(r'<td align=\"right\" valign=\"top\" class=\"nw\">監督：</td>\n?<td><a href=\"/digital/videoa/-/list/=/article=director/id=\d+/\">(.*)</a></td>',html)[0]
+        ciddata['director'] = re.findall(r'<td align=\"right\" valign=\"top\" class=\"nw\">監督：</td>\n?<td><a href=\"/digital/videoa/-/list/=/article=director/id=\d+/\".*>(.*)</a></td>',html)[0]
     except:   
         ciddata['director'] = '---'
     try:     
-        ciddata['series'] = re.findall(r'<td align=\"right\" valign=\"top\" class=\"nw\">シリーズ：</td>\n?<td><a href=\"/digital/videoa/-/list/=/article=series/id=\d+/\">(.*)</a></td>',html)[0]
+        ciddata['series'] = re.findall(r'<td align=\"right\" valign=\"top\" class=\"nw\">シリーズ：</td>\n?<td><a href=\"/digital/videoa/-/list/=/article=series/id=\d+/\".*>(.*)</a></td>',html)[0]
     except:   
         ciddata['series'] = '---'
     try:     
-        ciddata['seriesid'] = re.findall(r'<td align=\"right\" valign=\"top\" class=\"nw\">シリーズ：</td>\n?<td><a href=\"/digital/videoa/-/list/=/article=series/id=(\d+)/\">.*</a></td>',html)[0]
+        ciddata['seriesid'] = re.findall(r'<td align=\"right\" valign=\"top\" class=\"nw\">シリーズ：</td>\n?<td><a href=\"/digital/videoa/-/list/=/article=series/id=(\d+)/\".*>.*</a></td>',html)[0]
     except:   
         ciddata['seriesid'] = '---'
     try:     
@@ -569,7 +569,7 @@ def dmmsearchall(searchstr,mode='temp'):
     
 if __name__ == "__main__":
     
-    print(platform.system())
+    print(dmmonecid('ssni-441'))
     
     
     
