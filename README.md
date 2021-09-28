@@ -12,6 +12,8 @@
 ## Disclaimer:  This code is only for learning. Please do not use it for commercial purposes or violate the laws of the user’s location after downloading. I have the final right of interpretation.
 
 ## 更新日志|Update log
+**2021/9/27**      切换了main分支，更新时需要手动切换:先运行`git fetch` ,`git checkout -b main origin/main`,后`git branch`查看确认处在main分支，最后删除master分支`git branch -d master`
+
 **2021/8/10**      3.0beta——重构程序结构(配置文件config.ini移动到了app/config/config.ini,直接启动程序会自动移动)，使得更加美观，更新chromedriver(92.0.4515.107),小bug修复，无大功能更新。
 
 **2021/1/17**      2.0beta——新增程序内更新，**需再执行**`pip3 install -r requirements.txt`，若不能实现还请继续手动更新。
