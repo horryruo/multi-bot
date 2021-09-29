@@ -74,6 +74,6 @@
 ### 如何更新程序|update program
   1. 直接telegram内发送命令/update根据提示更新，更新完后/restart重启程序（若无法更新请使用方法2）
   
-  2. ctrl+z停止项目，使用screen的先`screen -r multi-bot`进入screen进程再停止。然后在项目文件夹`git pull`即可更新，然后再启动。本方法适用于只配置了config.ini而没有更改其他任何参与git的文件的用户，如果更改过，git pull会冲突，输入`git reset --hard origin/master ` （本条命令将放弃本地所有更改）后再进行git pull。
+  2. ctrl+z停止项目，使用screen的先`screen -r multi-bot`进入screen进程再停止。然后在项目文件夹`git pull`即可更新，然后再启动。本方法适用于只配置了config.ini而没有更改其他任何参与git的文件的用户，如果更改过，git pull会冲突，输入`git reset --hard origin/main ` （本条命令将放弃本地所有更改）后再进行git pull。
    
   3. 用docker部署的更新依旧是来到克隆目录下`git pull`或者程序内更新后`docker restart multi-bot`即可，因为docker镜像只打包了运行环境，项目文件直接映射在宿主机上。
