@@ -1,0 +1,8 @@
+.git/
+.vscode/
+.venv/
+config.ini
+app/config/config.ini
+user_photo.jpg
+__pycache__/
+*/__pycache__/

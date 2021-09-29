@@ -455,7 +455,7 @@ def gitupdate(update, context):
     elif matchline == 'merge':
         update.callback_query.edit_message_text('你可能修改过项目文件，无法自动更新，请手动解决或重新下载程序')
     else:
-        update.callback_query.edit_message_text('未知错误，请重新配置项目')
+        update.callback_query.edit_message_text(str(pull))
         
     return ConversationHandler.END
 @restricted

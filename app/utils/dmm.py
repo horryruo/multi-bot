@@ -443,7 +443,10 @@ def truevideo(searchcid):
         options.add_argument('proxy-server=' + proxy)
 
     if system == 'Linux':
-        browser = webdriver.Chrome(executable_path=os.path.abspath(os.path.join("app", "bin","chromedriver")),options=options)
+        try:
+            browser = webdriver.Chrome(options=options)
+        except:
+            browser = webdriver.Chrome(executable_path=os.path.abspath(os.path.join("app", "bin","chromedriver")),options=options)
     elif system == 'Windows':
         browser = webdriver.Chrome(executable_path=os.path.abspath(os.path.join("app", "bin","chromedriver.exe")),options=options)
     #browser.set_page_load_timeout(5)    
