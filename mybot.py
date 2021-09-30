@@ -456,14 +456,16 @@ def gitupdate(update, context):
     except Exception as e:
         pull = str(e)
     print(pull)
-    matchline = re.search( r'file changed|Already|merge', pull, re.M|re.I).group()
+    matchline = re.search( r'file changed|Already|merge', pull, re.M|re.I)
     #print(matchline)
-    if matchline == 'Already':
-        update.callback_query.edit_message_text('版本已是最新，无需更新')
-    elif matchline == 'file changed':
-        update.callback_query.edit_message_text('更新完成，请输入/restart 重启程序完成更新')
-    elif matchline == 'merge':
-        update.callback_query.edit_message_text('你可能修改过项目文件，无法自动更新，请手动解决或重新下载程序')
+    if matchline:
+        matchline=matchline.group()
+        if matchline == 'Already':
+            update.callback_query.edit_message_text('版本已是最新，无需更新')
+        elif matchline == 'file changed':
+            update.callback_query.edit_message_text('更新完成，请输入/restart 重启程序完成更新')
+        elif matchline == 'merge':
+            update.callback_query.edit_message_text('你可能修改过项目文件，无法自动更新，请手动解决或重新下载程序')
     else:
         update.callback_query.edit_message_text(str(pull))
         
