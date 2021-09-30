@@ -330,22 +330,32 @@ def dmmphoto(update, context):
         firstlist = boxlist[0]
         wcid = firstlist.get('cid')
         list_of_urls = prephotos(wcid)
-    
-    if len(list_of_urls)<=10:
-        media_group = []
-        for number, url in enumerate(list_of_urls):
-            media_group.append(telegram.InputMediaPhoto(media=url, caption="Turtle" + str(number)))
-        update.message.reply_media_group(media=media_group)
-    else:
-        list_of_urls = split_list(list_of_urls,10) 
-        for i in list_of_urls:
+    try:
+        if len(list_of_urls)<=10:
             media_group = []
-            for number, url in enumerate(i):
-            #print(telegram.InputMediaPhoto(media=url, caption="Photos" + str(number)))
+            for number, url in enumerate(list_of_urls):
                 media_group.append(telegram.InputMediaPhoto(media=url, caption="Photos" + str(number)))
-        #print(media_group)
             update.message.reply_media_group(media=media_group)
-
+        else:
+            list_of_urls = split_list(list_of_urls,10) 
+            for i in list_of_urls:
+                media_group = []
+                for number, url in enumerate(i):
+                #print(telegram.InputMediaPhoto(media=url, caption="Photos" + str(number)))
+                    media_group.append(telegram.InputMediaPhoto(media=url, caption="Photos" + str(number)))
+            #print(media_group)
+                update.message.reply_media_group(media=media_group)
+    except Exception as e:
+        text='发送照片组失败，失败原因：%s，转为单张图片发送'%e
+        update.message.reply_markdown(text)
+        for url in list_of_urls:
+            try:
+                update.message.reply_photo(url)
+                time.sleep(0.5)
+            except:
+                text='造成发送失败的图片链接：%s'%url
+                update.message.reply_markdown(text)
+                continue
 @restricted    
 @send_typing_action
 def magnet(update, context):
