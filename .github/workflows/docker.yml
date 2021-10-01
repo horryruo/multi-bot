@@ -4,7 +4,7 @@ on:
   workflow_dispatch
 env:
   # 设置 docker 镜像名
-  IMAGE_NAME: test
+  IMAGE_NAME: multi-bot
   VERSION: latest
 
 jobs:
