@@ -71,7 +71,7 @@
 6. 开始运行 `docker run -d --name=multi-bot -v 你的项目目录:/bot horryruo/multi-bot` (命令中“你的项目目录”直接替换成你第三步克隆所在的绝对路径，假设克隆在/root/multi-bot,那么就是`docker run -d --name=multi-bot -v /root/multi-bot:/bot horryruo/multi-bot`)
  
  **看到这里你也发现了，如果你是第一次使用docker，并不比上面容易多少，甚至很多步骤都是差不多的，所以不熟悉的情况下还是建议使用上面的方法。**
-### 如何更新程序|update program
+### 如何更新程序 |update program
   1. 直接telegram内发送命令/update根据提示更新，更新完后/restart重启程序（若无法更新请使用方法2）
   
   2. ctrl+z停止项目，使用screen的先`screen -r multi-bot`进入screen进程再停止。然后在项目文件夹`git pull`即可更新，然后再启动。本方法适用于只配置了config.ini而没有更改其他任何参与git的文件的用户，如果更改过，git pull会冲突，输入`git reset --hard origin/main ` （本条命令将放弃本地所有更改）后再进行git pull。
