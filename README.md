@@ -12,7 +12,7 @@
 ## Disclaimer:  This code is only for learning. Please do not use it for commercial purposes or violate the laws of the user’s location after downloading. I have the final right of interpretation.
 <details>
 <summary>
-## 更新日志|Update log</summary>
+更新日志|Update log</summary>
 
 **2021/9/29**      添加了docker启动的方案，尚不完善，有bug请提issue，有能精简镜像的方法(目前400mb，包含了chrome,python,依赖库，具体看Dockerfile)也可以pr，具体安装方法请看下面。
 
@@ -33,7 +33,7 @@
 **2020/11/16**     1.5beta——增加利用selenium进行提取预览视频链接|add support find video with selenium(chromedriver 86.0.4240.22)</details>
 
 <details>
-<summary>## 功能|Feature</summary>
+<summary>功能|Feature</summary>
 
 1. 输入演员ID，即可获得该演员在dmm中的所有cid。| Enter the actor id to get all the cid of the actor in dmm.
 2. 查询 "ikoa "中的影片参数(利用mahuateng)| Query the movie parameters in ikoa' video  (refer to mahuateng)
