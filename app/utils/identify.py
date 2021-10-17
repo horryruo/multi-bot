@@ -1,4 +1,4 @@
-from app.utils.requests import post_photo
+from app.utils.func_requests import post_photo
 import json, re
 from bs4 import BeautifulSoup
 from jinja2 import PackageLoader,Environment

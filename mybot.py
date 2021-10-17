@@ -10,7 +10,8 @@ from app.utils.loadini import read_config
 from app.utils.monthly import monthly_thread
 from app.utils.jav_thread import thread_javlib
 from app.utils.magnet import sukebei
-from app.utils.dmm import dmm_thread, prevideo, prephotos, dmmonecid, prevideolow, dmmsearch, dmmlinks,truevideo,dmmsearchall
+from app.utils.dmm import dmm_thread, prevideo, prephotos, dmmonecid, dmmsearch, dmmlinks,truevideo,dmmsearchall
+from app.utils.faleno import Faleno
 from app.utils.cloudflare import CloudFlare_handler
 from app.utils.get_update import Version
 from app.utils.identify import girl, acg
@@ -269,37 +270,34 @@ def lib(update, context):
 @send_typing_action
 def dmmvideo(update, context):
     searchid = context.args[0]
-    #text = str(prevideo(searchid))
-    #update.message.reply_video(text)
-    nocid = 0
     if len(context.args) == 1:
-        gang = '-'
         searchidd = context.args[0]
-        if gang in searchidd:
-            nocid = 1
-            searchidd = searchidd.replace('-',' ')
+        searchidd = searchidd.replace('-',' ')
     else:
-        nocid = 1
         searchidd = ' '.join(context.args[:])
-    if nocid == 1:
-        boxlist,stitle = dmmsearch(searchidd,'onlysearch')
-        if boxlist == '選択した条件で商品は存在しませんでした':
+    
+    boxlist,stitle = dmmsearch(searchidd,'onlysearch')
+    if boxlist == '選択した条件で商品は存在しませんでした':
+        faleno = Faleno()
+        searchid = searchidd.replace(' ','')
+        try:
+            video = faleno.video(searchid)
+            update.message.reply_text('视频资源来自faleno,超出telegram大小限制,复制链接到浏览器查看:\n'+ video)
+            return
+        except Exception as e:
+            print(e)
             update.message.reply_text('没有找到 %s 预览视频'%searchid)
             return
         #print(boxlist)
-        firstlist = boxlist[0]
-        searchid = firstlist.get('cid')
+    firstlist = boxlist[0]
+    searchid = firstlist.get('cid')
     try:
         result = str(truevideo(searchid))
     except:
         print('尝试使用selenium引擎失败')
         result = str(prevideo(searchid))
-
-
     try:
-        
         update.message.reply_video(result)
-
     except:
         result_hd = result
         update.message.reply_text('原视频超出telegram大小限制，将发送低画质版本，可复制原画质链接到浏览器查看!---%s'%result_hd)
@@ -323,13 +321,21 @@ def dmmphoto(update, context):
         else:
             searchidd = ' '.join(context.args[:])
         boxlist,stitle = dmmsearch(searchidd,'onlysearch')
+        dmm_have = 'yes'
         if boxlist == '選択した条件で商品は存在しませんでした':
-            update.message.reply_text('没有找到 %s 预览图片'%searchid)
-            return
+            dmm_have = 'no'
+            faleno = Faleno()
+            searchid = searchidd.replace(' ','')
+            try:
+                list_of_urls = faleno.photo(searchid)
+            except:
+                update.message.reply_text('没有找到 %s 预览图片'%searchid)
+                return
         #print(boxlist)
-        firstlist = boxlist[0]
-        wcid = firstlist.get('cid')
-        list_of_urls = prephotos(wcid)
+        if dmm_have =='yes':
+            firstlist = boxlist[0]
+            wcid = firstlist.get('cid')
+            list_of_urls = prephotos(wcid)
     try:
         if len(list_of_urls)<=10:
             media_group = []
@@ -426,6 +432,16 @@ def top30(update, context):
     text = dmmlinks(searchlink)
     update.message.reply_markdown(text)
 
+@restricted
+@send_typing_action 
+def faleno(update, context):
+    if len(context.args) == 1:
+        searchstr = context.args[0]
+    else:
+        searchstr = ' '.join(context.args[:])
+    faleno = Faleno()
+    result = faleno.search(searchstr)
+    msg = long_message(update,context,result,'markdown')
 @restricted
 @send_typing_action 
 def cf(update, context):
@@ -558,6 +574,7 @@ def main():
     dp.add_handler(CommandHandler("search", dmmsearchh))
     dp.add_handler(CommandHandler("links", dmmlink))
     dp.add_handler(CommandHandler("new", new30))
+    dp.add_handler(CommandHandler("faleno", faleno))
     dp.add_handler(CommandHandler("top", top30))
     dp.add_handler(CommandHandler("cf", cf))
     dp.add_handler(CommandHandler("all", searchall))

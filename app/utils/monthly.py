@@ -1,10 +1,7 @@
 #  coding: utf-8
 import requests
-from re import search, findall
-import os 
 import threading 
 import time
-import json
 from queue import Queue
 import prettytable as pt
 from app.utils.loadini import read_config

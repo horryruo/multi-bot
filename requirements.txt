@@ -1,4 +1,4 @@
-Jinja2>=2.11.3
+Jinja2==2.9
 cfscrape>=2.1.1
 prettytable>=2.0.0
 requests_html>=0.10.0

@@ -1,8 +1,6 @@
 import requests
 from cfscrape import get_cookie_string
-from traceback import format_exc
-from time import sleep
-from re import search, findall
+from re import search
 from requests_html import HTMLSession
 from app.utils.loadini import read_config
 
@@ -48,12 +46,12 @@ def get_html_html(url):
     #html = rqs.decode("utf8", "ignore")
     return rqs
 
-def get_html_jp(url):
+def get_html_jp(url,verify=True):
     session = requests.session()
     if ifproxy == 'true':
-        rqs = session.get(url,headers=headers_jp,proxies=proxies).content
+        rqs = session.get(url,headers=headers_jp,proxies=proxies,verify=verify).content
     else:
-        rqs = session.get(url,headers=headers_jp).content
+        rqs = session.get(url,headers=headers_jp,verify=verify).content
     #rqs.encoding = 'utf-8'
     html = rqs.decode("utf8", "ignore")
     return html

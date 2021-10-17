@@ -1,8 +1,8 @@
-import sys, os
+import os
 from git import Repo
 import time
 from datetime import datetime, timedelta
-from app.utils.requests import get_html
+from app.utils.func_requests import get_html
 
 class Version(object):
     def __init__(self, repo_url, branch='master'):

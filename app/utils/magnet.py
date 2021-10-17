@@ -3,8 +3,7 @@ import re, os
 import time
 from queue import Queue
 import threading 
-from app.utils.requests import get_html_html
-from requests_html import HTMLSession
+from app.utils.func_requests import get_html_html
 from bs4 import BeautifulSoup
 from jinja2 import PackageLoader,Environment
 def sukebei_findindex(searchid):

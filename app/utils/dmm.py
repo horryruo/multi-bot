@@ -6,7 +6,7 @@ from jinja2 import PackageLoader,Environment
 from bs4 import BeautifulSoup
 from queue import Queue
 #from lxml import etree
-from app.utils.requests import get_html_jp,get_html_jp_html
+from app.utils.func_requests import get_html_jp
 from app.utils.loadini import read_config
 from selenium import webdriver
 

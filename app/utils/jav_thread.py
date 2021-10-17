@@ -1,11 +1,10 @@
 #  coding: utf-8
 import requests
 import re 
-import os
 import time
 import threading 
 from queue import Queue
-from app.utils.requests import steal_library_header
+from app.utils.func_requests import steal_library_header
 from app.utils.loadini import read_config
 
 
