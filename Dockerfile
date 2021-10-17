@@ -4,10 +4,6 @@ WORKDIR /bot
 COPY ./requirements.txt .
 COPY ./start.sh .
 RUN echo "http://dl-4.alpinelinux.org/alpine/v3.14/main" >> /etc/apk/repositories && \
-    apk add -U tzdata &&\
-    cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime &&\
-    echo "Asia/Shanghai" > /etc/timezone &&\
-    apk del tzdata &&\
     apk update && apk add --no-cache \
     chromium \
     chromium-chromedriver \
@@ -15,6 +11,7 @@ RUN echo "http://dl-4.alpinelinux.org/alpine/v3.14/main" >> /etc/apk/repositorie
     udev \
     git &&\
     apk add --no-cache --virtual .build-dependencies \
+    tzdata \
     libffi-dev \
     libxslt-dev \
     libxml2-dev \
@@ -24,7 +21,9 @@ RUN echo "http://dl-4.alpinelinux.org/alpine/v3.14/main" >> /etc/apk/repositorie
     pip install --no-cache-dir -r requirements.txt && \
     if [[ ! -f /usr/bin/python ]]; then ln -s /usr/bin/python3 /usr/bin/python; fi && \
     ln -s /bin/bash /usr/bin/bash && \
-    rm -Rf /var/cache/apk/* && \
+    cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime &&\
+    echo "Asia/Shanghai" > /etc/timezone &&\
     apk del .build-dependencies && \
+    rm -Rf /var/cache/* && \
     chmod 777 /bot/start.sh
 ENTRYPOINT [ "sh", "start.sh" ]
