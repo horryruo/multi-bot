@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from requests.api import get
 import telegram 
 import os
 import sys
@@ -10,6 +11,7 @@ from app.utils.loadini import read_config
 from app.utils.monthly import monthly_thread
 from app.utils.jav_thread import thread_javlib
 from app.utils.magnet import sukebei
+from app.utils.func_requests import get_file
 from app.utils.dmm import dmm_thread, prevideo, prephotos, dmmonecid, dmmsearch, dmmlinks,truevideo,dmmsearchall
 from app.utils.faleno import Faleno
 from app.utils.cloudflare import CloudFlare_handler
@@ -129,13 +131,14 @@ def help(update, context):
     *help* - `帮助`
     *m* - `查询是否ikoa月额，num/cid皆可，可批量查询，半角逗号分隔   /m ssni-520,ssni-521`
     *uid* - `查询女优在dmm所有番号，需女优在dmm的数字id  /uid 2333`
-    *lib* - `查询女优在library所有番号，需女优页面完整https链接  /lib https://*****`
-    *video* - `dmm预览视频，cid(准确)，num(可能查询不到)`
-    *photo* - `dmm预览图片，cid(准确)，num(可能查询不到)`
+    *lib* - `查询女优在library所有番号，需女优页面完整https链接(目前不可用)  /lib https://*****`
+    *video* - `dmm预览视频，cid(准确)，num(可能查询不到),dmm没有时会从faleno寻找`
+    *photo* - `dmm预览图片，cid(准确)，num(可能查询不到)，dmm没有时会从faleno寻找`
     *cid* -  `查询番号具体信息，cid(准确)，num(可能查询不到) `
     *magnet* -  `搜索关键词在sukebei（磁力）`
     *search* -  `搜索关键词在dmm，dmm官方支持正则，例如当长字符无结果，可利用空格分割`
     *all* -  `搜索关键词在dmm所有区域的内容，dmm官方支持正则，例如当长字符无结果，可利用空格分割`
+    *faleno* - `搜索faleno，支持名字，标题，不支持cid、num(官方不支持)`
     *links* -  `demo for links in dmm limit 30 project`
     *face* - `根据提示发送图片进行人脸识别`
     *new* -  `dmm new video limit 30`
@@ -282,8 +285,22 @@ def dmmvideo(update, context):
         searchid = searchidd.replace(' ','')
         try:
             video = faleno.video(searchid)
-            update.message.reply_text('视频资源来自faleno,超出telegram大小限制,复制链接到浏览器查看:\n'+ video)
-            return
+            try:
+                update.message.reply_video(video)
+            except:
+                try:
+                    file = get_file(video)
+                    with open("upload.mp4", "wb") as f:
+                        for chunk in file.iter_content(chunk_size=1024):
+                            if chunk:
+                                f.write(chunk)
+                    f.close()
+                    update.message.reply_video(open('upload.mp4', 'rb'))
+                    os.remove("upload.mp4")
+                    return
+                except:
+                    update.message.reply_text('视频资源来自faleno,超出telegram大小限制,复制链接到浏览器查看:\n'+ video)
+                    return
         except Exception as e:
             print(e)
             update.message.reply_text('没有找到 %s 预览视频'%searchid)
@@ -300,8 +317,19 @@ def dmmvideo(update, context):
         update.message.reply_video(result)
     except:
         result_hd = result
-        update.message.reply_text('原视频超出telegram大小限制，将发送低画质版本，可复制原画质链接到浏览器查看!---%s'%result_hd)
+        update.message.reply_text('原视频超出telegram大小限制，尝试下载上传发送，同时将发送低画质版本，可复制原画质链接到浏览器查看!---%s'%result_hd)
         result = result.replace('mhb','dmb')
+        try:
+            file = get_file(result_hd)
+            with open("upload.mp4", "wb") as f:
+                for chunk in file.iter_content(chunk_size=1024):
+                    if chunk:
+                        f.write(chunk)
+            f.close()
+            update.message.reply_video(open('upload.mp4', 'rb'))
+            os.remove("upload.mp4")
+        except:
+            pass
         try:
             update.message.reply_video(result)
         except:
@@ -523,6 +551,7 @@ def girl_ide(update, context):
     update.message.reply_text('正在识别，请稍候')
     result = girl()
     msg = long_message(update, context, result,'markdown')
+    os.remove("user_photo.jpg")
     return ConversationHandler.END
 @send_typing_action  
 def acg_ide(update, context):

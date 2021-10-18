@@ -153,3 +153,10 @@ def post_photo(url,image,headers=headers):
         res = requests.post(url,files=image,headers=headers)
     res.encoding = 'utf-8'
     return res.text
+
+def get_file(url,headers=headers):
+    if ifproxy == 'true':
+        res = requests.get(url,proxies=proxies,headers=headers,stream=True)
+    else:
+        res = requests.get(url,headers=headers,stream=True)
+    return res

@@ -10,6 +10,7 @@ from app.utils.func_requests import get_html_jp
 from app.utils.loadini import read_config
 from selenium import webdriver
 
+#返回页码
 def findinfo(articleid):
     url = "https://www.dmm.co.jp/digital/videoa/-/list/=/article=actress/id=%s/" %articleid
     html = get_html_jp(url)
@@ -26,6 +27,7 @@ def findinfo(articleid):
         page1 = page4
     title1 = title[0]
     return (page1,title1)
+#生成网址
 def producer(in_q,articleid, page):
     url1 = "https://www.dmm.co.jp/digital/videoa/-/list/=/article=actress/id={}/".format(articleid)
     in_q.put(url1)
@@ -33,6 +35,7 @@ def producer(in_q,articleid, page):
         url = "https://www.dmm.co.jp/digital/videoa/-/list/=/article=actress/id={}/page={}/".format(articleid,i)
         #print(url)
         in_q.put(url)
+#一页进程
 def dmmcid(in_q, out_q):
     while in_q.empty() is not True:
         url = in_q.get()
@@ -42,6 +45,7 @@ def dmmcid(in_q, out_q):
         #print(list)
         out_q.append(list)
         in_q.task_done()
+#多线程收集
 def dmm_thread(articleid):
     start = time.time()
     page, title = findinfo(articleid)
@@ -79,9 +83,11 @@ def dmm_thread(articleid):
     result = '%s - エロ動画・アダルトビデオ - FANZA動画\npage(%s)(%s),cid list  =>\n%s' % (title,page,leng,alllist)
     return (result,usetime)
     
+#收集信息
 def ciddata(html):
     notitle = 0
     soup = BeautifulSoup(html,'lxml')
+    #print(soup)
     try:
         ifresult = re.findall(r'(指定されたページが見つかりません)', html)
         noresult = '指定されたページが見つかりません'
@@ -96,31 +102,32 @@ def ciddata(html):
 
 
     ciddata = {}
-    allper = soup.find_all(name='span', id='performer')
-    sortper = re.findall(r'<a href=\"/digital/videoa/-/list/=/article=actress/id=(\d+)/\".*>(.*)</a>', str(allper))
     perfordata = {}
-    for i in sortper:
-        perfordata[i[0]] = i[1]
+    allper = soup.find(name='span', id='performer').find_all(href=re.compile("actress"))
+    for i in allper:
+        id = re.findall(r'/digital/videoa/-/list/=/article=actress/id=(.*)/',i.get('href'))
+        perfordata[id[0]] = i.string
     if perfordata != None:
         ciddata['performers'] = perfordata
     else:
         ciddata['performers'] = '---'
-    allkey = soup.find('table', attrs = {'class':'mg-b20'}).find_all('a', href = re.compile('article=keyword'))
-    sortkey = re.findall(r'<a href="/digital/videoa/-/list/=/article=keyword/id=(\d+)/".*>(.*?)</a>', str(allkey))
+    body = soup.find('table', attrs = {'class':'mg-b20'})
+    allkey = body.find_all('a', href = re.compile('article=keyword'))
     keyworddata = {}
-    for i in sortkey:
-        keyworddata[i[0]] = i[1]
+    for i in allkey:
+        id = re.findall(r'/digital/videoa/-/list/=/article=keyword/id=(.*)/',i.get('href'))
+        keyworddata[id[0]] = i.string
     if perfordata != None:
         ciddata['keyword'] = keyworddata
     else:
         ciddata['keyword'] = '---'
     
-    scoregif = soup.find('table', attrs = {'class':'mg-b20'}).find_all('img')
+    scoregif = body.find_all('img')
     try:
         score = re.findall(r'https://.*/(\d)_?(\d)?.gif',str(scoregif))[0]
         ciddata['score'] = score
     except:
-        ciddata['score'] = '0-0'
+        ciddata['score'] = 'none'
     try:
         redkey = re.findall(r'<span class="red">(.*)</span>',html)[0]
         titlebig = re.findall(r'<title>(.*)</title>',html)[0]
@@ -141,74 +148,47 @@ def ciddata(html):
     except:   
         ciddata['release'] = '---'
     try:
-        ciddata['time'] = re.findall(r'<td align=\"right\" valign=\"top\" class=\"nw\">収録時間：</td>\n?<td>(.*\n?.*)',html)[0]
+        ciddata['time'] = re.findall(r'<td align=\"right\" valign=\"top\" class=\"nw\">収録時間：</td>\n?<td>(.*\n?.*)',html)[0].replace('\n','')
     except:   
         ciddata['time'] = '---'
-    try:   
-        ciddata['directorid'] = re.findall(r'<td align=\"right\" valign=\"top\" class=\"nw\">監督：</td>\n?<td><a href=\"/digital/videoa/-/list/=/article=director/id=(\d+)/\".*>.*</a></td>',html)[0]
-    except:   
-        ciddata['directorid'] = '---'
     try:     
-        ciddata['director'] = re.findall(r'<td align=\"right\" valign=\"top\" class=\"nw\">監督：</td>\n?<td><a href=\"/digital/videoa/-/list/=/article=director/id=\d+/\".*>(.*)</a></td>',html)[0]
+        director = body.find_all('a', href = re.compile('article=director'))[0]
+        ciddata['director'] = director.string
+        id = re.findall(r'/digital/videoa/-/list/=/article=director/id=(.*)/',director.get('href'))[0]     
+        ciddata['directorid'] = id
     except:   
         ciddata['director'] = '---'
+        ciddata['directorid'] = '---'
     try:     
-        ciddata['series'] = re.findall(r'<td align=\"right\" valign=\"top\" class=\"nw\">シリーズ：</td>\n?<td><a href=\"/digital/videoa/-/list/=/article=series/id=\d+/\".*>(.*)</a></td>',html)[0]
+        series = body.find_all('a', href = re.compile('article=series'))[0]
+        ciddata['series'] = series.string
+        id = re.findall(r'/digital/videoa/-/list/=/article=series/id=(.*)/',series.get('href'))[0]     
+        ciddata['seriesid'] = id
     except:   
         ciddata['series'] = '---'
-    try:     
-        ciddata['seriesid'] = re.findall(r'<td align=\"right\" valign=\"top\" class=\"nw\">シリーズ：</td>\n?<td><a href=\"/digital/videoa/-/list/=/article=series/id=(\d+)/\".*>.*</a></td>',html)[0]
-    except:   
         ciddata['seriesid'] = '---'
     try:     
-        ciddata['maker'] = re.findall(r'<td align=\"right\" valign=\"top\" class=\"nw\">メーカー：</td>\n?<td><a href=\"/digital/videoa/-/list/=/article=maker/id=\d+/\">(.*)</a></td>',html)[0]
+        maker = body.find_all('a', href = re.compile('article=maker'))[0]
+        ciddata['maker'] = maker.string
+        id = re.findall(r'/digital/videoa/-/list/=/article=maker/id=(.*)/',maker.get('href'))[0]     
+        ciddata['makerid'] = id
     except:   
         ciddata['maker'] = '---'
-    try:     
-        ciddata['makerid'] = re.findall(r'<td align=\"right\" valign=\"top\" class=\"nw\">メーカー：</td>\n?<td><a href=\"/digital/videoa/-/list/=/article=maker/id=(\d+)/\">.*</a></td>',html)[0]
-    except:   
         ciddata['makerid'] = '---'
-    try:     
-        ciddata['label'] = re.findall(r'<td align=\"right\" valign=\"top\" class=\"nw\">レーベル：</td>\n?<td><a href=\"/digital/videoa/-/list/=/article=label/id=\d+/\">(.*)</a></td>',html)[0]
-    except:   
-        ciddata['label'] = '---'
-    try:     
-        ciddata['labelid'] = re.findall(r'<td align=\"right\" valign=\"top\" class=\"nw\">レーベル：</td>\n?<td><a href=\"/digital/videoa/-/list/=/article=label/id=(\d+)/\">.*</a></td>',html)[0]
+    try:
+        label = body.find_all('a', href = re.compile('article=label'))[0]
+        ciddata['label'] = label.string
+        id = re.findall(r'/digital/videoa/-/list/=/article=label/id=(.*)/',label.get('href'))[0]     
+        ciddata['labelid'] = id
     except: 
+        ciddata['label'] = '---'
         ciddata['labelid'] = '---'
     try:     
         ciddata['cid'] = re.findall(r'<td align=\"right\" valign=\"top\" class=\"nw\">品番：</td>[\s\S]*?<td>(.*?)</td>',html)[0]
     except: 
         ciddata['cid'] = '---'
     return (ciddata,notitle)
-def prevideo(searchcid):
-    video1 = searchcid[0]
-    video3 = searchcid[0:3]
-    videobase = 'https://cc3001.dmm.co.jp/litevideo/freepv/{}/{}/{}/{}_dmb_w.mp4'.format(video1,video3,searchcid,searchcid)
-    return videobase
-def prevideolow(searchcid):
-    video1 = searchcid[0]
-    video3 = searchcid[0:3]
-    videobase = 'https://cc3001.dmm.co.jp/litevideo/freepv/{}/{}/{}/{}_sm_w.mp4'.format(video1,video3,searchcid,searchcid)
-    return videobase
-def prephotos(searchcid):
-    searchurl = 'https://www.dmm.co.jp/digital/videoa/-/detail/=/cid={}/'.format(searchcid)
-    html = get_html_jp(searchurl)
-    soup = BeautifulSoup(html,'lxml')
-    photourlss = soup.find_all('img', attrs = {'class':'mg-b6'})
-    photourls = re.findall(r'(https://pics.dmm.co.jp/digital/video/.*?/.*?.jpg)', str(photourlss))
-    photolist = list(photourls)
-    #print(photolist)
-    jpg = []
-    for i in photolist:
-        ii = list(i)
-        ii.insert(-6,'jp')
-        iii = ''.join(ii)
-        iii = iii.replace('-jp','jp-',1)
-        jpg.append(iii)
-        
 
-    return (jpg)
 def template_cid(ciddataa):
     ciddataa_performers = ciddataa.get('performers')
     ciddataa_keyword = ciddataa.get('keyword')
@@ -416,7 +396,33 @@ def dmmlinks(links):
     #print(result, stitle)
     temp_out = template_links(result, stitle)
     return temp_out
-
+#多媒体收集
+def prevideo(searchcid):
+    video1 = searchcid[0]
+    video3 = searchcid[0:3]
+    videobase = 'https://cc3001.dmm.co.jp/litevideo/freepv/{}/{}/{}/{}_dmb_w.mp4'.format(video1,video3,searchcid,searchcid)
+    return videobase
+def prevideolow(searchcid):
+    video1 = searchcid[0]
+    video3 = searchcid[0:3]
+    videobase = 'https://cc3001.dmm.co.jp/litevideo/freepv/{}/{}/{}/{}_sm_w.mp4'.format(video1,video3,searchcid,searchcid)
+    return videobase
+def prephotos(searchcid):
+    searchurl = 'https://www.dmm.co.jp/digital/videoa/-/detail/=/cid={}/'.format(searchcid)
+    html = get_html_jp(searchurl)
+    soup = BeautifulSoup(html,'lxml')
+    photourlss = soup.find_all('img', attrs = {'class':'mg-b6'})
+    photourls = re.findall(r'(https://pics.dmm.co.jp/digital/video/.*?/.*?.jpg)', str(photourlss))
+    photolist = list(photourls)
+    #print(photolist)
+    jpg = []
+    for i in photolist:
+        ii = list(i)
+        ii.insert(-6,'jp')
+        iii = ''.join(ii)
+        iii = iii.replace('-jp','jp-',1)
+        jpg.append(iii)
+    return (jpg)
 def truevideo(searchcid):
     url = 'https://www.dmm.co.jp/digital/videoa/-/detail/ajax-movie/=/cid={}'.format(searchcid)
     #coding=utf-8

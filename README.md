@@ -14,6 +14,8 @@
 <summary>
 更新日志|Update log</summary>
 
+**2021/10/18**     修复部分bug，新增从faleno获取video，photo(直接内嵌在原来到命令中)，以及搜索faleno
+
 **2021/9/29**      添加了docker启动的方案，尚不完善，有bug请提issue，有能精简镜像的方法(目前400mb，包含了chrome,python,依赖库，具体看Dockerfile)也可以pr，具体安装方法请看下面。
 
 **2021/9/27**      切换了main分支，更新时需要手动切换:先运行`git fetch` ,`git checkout -b main origin/main`,后`git branch`查看确认处在main分支，最后删除master分支`git branch -d master`
