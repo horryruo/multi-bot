@@ -285,22 +285,8 @@ def dmmvideo(update, context):
         searchid = searchidd.replace(' ','')
         try:
             video = faleno.video(searchid)
-            try:
-                update.message.reply_video(video)
-            except:
-                try:
-                    file = get_file(video)
-                    with open("upload.mp4", "wb") as f:
-                        for chunk in file.iter_content(chunk_size=1024):
-                            if chunk:
-                                f.write(chunk)
-                    f.close()
-                    update.message.reply_video(open('upload.mp4', 'rb'))
-                    os.remove("upload.mp4")
-                    return
-                except:
-                    update.message.reply_text('视频资源来自faleno,超出telegram大小限制,复制链接到浏览器查看:\n'+ video)
-                    return
+            update.message.reply_text('视频资源来自faleno,超出telegram大小限制,复制链接到浏览器查看:\n'+ video)
+            return
         except Exception as e:
             print(e)
             update.message.reply_text('没有找到 %s 预览视频'%searchid)
@@ -310,15 +296,17 @@ def dmmvideo(update, context):
     searchid = firstlist.get('cid')
     try:
         result = str(truevideo(searchid))
-    except:
+    except Exception as e:
+        print(e)
         print('尝试使用selenium引擎失败')
         result = str(prevideo(searchid))
     try:
         update.message.reply_video(result)
     except:
         result_hd = result
-        update.message.reply_text('原视频超出telegram大小限制，尝试下载上传发送，同时将发送低画质版本，可复制原画质链接到浏览器查看!---%s'%result_hd)
+        update.message.reply_text('原视频超出telegram大小限制，将发送低画质版本，可复制原画质链接到浏览器查看!---%s'%result_hd)
         result = result.replace('mhb','dmb')
+        '''
         try:
             file = get_file(result_hd)
             with open("upload.mp4", "wb") as f:
@@ -329,7 +317,7 @@ def dmmvideo(update, context):
             update.message.reply_video(open('upload.mp4', 'rb'))
             os.remove("upload.mp4")
         except:
-            pass
+            pass'''
         try:
             update.message.reply_video(result)
         except:
