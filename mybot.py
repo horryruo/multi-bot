@@ -138,7 +138,7 @@ def help(update, context):
     *magnet* -  `搜索关键词在sukebei（磁力）`
     *search* -  `搜索关键词在dmm，dmm官方支持正则，例如当长字符无结果，可利用空格分割`
     *all* -  `搜索关键词在dmm所有区域的内容，dmm官方支持正则，例如当长字符无结果，可利用空格分割`
-    *faleno* - `搜索faleno，支持名字，标题，不支持cid、num(官方不支持)`
+    *faleno* - `搜索faleno，支持名字，标题，不支持cid、num(官方不支持),二级命令功能看下面`
     *links* -  `demo for links in dmm limit 30 project`
     *face* - `根据提示发送图片进行人脸识别`
     *new* -  `dmm new video limit 30`
@@ -147,7 +147,12 @@ def help(update, context):
     *update* - `更新机器人`
     *restart* - `重启机器人`
     *cancel* - `处在对话命令内时，提前结束对话`
-
+    *faleno help* ==>  
+       /faleno new `最新作品`
+       /faleno work `单番号详情，不要空格、横杠，如fsdss310`
+       /faleno act `全部演员以及英文名`
+       /faleno act name `单演员全部作品 'name为演员英文名，直接复制即可'`
+       /faleno 搜索内容  `不属于上面任何命令时，默认搜索`
     *cloudflare help* ==>  
        1、 *ls* => `列出所有已拥有域名    example: /cf ls`
        2、 *dns domain* => `查看单个域名解析情况   example:  /cf dns domain`
@@ -451,12 +456,9 @@ def top30(update, context):
 @restricted
 @send_typing_action 
 def faleno(update, context):
-    if len(context.args) == 1:
-        searchstr = context.args[0]
-    else:
-        searchstr = ' '.join(context.args[:])
-    faleno = Faleno()
-    result = faleno.search(searchstr)
+    args = context.args
+    faleno = Faleno(args)
+    result = faleno.option()
     msg = long_message(update,context,result,'markdown')
 @restricted
 @send_typing_action 

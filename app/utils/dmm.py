@@ -306,7 +306,9 @@ def dmmsearch(searchstr,mode='temp'):
         return result, stitle
     noresult = '選択した条件で商品は存在しませんでした'
     if result == noresult:
-        return noresult
+        try_all = dmmsearchall(searchstr)
+        result = 'dmm动画无结果，尝试dmm全站搜索:\n%s'%try_all
+        return result
     
     temp_out = template_search(result, stitle)
     return temp_out
@@ -562,6 +564,7 @@ def dmmsearchall(searchstr,mode='temp'):
         return result, stitle
     noresult = 'に一致する商品は見つかりませんでした。'
     if result == noresult:
+        noresult = '全站搜索无结果:%s\n建议关键词之间多加空格,番号字母与数字之间加空格重新搜索'%noresult
         return noresult
     
     temp_out = template_searchall(result, stitle)
