@@ -286,7 +286,7 @@ def dmmvideo(update, context):
     
     boxlist,stitle = dmmsearch(searchidd,'onlysearch')
     if boxlist == '選択した条件で商品は存在しませんでした':
-        faleno = Faleno()
+        faleno = Faleno(context.args)
         searchid = searchidd.replace(' ','')
         try:
             video = faleno.video(searchid)
@@ -345,7 +345,7 @@ def dmmphoto(update, context):
         dmm_have = 'yes'
         if boxlist == '選択した条件で商品は存在しませんでした':
             dmm_have = 'no'
-            faleno = Faleno()
+            faleno = Faleno(context.args)
             searchid = searchidd.replace(' ','')
             try:
                 list_of_urls = faleno.photo(searchid)
