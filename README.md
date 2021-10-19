@@ -1,4 +1,4 @@
-# iMulti-bot  3.0 beta
+# iMulti-bot  3.2 beta
 [![iMulti-Telegram BOT](https://img.shields.io/badge/iMulti-Telegram%20BOT-red?style=flat-square&logo=appveyor)](https://github.com/horryruo/multi-bot/)
 [![Python 3.6](https://img.shields.io/badge/LANGUAGE-Python%203.6%2B-success?style=flat-square&logo=appveyor)](https://www.python.org/downloads/)
 [![BSD-3](https://img.shields.io/badge/LICENSE-BSD3-brightgreen.svg)](https://github.com/horryruo/multi-bot/blob/master/LICENSE)
@@ -14,7 +14,7 @@
 <summary>
 更新日志|Update log</summary>
 
-**2021/10/18**     修复部分bug，新增从faleno获取video，photo(直接内嵌在原来到命令中)，以及搜索faleno
+**2021/10/18**     3.2beta修复部分bug，新增从faleno获取video，photo(直接内嵌在原来到命令中)，以及搜索faleno
 
 **2021/9/29**      添加了docker启动的方案，尚不完善，有bug请提issue，有能精简镜像的方法(目前400mb，包含了chrome,python,依赖库，具体看Dockerfile)也可以pr，具体安装方法请看下面。
 
