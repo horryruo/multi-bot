@@ -22,6 +22,8 @@ class Faleno(object):
             return self.new_work()
         elif option == 'work':
             return self.work(args[0])
+        elif self.context[:] == []:
+            return '请附带搜索内容或命令'
         else:
             if len(self.context) == 1:
                 searchstr = self.context[0]
