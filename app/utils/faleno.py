@@ -7,6 +7,8 @@ class Faleno(object):
         self.context = context
 
     def option(self):
+        if self.context == None:
+            return '请附带搜索内容或命令'
         option = self.context[0]
         args = self.context[1:]
         if option == 'act':
@@ -22,8 +24,6 @@ class Faleno(object):
             return self.new_work()
         elif option == 'work':
             return self.work(args[0])
-        elif self.context == None:
-            return '请附带搜索内容或命令'
         else:
             if len(self.context) == 1:
                 searchstr = self.context[0]
