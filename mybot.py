@@ -1,10 +1,6 @@
 # -*- coding: utf-8 -*-
-from requests.api import get
-import telegram 
-import os
-import sys
+import telegram, os, sys, logging, time, re
 from threading import Thread
-import logging
 from functools import wraps
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, ConversationHandler, CallbackQueryHandler
 from app.utils.loadini import read_config
@@ -17,8 +13,6 @@ from app.utils.faleno import Faleno
 from app.utils.cloudflare import CloudFlare_handler
 from app.utils.get_update import Version
 from app.utils.identify import girl, acg
-import time
-import re
 
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -94,12 +88,21 @@ def long_message(update, context, text: str,mtype):
 
     parts = []
     while len(text) > max_length:
-        parts.append(text[:max_length])
-        text = text[max_length:]
+        last = text[:max_length].rfind('=>')
+        if last == -1:
+            parts.append(text[:max_length])
+            text = text[max_length:]
+            continue
+        cut = last - 1
+        parts.append(text[:cut])
+        text = text[cut:]
     parts.append(text)
     msg = None
     for part in parts:
-        update.message.reply_text(part)
+        try:
+            update.message.reply_markdown(part)
+        except:
+            update.message.reply_text(part)
         time.sleep(3)
     return msg
 def split_list(init_list, children_list_len):

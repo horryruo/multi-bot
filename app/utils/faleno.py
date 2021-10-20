@@ -7,8 +7,8 @@ class Faleno(object):
         self.context = context
 
     def option(self):
-        if self.context == None:
-            return '请附带搜索内容或命令'
+        if self.context == []:
+            return '请附带搜索内容或命令,详情看/help'
         option = self.context[0]
         args = self.context[1:]
         if option == 'act':
@@ -65,6 +65,8 @@ class Faleno(object):
             liv = i.find('a')
             imgs = i.find('img')
             url = liv.get('href')
+            work = re.findall(r'https://faleno.jp/top/works/(.*)/',str(url))[0]
+            boxdict['work'] = work
             boxdict['url'] = url
             name = imgs.get('alt')
             boxdict['name'] = name
@@ -146,6 +148,8 @@ class Faleno(object):
             liv = i.find('a')
             imgs = i.find('img')
             url = liv.get('href')
+            work = re.findall(r'https://faleno.jp/top/works/(.*)/',str(url))[0]
+            boxdict['work'] = work
             boxdict['url'] = url
             name = imgs.get('alt')
             boxdict['name'] = name
@@ -172,6 +176,8 @@ class Faleno(object):
             imgs = i.find('img')
             url = liv.get('href')
             boxdict['url'] = url
+            work = re.findall(r'https://faleno.jp/top/works/(.*)/',str(url))[0]
+            boxdict['work'] = work
             name = imgs.get('alt')
             boxdict['name'] = name
             img = imgs.get('src')

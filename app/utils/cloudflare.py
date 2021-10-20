@@ -144,6 +144,8 @@ class CloudFlare_handler(object):
         
         
     def option(self):
+        if self.context == []:
+            return '请附带命令使用,详情看/help'
         option = self.context[0]
         args = self.context[1:]
         if option == 'ls':
