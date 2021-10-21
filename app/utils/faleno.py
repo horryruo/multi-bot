@@ -1,4 +1,4 @@
-from app.utils.func_requests import get_html_jp
+from app.utils.func_requests import get_html_jp, sod_get
 from bs4 import BeautifulSoup
 from jinja2 import PackageLoader,Environment
 import re
@@ -189,6 +189,10 @@ class Faleno(object):
         #print(temp_out)  # 渲染
         return (temp_out)
         
+    def sod(self,id):
+        file = sod_get(id)
+        return(file)
+
 if __name__ == '__main__':
     faleno = Faleno()
     faleno.search('天使もえ')

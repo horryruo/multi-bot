@@ -160,3 +160,22 @@ def get_file(url,headers=headers):
     else:
         res = requests.get(url,headers=headers,stream=True)
     return res
+
+def sod_get(id):
+    session = requests.session()
+    rurl = 'https://ec.sod.co.jp/prime/_ontime.php'
+    url = 'https://ec.sod.co.jp/prime/videos/sample.php?id=%s'%id
+    if ifproxy == 'true':
+        session.get(rurl,headers=headers,proxies=proxies)
+        response = session.get(url,headers=headers,proxies=proxies).content
+    else:
+        session.get(rurl,headers=headers)
+        response = session.get(url,headers=headers,proxies=proxies).content
+    from bs4 import BeautifulSoup
+    soup = BeautifulSoup(response,'lxml')               
+    video = soup.find('video',attrs = {'controls' : 'true'}).source.get('src')
+    if ifproxy == 'true':
+        file = session.get(video,proxies=proxies,headers=headers,stream=True)
+    else:
+        file = session.get(video,headers=headers,stream=True)
+    return file

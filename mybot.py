@@ -283,9 +283,16 @@ def dmmvideo(update, context):
     searchid = context.args[0]
     if len(context.args) == 1:
         searchidd = context.args[0]
+        num = re.findall(r'([a-zA-Z]+)-?[ ]?(\d{1,})', searchidd)
+        if num != []:
+            searchidd = ' '.join(num[0])
         searchidd = searchidd.replace('-',' ')
     else:
         searchidd = ' '.join(context.args[:])
+        num = re.findall(r'([a-zA-Z]+)-?[ ]?(\d{1,})', searchidd)
+        if num != []:
+            searchidd = ' '.join(num[0])
+        
     
     boxlist,stitle = dmmsearch(searchidd,'onlysearch')
     if boxlist == '選択した条件で商品は存在しませんでした':
@@ -295,11 +302,18 @@ def dmmvideo(update, context):
             video = faleno.video(searchid)
             update.message.reply_text('视频资源来自faleno,超出telegram大小限制,复制链接到浏览器查看:\n'+ video)
             return
-        except Exception as e:
-            print(e)
+        except:
             update.message.reply_text('没有找到 %s 预览视频'%searchid)
             return
-        #print(boxlist)
+            try:
+                numid= '-'.join(num[0])
+                video = faleno.sod(numid)
+                #update.message.reply_video(video)
+                return
+            except Exception as e:
+                print(e)
+                update.message.reply_text('没有找到 %s 预览视频'%searchid)
+                return
     firstlist = boxlist[0]
     searchid = firstlist.get('cid')
     try:
@@ -341,17 +355,22 @@ def dmmphoto(update, context):
     if list_of_urls == []:
         if len(context.args) == 1:
             searchidd = context.args[0]
+            num = re.findall(r'([a-zA-Z]+)-?[ ]?(\d{1,})', searchidd)
+            if num != []:
+                searchidd = ' '.join(num[0])
             searchidd = searchidd.replace('-',' ')
         else:
             searchidd = ' '.join(context.args[:])
+            num = re.findall(r'([a-zA-Z]+)-?[ ]?(\d{1,})', searchidd)
+            if num != []:
+                searchidd = ' '.join(num[0])
         boxlist,stitle = dmmsearch(searchidd,'onlysearch')
         dmm_have = 'yes'
         if boxlist == '選択した条件で商品は存在しませんでした':
             dmm_have = 'no'
             faleno = Faleno(context.args)
-            searchid = searchidd.replace(' ','')
             try:
-                list_of_urls = faleno.photo(searchid)
+                list_of_urls = faleno.photo(''.join(num[0]))
             except:
                 update.message.reply_text('没有找到 %s 预览图片'%searchid)
                 return
@@ -391,7 +410,9 @@ def dmmphoto(update, context):
 def magnet(update, context):
     if len(context.args) == 1:
         searchid = context.args[0]
-        
+        num = re.findall(r'([a-zA-Z]+)-?[ ]?(\d{1,})', searchid)
+        if num != []:
+            searchid = ' '.join(num[0])
     else:
         searchid = ' '.join(context.args[:])
     
