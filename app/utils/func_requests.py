@@ -162,20 +162,18 @@ def get_file(url,headers=headers):
     return res
 
 def sod_get(id):
-    session = requests.session()
     rurl = 'https://ec.sod.co.jp/prime/_ontime.php'
     url = 'https://ec.sod.co.jp/prime/videos/sample.php?id=%s'%id
+    session = HTMLSession()
+    headers['referer']='https://ec.sod.co.jp/'
+    headers['sec-fetch-site']='cross-site'
+    session.headers.update(headers)
     if ifproxy == 'true':
-        session.get(rurl,headers=headers,proxies=proxies)
-        response = session.get(url,headers=headers,proxies=proxies).content
-    else:
-        session.get(rurl,headers=headers)
-        response = session.get(url,headers=headers,proxies=proxies).content
+        session.proxies.update(proxies)
+    session.get(rurl)
+    response = session.get(url).content
     from bs4 import BeautifulSoup
     soup = BeautifulSoup(response,'lxml')               
     video = soup.find('video',attrs = {'controls' : 'true'}).source.get('src')
-    if ifproxy == 'true':
-        file = session.get(video,proxies=proxies,headers=headers,stream=True)
-    else:
-        file = session.get(video,headers=headers,stream=True)
+    file = session.get(video).content
     return file

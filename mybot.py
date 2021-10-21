@@ -303,11 +303,15 @@ def dmmvideo(update, context):
             update.message.reply_text('视频资源来自faleno,超出telegram大小限制,复制链接到浏览器查看:\n'+ video)
             return
         except:
-            update.message.reply_text('没有找到 %s 预览视频'%searchid)
-            return
             try:
                 numid= '-'.join(num[0])
                 video = faleno.sod(numid)
+                with open("upload.mp4", "wb") as f:
+                    f.write(video)
+                f.close()
+                update.message.reply_text('视频资源来自sod,画质较差,正在上传,请稍后')
+                update.message.reply_video(open('upload.mp4', 'rb'))
+                os.remove("upload.mp4")
                 #update.message.reply_video(video)
                 return
             except Exception as e:
