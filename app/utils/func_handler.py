@@ -75,13 +75,25 @@ def long_message(update, context, text: str,mtype):
     parts = []
     while len(text) > max_length:
         last = text[:max_length].rfind('=>')
-        if last == -1:
-            parts.append(text[:max_length])
-            text = text[max_length:]
-            continue
-        cut = last - 1
-        parts.append(text[:cut])
-        text = text[cut:]
+        if last ==  -1:
+            last1 = text[:max_length].rfind(',')
+            cut1 = last1 +1
+            parts.append(text[:cut1])
+            text = text[cut1:]
+        elif last == 1:
+            last1 = text[:max_length].rfind(',')
+            cut1 = last1 +1
+            parts.append(text[:cut1])
+            text = text[cut1:]
+        elif last <= 100:
+            last1 = text[:max_length].rfind(',')
+            cut1 = last1 +1
+            parts.append(text[:cut1])
+            text = text[cut1:]
+        else:
+            cut = last - 1
+            parts.append(text[:cut])
+            text = text[cut:]
     parts.append(text)
     msg = None
     for part in parts:

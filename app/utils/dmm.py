@@ -11,11 +11,17 @@ from app.utils.loadini import read_config
 from selenium import webdriver
 
 #返回页码
-def findinfo(articleid):
-    url = "https://www.dmm.co.jp/digital/videoa/-/list/=/article=actress/id=%s/" %articleid
-    html = get_html_jp(url)
-    page1 = re.findall(r'/digital/videoa/-/list/=/article=actress/id=\d+/page=(\d+)/',html)
-    title = re.findall(r'<title>(.*) - エロ動画・アダルトビデオ - FANZA動画</title>',html)
+def findinfo(articleid,mode='uid'):
+    if mode=='link':
+        url = articleid
+        html = get_html_jp(url)
+        page1 = re.findall(r'/digital/videoa/-/list/=/.*/id=\d+/page=(\d+)/',html)
+        title = re.findall(r'<title>(.*) - エロ動画・アダルトビデオ - FANZA動画</title>',html)
+    elif mode=='uid':
+        url = "https://www.dmm.co.jp/digital/videoa/-/list/=/article=actress/id=%s/" %articleid
+        html = get_html_jp(url)
+        page1 = re.findall(r'/digital/videoa/-/list/=/article=actress/id=\d+/page=(\d+)/',html)
+        title = re.findall(r'<title>(.*) - エロ動画・アダルトビデオ - FANZA動画</title>',html)
     if page1 == []:
         page1 = 1
     else:
@@ -25,16 +31,26 @@ def findinfo(articleid):
                 page3.append(int(i))
         page4 = max(page3)
         page1 = page4
-    title1 = title[0]
-    return (page1,title1)
+    return (page1,title[0])
 #生成网址
-def producer(in_q,articleid, page):
-    url1 = "https://www.dmm.co.jp/digital/videoa/-/list/=/article=actress/id={}/".format(articleid)
-    in_q.put(url1)
-    for i in range(2, int(page)+1):
-        url = "https://www.dmm.co.jp/digital/videoa/-/list/=/article=actress/id={}/page={}/".format(articleid,i)
-        #print(url)
+def producer(in_q,articleid, page,mode='uid'):
+    if mode=='uid':
+        url1 = "https://www.dmm.co.jp/digital/videoa/-/list/=/article=actress/id={}/".format(articleid)
+        in_q.put(url1)
+        for i in range(2, int(page)+1):
+            url = "https://www.dmm.co.jp/digital/videoa/-/list/=/article=actress/id={}/page={}/".format(articleid,i)
+            #print(url)
+            in_q.put(url)
+    elif mode=='link':
+        if articleid[-1]=='/':
+            url = articleid 
+        else:
+            url = articleid +'/'
         in_q.put(url)
+        for i in range(2, int(page)+1):
+            url1 = url + 'page={}/'.format(i)
+            in_q.put(url1)
+
 #一页进程
 def dmmcid(in_q, out_q):
     while in_q.empty() is not True:
@@ -42,28 +58,33 @@ def dmmcid(in_q, out_q):
         #url = 'https://www.dmm.co.jp/digital/videoa/-/list/=/article=actress/id=1060823/'
         html = get_html_jp(url)
         list = re.findall(r'https://www.dmm.co.jp/digital/videoa/-/detail/=/cid=([_0-9a-z]+)/',html)
-        #print(list)
+        #print(url,list)
         out_q.append(list)
         in_q.task_done()
 #多线程收集
 def dmm_thread(articleid):
     start = time.time()
-    page, title = findinfo(articleid)
-    #print(page,title)
     queue = Queue()  
     result_queue = []
-    #page = 9
-    producer_thread = threading.Thread(target=producer, args=(queue, articleid, page))
+    matchline = re.search( r'https|www.dmm.co.jp', articleid, re.M|re.I)
+    if matchline:
+        page, title = findinfo(articleid,mode='link')
+        mode = 'link'
+        producer_thread = threading.Thread(target=producer, args=(queue, articleid, page,mode))
     #producer_thread.daemon = True
-    producer_thread.start()
-    
+        producer_thread.start()
+    else:
+        page, title = findinfo(articleid)
+        producer_thread = threading.Thread(target=producer, args=(queue, articleid, page))
+    #producer_thread.daemon = True
+        producer_thread.start()
     for index in range(int(page)+1):
         consumer_thread = threading.Thread(target=dmmcid, args=(queue, result_queue))
         consumer_thread.daemon = True
         consumer_thread.start()
     #print('开启线程数:' + str(threading.active_count()))
     queue.join()
-    
+    #print(page,result_queue)
     resetlist = []
     for i in result_queue:
         try:
@@ -80,7 +101,7 @@ def dmm_thread(articleid):
     alllist = ','.join(resetlist)
     end = time.time()
     usetime = str(end - start)
-    result = '%s - エロ動画・アダルトビデオ - FANZA動画\npage(%s)(%s),cid list  =>\n%s' % (title,page,leng,alllist)
+    result = '%s - エロ動画・アダルトビデオ - FANZA動画\n(%s page)(%s cid) list  =>\n%s' % (title,page,leng,alllist)
     return (result,usetime)
     
 #收集信息
