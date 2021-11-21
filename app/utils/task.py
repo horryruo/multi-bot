@@ -32,19 +32,19 @@ def help(update, context):
     *start* - `欢迎  `
     *help* - `帮助`
     *m* - `查询是否ikoa月额，num/cid皆可，可批量查询，半角逗号分隔   /m ssni-520,ssni-521`
-    *uid* - `查询女优在dmm所有番号，需女优在dmm的数字id  /uid 2333`
-    *lib* - `查询女优在library所有番号，需女优页面完整https链接(目前不可用)  /lib https://*****`
-    *video* - `dmm预览视频，cid(准确)，num(可能查询不到),dmm没有时会从faleno寻找`
+    *uid* - `1、查询女优在dmm所有uid，需女优在dmm的数字id  /uid 2333;2、查询list链接所有uid，需完整dmm链接`
+    *lib* - `(目前不可用)查询女优在library所有番号，需女优页面完整https链接  /lib https://*****`
+    *video* - `dmm预览视频，cid(准确)，num(可能查询不到),dmm没有时会从faleno和sod寻找`
     *photo* - `dmm预览图片，cid(准确)，num(可能查询不到)，dmm没有时会从faleno寻找`
     *cid* -  `查询番号具体信息，cid(准确)，num(可能查询不到) `
     *magnet* -  `搜索关键词在sukebei（磁力）`
     *search* -  `搜索关键词在dmm，dmm官方支持正则，例如当长字符无结果，可利用空格分割`
     *all* -  `搜索关键词在dmm所有区域的内容，dmm官方支持正则，例如当长字符无结果，可利用空格分割`
     *faleno* - `搜索faleno，支持名字，标题，不支持cid、num(官方不支持),二级命令功能看下面`
-    *links* -  `demo for links in dmm limit 30 project`
+    *links* -  `输入dmm list链接获取内容`
     *face* - `根据提示发送图片进行人脸识别`
-    *new* -  `dmm new video limit 30`
-    *top* -  `dmm hot video limit 30`
+    *new* -  `dmm new video `
+    *top* -  `dmm hot video`
     *cf option* -  `控制cf域名解析`
     *update* - `更新机器人`
     *restart* - `重启机器人`
