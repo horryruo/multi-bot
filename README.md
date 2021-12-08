@@ -74,8 +74,9 @@
 3. 复制一份配置 | `cp app/config/config.ini.example app/config/config.ini` 
 4. telegram内通过 **@BotFather**  创建机器人后获取token（具体也可以谷歌如何创建telegram机器人并获得token，教程很多），然后telegram内 私聊 **@get_id_bot**  获取chat id，获取的这两个都要填到下一步的配置文件里。
 5. 根据配置文件(在app/config/config.ini)描述配置设置（自行谷歌linux如何编辑文件，一般是使用vim或者nano） | &nbsp;Edit `vi app/config/config.ini`
-6. 开始运行 `docker run -d --name=multi-bot -v 你的项目目录:/bot horryruo/multi-bot` (命令中“你的项目目录”直接替换成你第三步克隆所在的绝对路径，假设克隆在/root/multi-bot,那么就是`docker run -d --name=multi-bot -v /root/multi-bot:/bot horryruo/multi-bot`)
- 
+6. 回到目录/multi-bot,运行 `docker run -dit --restart=always --name=multi-bot -v "$(pwd)":/bot --privileged=true horryruo/multi-bot` 
+
+
  **看到这里你也发现了，如果你是第一次使用docker，并不比上面容易多少，甚至很多步骤都是差不多的，所以不熟悉的情况下还是建议使用上面的方法。**
 ### 如何更新程序 |update program
   1. 直接telegram内发送命令/update根据提示更新，更新完后/restart重启程序（若无法更新请使用方法2）
