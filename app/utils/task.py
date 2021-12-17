@@ -182,13 +182,13 @@ def dmmvideo(update, context):
     searchid = context.args[0]
     if len(context.args) == 1:
         searchidd = context.args[0]
-        num = re.findall(r'([a-zA-Z]+)-?[ ]?(\d{1,})', searchidd)
+        num = re.findall(r'(\w+_?\w+[a-zA-Z]+)-?[ ]?(\d{1,}\w{0,})', searchidd)
         if num != []:
             searchidd = ' '.join(num[0])
         searchidd = searchidd.replace('-',' ')
     else:
         searchidd = ' '.join(context.args[:])
-        num = re.findall(r'([a-zA-Z]+)-?[ ]?(\d{1,})', searchidd)
+        num = re.findall(r'(\w+_?\w+[a-zA-Z]+)-?[ ]?(\d{1,}\w{0,})', searchidd)
         if num != []:
             searchidd = ' '.join(num[0])
         
