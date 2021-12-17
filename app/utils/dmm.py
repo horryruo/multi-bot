@@ -484,8 +484,8 @@ def truevideo(searchcid):
     #print(browser.page_source)
     browser.switch_to.default_content()
     browser.switch_to.frame('DMMSample_player_now')
-    video = browser.find_element_by_xpath('//*[contains(@id,"video-video")]')
-    
+    video = browser.find_element_by_xpath("//video[@data-binding='play']")
+    #print(video)
     # 返回播放文件地址
     videourl = browser.execute_script("return arguments[0].currentSrc;",video)
     print('selenium:',videourl)
@@ -600,7 +600,7 @@ def dmmsearchall(searchstr,mode='temp'):
     
 if __name__ == "__main__":
     
-    print(dmmonecid('ssni-441'))
+    print(truevideo('ipx00790'))
     
     
     
