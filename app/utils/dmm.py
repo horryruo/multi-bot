@@ -488,6 +488,7 @@ def truevideo(searchcid):
     
     # 返回播放文件地址
     videourl = browser.execute_script("return arguments[0].currentSrc;",video)
+    print('selenium:',videourl)
     browser.quit()
     return videourl
 
