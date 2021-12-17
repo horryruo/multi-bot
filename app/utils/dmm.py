@@ -447,7 +447,8 @@ def prephotos(searchcid):
         jpg.append(iii)
     return (jpg)
 def truevideo(searchcid):
-    url = 'https://www.dmm.co.jp/digital/videoa/-/detail/ajax-movie/=/cid={}'.format(searchcid)
+    #url = 'https://www.dmm.co.jp/digital/videoa/-/detail/ajax-movie/=/cid={}'.format(searchcid)
+    url = 'https://www.dmm.co.jp/mono/dvd/-/detail/ajax-movie/=/cid={}'.format(searchcid)
     #coding=utf-8
 
     allconfig = read_config()
