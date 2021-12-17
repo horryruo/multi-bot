@@ -214,7 +214,7 @@ def dmmvideo(update, context):
                 #update.message.reply_video(video)
                 return
             except Exception as e:
-                print(e)
+                func_handler.logger.warning(str(e))
                 update.message.reply_text('没有找到 %s 预览视频'%searchid)
                 return
     firstlist = boxlist[0]
@@ -222,8 +222,8 @@ def dmmvideo(update, context):
     try:
         result = str(truevideo(searchid))
     except Exception as e:
-        print(e)
-        print('尝试使用selenium引擎失败')
+        func_handler.logger.warning(str(e))
+        func_handler.logger.error('尝试使用selenium引擎失败')
         result = str(prevideo(searchid))
     try:
         update.message.reply_video(result)
@@ -416,7 +416,7 @@ def gitupdate(update, context):
         pull = repo.pull()
     except Exception as e:
         pull = str(e)
-    print(pull)
+        func_handler.logger.warning(str(e))
     matchline = re.search( r'file changed|Already|merge|files changed', pull, re.M|re.I)
     #print(matchline)
     if matchline:

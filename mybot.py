@@ -23,6 +23,7 @@ def main():
 
     def restart(update, context):
         update.message.reply_text('Bot 正在重启，请等待5~10秒')
+        func_handler.logger.info("Bot 重启")
         Thread(target=stop_and_restart).start()
 
     dp.add_handler(CommandHandler("start", task.start,run_async=True))

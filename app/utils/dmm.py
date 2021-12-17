@@ -9,7 +9,7 @@ from queue import Queue
 from app.utils.func_requests import get_html_jp
 from app.utils.loadini import read_config
 from selenium import webdriver
-
+from app.utils.func_handler import logger
 #返回页码
 def findinfo(articleid,mode='uid'):
     if mode=='link':
@@ -488,7 +488,7 @@ def truevideo(searchcid):
     #print(video)
     # 返回播放文件地址
     videourl = browser.execute_script("return arguments[0].currentSrc;",video)
-    print('selenium:',videourl)
+    logger.info('selenium:'+ videourl)
     browser.quit()
     return videourl
 
