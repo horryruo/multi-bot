@@ -449,6 +449,7 @@ def prephotos(searchcid):
 def truevideo(searchcid):
     #url = 'https://www.dmm.co.jp/digital/videoa/-/detail/ajax-movie/=/cid={}'.format(searchcid)
     url = 'https://www.dmm.co.jp/mono/dvd/-/detail/ajax-movie/=/cid={}'.format(searchcid)
+    #print(url)
     #coding=utf-8
 
     allconfig = read_config()
@@ -482,6 +483,10 @@ def truevideo(searchcid):
     #browser.set_page_load_timeout(5)    
     
     browser.get(url)
+    #print(browser.page_source)
+    checkbox = browser.find_element_by_css_selector("[class='ageCheck__link ageCheck__link--r18']")
+    checkbox.click()
+    #browser.get(url)
     #print(browser.page_source)
     browser.switch_to.default_content()
     browser.switch_to.frame('DMMSample_player_now')

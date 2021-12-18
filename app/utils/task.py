@@ -1,4 +1,4 @@
-import telegram, os, time, re
+import telegram, os, time, re ,traceback
 from telegram.ext import ConversationHandler
 from app.utils.monthly import monthly_thread
 from app.utils.jav_thread import thread_javlib
@@ -224,7 +224,8 @@ def dmmvideo(update, context):
     try:
         result = str(truevideo(searchid))
     except Exception as e:
-        func_handler.logger.warning(str(e))
+        func_handler.logger.warning(traceback.format_exc())
+        #func_handler.logger.warning(str(e))
         func_handler.logger.error('尝试使用selenium引擎失败')
         result = str(prevideo(searchid))
     try:
