@@ -447,10 +447,6 @@ def prephotos(searchcid):
         jpg.append(iii)
     return (jpg)
 def truevideo(searchcid):
-    #url = 'https://www.dmm.co.jp/digital/videoa/-/detail/ajax-movie/=/cid={}'.format(searchcid)
-    url = 'https://www.dmm.co.jp/mono/dvd/-/detail/ajax-movie/=/cid={}'.format(searchcid)
-    #print(url)
-    #coding=utf-8
 
     allconfig = read_config()
     ifproxy = allconfig['ifproxy'] 
@@ -480,20 +476,29 @@ def truevideo(searchcid):
             browser = webdriver.Chrome(executable_path=os.path.abspath(os.path.join("app", "bin","chromedriver")),options=options)
     elif system == 'Windows':
         browser = webdriver.Chrome(executable_path=os.path.abspath(os.path.join("app", "bin","chromedriver.exe")),options=options)
-    #browser.set_page_load_timeout(5)    
-    
-    browser.get(url)
+    #browser.set_page_load_timeout(5) 
+    browser.implicitly_wait(5)   
+    try:
+        url = 'https://www.dmm.co.jp/digital/videoa/-/detail/ajax-movie/=/cid={}'.format(searchcid)
+        browser.get(url)
+        browser.switch_to.default_content()
+        browser.switch_to.frame('DMMSample_player_now')
+        video = browser.find_element_by_xpath("//video[@data-binding='play']")
+        videourl = browser.execute_script("return arguments[0].currentSrc;",video)
     #print(browser.page_source)
-    checkbox = browser.find_element_by_css_selector("[class='ageCheck__link ageCheck__link--r18']")
-    checkbox.click()
-    #browser.get(url)
-    #print(browser.page_source)
-    browser.switch_to.default_content()
-    browser.switch_to.frame('DMMSample_player_now')
-    video = browser.find_element_by_xpath("//video[@data-binding='play']")
-    #print(video)
-    # 返回播放文件地址
-    videourl = browser.execute_script("return arguments[0].currentSrc;",video)
+    except Exception as e:
+        logger.error('video区获取失败:'+ str(e))
+        try:
+            url = 'https://www.dmm.co.jp/mono/dvd/-/detail/ajax-movie/=/cid={}'.format(searchcid)
+            browser.get(url)
+            checkbox = browser.find_element_by_css_selector("[class='ageCheck__link ageCheck__link--r18']")
+            checkbox.click()
+            browser.switch_to.default_content()
+            browser.switch_to.frame('DMMSample_player_now')
+            video = browser.find_element_by_xpath("//video[@data-binding='play']")
+            videourl = browser.execute_script("return arguments[0].currentSrc;",video)
+        except Exception as e:
+            logger.error('dvd区获取失败'+ str(e))
     logger.info('selenium:'+ videourl)
     browser.quit()
     return videourl

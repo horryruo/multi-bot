@@ -224,9 +224,9 @@ def dmmvideo(update, context):
     try:
         result = str(truevideo(searchid))
     except Exception as e:
-        func_handler.logger.warning(traceback.format_exc())
+        func_handler.logger.error(traceback.format_exc())
         #func_handler.logger.warning(str(e))
-        func_handler.logger.error('尝试使用selenium引擎失败')
+        func_handler.logger.warning('尝试使用selenium引擎失败')
         result = str(prevideo(searchid))
     try:
         update.message.reply_video(result)
