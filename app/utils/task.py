@@ -195,30 +195,30 @@ def dmmvideo(update, context):
     
     boxlist,stitle = dmmsearch(searchidd,'onlysearch')
     if boxlist == '選択した条件で商品は存在しませんでした':
+        faleno = Faleno(context.args)
+        searchid = searchidd.replace(' ','')
+        try:
+            video = faleno.video(searchid)
+            update.message.reply_text('视频资源来自faleno,超出telegram大小限制,复制链接到浏览器查看:\n'+ video)
+            return
+        except:
+            try:
+                numid= '-'.join(num[0])
+                video = faleno.sod(numid)
+                with open("upload.mp4", "wb") as f:
+                    f.write(video)
+                f.close()
+                update.message.reply_text('视频资源来自sod,画质较差,正在上传,请稍后')
+                update.message.reply_video(open('upload.mp4', 'rb'))
+                os.remove("upload.mp4")
+                #update.message.reply_video(video)
+                return
+            except Exception as e:
+                func_handler.logger.warning(str(e))
         boxlist,stitle = dmmsearchall(searchidd,'onlysearch')
         if boxlist == 'に一致する商品は見つかりませんでした。':
-            faleno = Faleno(context.args)
-            searchid = searchidd.replace(' ','')
-            try:
-                video = faleno.video(searchid)
-                update.message.reply_text('视频资源来自faleno,超出telegram大小限制,复制链接到浏览器查看:\n'+ video)
-                return
-            except:
-                try:
-                    numid= '-'.join(num[0])
-                    video = faleno.sod(numid)
-                    with open("upload.mp4", "wb") as f:
-                        f.write(video)
-                    f.close()
-                    update.message.reply_text('视频资源来自sod,画质较差,正在上传,请稍后')
-                    update.message.reply_video(open('upload.mp4', 'rb'))
-                    os.remove("upload.mp4")
-                    #update.message.reply_video(video)
-                    return
-                except Exception as e:
-                    func_handler.logger.warning(str(e))
-                    update.message.reply_text('没有找到 %s 预览视频'%searchid)
-                    return
+            update.message.reply_text('没有找到 %s 预览视频'%searchid)
+            return
     firstlist = boxlist[0]
     searchid = firstlist.get('cid')
     try:
