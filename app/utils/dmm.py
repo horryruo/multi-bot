@@ -169,7 +169,7 @@ def ciddata(html):
     except:   
         ciddata['release'] = '---'
     try:
-        ciddata['time'] = re.findall(r'<td align=\"right\" valign=\"top\" class=\"nw\">収録時間：</td>\n?<td>(.*\n?.*)',html)[0].replace('\n','')
+        ciddata['time'] = re.findall(r'<td align=\"right\" valign=\"top\" class=\"nw\">収録時間：</td>\n?<td>(.*\n?.*)',html)[0].replace('\n','').replace('</td></tr>','')
     except:   
         ciddata['time'] = '---'
     try:     
@@ -232,6 +232,31 @@ def dmmonecid(searchcid):
     return temp_out, notitle
 
 
+
+def precid(searchcid):
+    searchurl = 'https://www.dmm.co.jp/mono/dvd/-/detail/=/cid={}/'.format(searchcid)
+    html = get_html_jp(searchurl)
+    soup = BeautifulSoup(html,'lxml')
+    title = soup.title.string
+    body = soup.find('table', attrs = {'class':'mg-b20'})
+    title = soup.title.string
+    red = soup.find('span',attrs = {'class' : 'red'}).string
+    title = red + title
+    photo = soup.find('div',attrs = {'class' : 'tx10 pd-3 lh4'}).a.get('href')
+    pushdate = body.find_all('tr')[0].find('td').find_next_sibling().string
+    time = body.find_all('tr')[1].find('td').find_next_sibling().string
+    performer = body.find_all('tr')[2].find('td').find_next_sibling().span.a.string
+    num = body.find_all('tr')[-1].find('td').find_next_sibling().string
+    text = '''
+    `{}`
+    [DVD ]({})
+    *発売日:*{}
+    *収録時間:*{}
+    *出演者:*{}
+    *品番:* `{}`
+    [官方信息]({})
+    '''.format(title,photo,pushdate,time,performer,num,searchurl)
+    return text
 def dmmsearch_data(searchstr):
     #url = 'https://www.dmm.co.jp/digital/videoa/-/list/search/=/?searchstr=乙白さやか'
     url = 'https://www.dmm.co.jp/digital/videoa/-/list/search/=/?searchstr={}'.format(searchstr)
@@ -430,8 +455,8 @@ def prevideolow(searchcid):
     video3 = searchcid[0:3]
     videobase = 'https://cc3001.dmm.co.jp/litevideo/freepv/{}/{}/{}/{}_sm_w.mp4'.format(video1,video3,searchcid,searchcid)
     return videobase
-def prephotos(searchcid):
-    searchurl = 'https://www.dmm.co.jp/digital/videoa/-/detail/=/cid={}/'.format(searchcid)
+def prephotos(searchurl):
+    #print(searchurl)
     html = get_html_jp(searchurl)
     soup = BeautifulSoup(html,'lxml')
     photourlss = soup.find_all('img', attrs = {'class':'mg-b6'})

@@ -4,7 +4,7 @@ from app.utils.monthly import monthly_thread
 from app.utils.jav_thread import thread_javlib
 from app.utils.magnet import sukebei
 from app.utils.func_requests import get_file
-from app.utils.dmm import dmm_thread, prevideo, prephotos, dmmonecid, dmmsearch, dmmlinks,truevideo,dmmsearchall
+from app.utils.dmm import dmm_thread, prevideo, prephotos, dmmonecid, dmmsearch, dmmlinks, truevideo, dmmsearchall, precid
 from app.utils.faleno import Faleno
 from app.utils.cloudflare import CloudFlare_handler
 from app.utils.get_update import Version
@@ -144,18 +144,27 @@ def dmmcid(update,context):
     searchidlist = allid.split(',')
     for cid in searchidlist:
         searchidd = cid.replace('-',' ')
-        
+        num = re.findall(r'(\w+_?\w+[a-zA-Z]+)-?[ ]?(\d{1,}\w{0,})', searchidd)
+        if num != []:
+            searchidd = ' '.join(num[0])
 
         text, notitle = dmmonecid(cid)
         if notitle == 1:
-        #update.message.reply_text('没有找到%s的cid信息，自动尝试使用/search功能搜索' %searchid)
             boxlist,stitle = dmmsearch(searchidd,'onlysearch')
+            typee = False
             if boxlist == '選択した条件で商品は存在しませんでした':
-                update.message.reply_text('没有找到 %s 的cid信息,自动搜索无结果:%s' % (cid, boxlist))
-                return
+                boxlist,stitle = dmmsearchall(searchidd,'onlysearch')
+                typee = True
+                if boxlist == 'に一致する商品は見つかりませんでした。':
+                    update.message.reply_text('没有找到 %s 的cid信息,自动搜索无结果:%s' % (cid, boxlist))
+                    continue 
         #print(boxlist)
             firstlist = boxlist[0]
             wcid = firstlist.get('cid')
+            if typee:
+                text = precid(wcid)
+                update.message.reply_markdown(text)
+                continue
             text, notitle = dmmonecid(wcid)
 
             update.message.reply_markdown(text)
@@ -163,7 +172,7 @@ def dmmcid(update,context):
 
         else:
             update.message.reply_markdown(text)
-        time.sleep(2)
+        time.sleep(1)
         
 @func_handler.restricted    
 @func_handler.send_typing_action 
@@ -257,7 +266,8 @@ def dmmvideo(update, context):
 def dmmphoto(update, context):
     searchid = context.args[0]
     #chat_id = update.message.chat_id
-    list_of_urls = prephotos(searchid)
+    searchurl = 'https://www.dmm.co.jp/digital/videoa/-/detail/=/cid={}/'.format(searchid)
+    list_of_urls = prephotos(searchurl)
     if list_of_urls == []:
         if len(context.args) == 1:
             searchidd = context.args[0]
@@ -271,20 +281,28 @@ def dmmphoto(update, context):
             if num != []:
                 searchidd = ' '.join(num[0])
         boxlist,stitle = dmmsearch(searchidd,'onlysearch')
-        dmm_have = 'yes'
+        dmm_have = True
+        s_all = False
         if boxlist == '選択した条件で商品は存在しませんでした':
-            dmm_have = 'no'
-            faleno = Faleno(context.args)
-            try:
-                list_of_urls = faleno.photo(''.join(num[0]))
-            except:
-                update.message.reply_text('没有找到 %s 预览图片'%searchid)
-                return
+            boxlist,stitle = dmmsearchall(searchidd,'onlysearch')
+            s_all = True
+            if boxlist == 'に一致する商品は見つかりませんでした。':
+                dmm_have = False
+                faleno = Faleno(context.args)
+                try:
+                    list_of_urls = faleno.photo(''.join(num[0]))
+                except:
+                    update.message.reply_text('没有找到 %s 预览图片'%searchid)
+                    return
         #print(boxlist)
-        if dmm_have =='yes':
+        if dmm_have:
             firstlist = boxlist[0]
             wcid = firstlist.get('cid')
-            list_of_urls = prephotos(wcid)
+            if s_all:
+                searchurl = 'https://www.dmm.co.jp/mono/dvd/-/detail/=/cid={}/'.format(wcid)
+            else:
+                searchurl = 'https://www.dmm.co.jp/digital/videoa/-/detail/=/cid={}/'.format(wcid)
+            list_of_urls = prephotos(searchurl)
     try:
         if len(list_of_urls)<=10:
             media_group = []
