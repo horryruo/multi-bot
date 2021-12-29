@@ -135,8 +135,4 @@ class Version(object):
 
 
 
-if __name__ == "__main__":
-    repo = Version('https://github.com/horryruo/multi-bot.git')
-    print(repo.pull())
-    
     

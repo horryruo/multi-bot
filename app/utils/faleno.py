@@ -8,7 +8,15 @@ class Faleno(object):
 
     def option(self):
         if self.context == []:
-            return '请附带搜索内容或命令,详情看/help'
+            return '''
+    请附带搜索内容或命令
+      *faleno help* ==>  
+       /faleno new `最新作品`
+       /faleno work `单番号详情，不要空格、横杠，如fsdss310`
+       /faleno act `全部演员以及英文名`
+       /faleno act name `单演员全部作品 'name为演员英文名，直接复制即可'`
+       /faleno 搜索内容  `不属于上面任何命令时，默认搜索`
+            '''
         option = self.context[0]
         args = self.context[1:]
         if option == 'act':
@@ -193,6 +201,3 @@ class Faleno(object):
         file = sod_get(id)
         return(file)
 
-if __name__ == '__main__':
-    faleno = Faleno()
-    faleno.search('天使もえ')

@@ -9,10 +9,10 @@ from app.utils import func_handler, task
 
         
 def main():
-    if func_handler.config.ifproxy == 'true':
-        updater = Updater(func_handler.config.TOKEN, use_context=True,request_kwargs=func_handler.config.REQUEST_KWARGS)
+    if func_handler.Config.ifproxy == 'true':
+        updater = Updater(func_handler.Config.TOKEN, use_context=True,request_kwargs=func_handler.Config.REQUEST_KWARGS)
     else:
-        updater = Updater(func_handler.config.TOKEN, use_context=True)
+        updater = Updater(func_handler.Config.TOKEN, use_context=True)
     
     #print(bot.get_me())
     dp = updater.dispatcher
@@ -64,7 +64,7 @@ def main():
     )
 
     dp.add_handler(conv_handler)
-    dp.add_handler(CommandHandler('restart', restart, filters=Filters.user(user_id=func_handler.config.LIST_OF_ADMINS[0])))
+    dp.add_handler(CommandHandler('restart', restart, filters=Filters.user(user_id=func_handler.Config.LIST_OF_ADMINS[0])))
     dp.add_error_handler(func_handler.error)
     updater.start_polling()
     func_handler.logger.info("iMulti-bot started")

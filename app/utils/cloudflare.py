@@ -1,15 +1,14 @@
 import requests
 import json
 import prettytable as pt
-from app.utils.loadini import read_config_cf,read_config
+from app.utils import Loadconfig
 '''
 https://api.cloudflare.com/#
 '''
-allconfig = read_config()
-ifproxy = allconfig['ifproxy'] 
-proxy = allconfig['proxy'] 
 
-email,globalkey = read_config_cf()
+ifproxy = Loadconfig.ifproxy
+proxy = Loadconfig.proxy
+email,globalkey = Loadconfig.email,Loadconfig.globalkey
 proxies = {'http': 'http://%s'%proxy, 'https': 'http://%s'%proxy}
 
 class CloudFlare(object):
@@ -145,7 +144,13 @@ class CloudFlare_handler(object):
         
     def option(self):
         if self.context == []:
-            return '请附带命令使用,详情看/help'
+            return ''' 
+        *help*
+       1、 *ls* => `列出所有已拥有域名    example: /cf ls`
+       2、 *dns domain* => `查看单个域名解析情况   example:  /cf dns domain`
+       3、 *add type domain host* => `添加域名解析   example: /cf add A test.domain.com ip-adress`
+       4、 *edit type domain host * => `编辑域名解析(option:cloudon/off ,ttl = ini)   example:/cf edit A test.domain.com ip-adress cloudon`
+       5、 *del domain* => `删除域名解析  example: /cf del test.domain.com`'''
         option = self.context[0]
         args = self.context[1:]
         if option == 'ls':
@@ -279,8 +284,3 @@ class CloudFlare_handler(object):
             #print(error,msg)
             return msg
 
-if __name__ == '__main__':
-    
-    
-    print('1')
-    

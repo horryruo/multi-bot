@@ -1,4 +1,4 @@
-import telegram, os, time, re ,traceback
+import telegram, os, time, re 
 from telegram.ext import ConversationHandler
 from app.utils.monthly import monthly_thread
 from app.utils.jav_thread import thread_javlib
@@ -45,22 +45,11 @@ def help(update, context):
     *face* - `根据提示发送图片进行人脸识别`
     *new* -  `dmm new video `
     *top* -  `dmm hot video`
-    *cf option* -  `控制cf域名解析`
     *update* - `更新机器人`
     *restart* - `重启机器人`
     *cancel* - `处在对话命令内时，提前结束对话`
-    *faleno help* ==>  
-       /faleno new `最新作品`
-       /faleno work `单番号详情，不要空格、横杠，如fsdss310`
-       /faleno act `全部演员以及英文名`
-       /faleno act name `单演员全部作品 'name为演员英文名，直接复制即可'`
-       /faleno 搜索内容  `不属于上面任何命令时，默认搜索`
-    *cloudflare help* ==>  
-       1、 *ls* => `列出所有已拥有域名    example: /cf ls`
-       2、 *dns domain* => `查看单个域名解析情况   example:  /cf dns domain`
-       3、 *add type domain host* => `添加域名解析   example: /cf add A test.domain.com ip-adress`
-       4、 *edit type domain host * => `编辑域名解析(option:cloudon/off ,ttl = ini)   example:/cf edit A test.domain.com ip-adress cloudon`
-       5、 *del domain* => `删除域名解析  example: /cf del test.domain.com`
+    *faleno* - faleno 输入命令查看二级指令
+    *cf* - cloudflare 输入命令查看二级指令
     '''
     update.message.reply_markdown(text)
 
@@ -88,7 +77,7 @@ def monthlyy(update, context):
             msg = func_handler.long_message(update, context, noresult, 'text')
         else:
             result1 = '非月额list (%s) => %s' %(leng1,nomon)
-            if func_handler.config.iftb == 'true':
+            if func_handler.Config.iftb == 'true':
                 msg = func_handler.long_message(update,context,tb,'text')
             msg = func_handler.long_message(update,context,result1,'text')
             if noresultleng>0:
@@ -98,7 +87,7 @@ def monthlyy(update, context):
             update.message.reply_text(usetime)
     else:
         if leng1 == 0:
-            if func_handler.config.iftb == 'true':
+            if func_handler.Config.iftb == 'true':
                 msg = func_handler.long_message(update,context,tb,'text')
             result = '月额list (%s) => %s' %(leng,mon)
             msg = func_handler.long_message(update,context,result,'text')
@@ -110,7 +99,7 @@ def monthlyy(update, context):
         else:
             result = '月额list (%s) => %s' %(leng,mon)
             result1 = '非月额list (%s) => %s' %(leng1,nomon)
-            if func_handler.config.iftb == 'true':
+            if func_handler.Config.iftb == 'true':
                 msg = func_handler.long_message(update,context,tb,'text')
             msg = func_handler.long_message(update,context,result,'text')
             msg = func_handler.long_message(update,context,result1,'text')
@@ -233,7 +222,7 @@ def dmmvideo(update, context):
     try:
         result = str(truevideo(searchid))
     except Exception as e:
-        func_handler.logger.error(traceback.format_exc())
+        #func_handler.logger.error(traceback.format_exc())
         #func_handler.logger.warning(str(e))
         func_handler.logger.warning('尝试使用selenium引擎失败')
         result = str(prevideo(searchid))

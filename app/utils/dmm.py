@@ -7,7 +7,7 @@ from bs4 import BeautifulSoup
 from queue import Queue
 #from lxml import etree
 from app.utils.func_requests import get_html_jp
-from app.utils.loadini import read_config
+from app.utils import Loadconfig
 from selenium import webdriver
 from app.utils.func_handler import logger
 #返回页码
@@ -473,10 +473,10 @@ def prephotos(searchurl):
     return (jpg)
 def truevideo(searchcid):
 
-    allconfig = read_config()
-    ifproxy = allconfig['ifproxy'] 
-    proxy = allconfig['proxy'] 
-    system = allconfig['system']
+    
+    ifproxy = Loadconfig.ifproxy
+    proxy = Loadconfig.proxy
+    system = Loadconfig.system
     
 
     # 进入浏览器设置
@@ -634,9 +634,6 @@ def dmmsearchall(searchstr,mode='temp'):
     
     
     
-if __name__ == "__main__":
-    
-    print(truevideo('ipx00790'))
-    
+
     
     

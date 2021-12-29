@@ -63,6 +63,3 @@ def acg():
             boxlist.append(boxdict)
     
     print(boxlist)
-if __name__ == "__main__":
-    #girl()
-    acg()

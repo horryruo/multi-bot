@@ -1,11 +1,13 @@
-import  logging, telegram, time
+import  logging, telegram, time,traceback
 #from telegram.ext import Updater, CommandHandler, MessageHandler, ConversationHandler
-from app.utils.loadini import read_config
+from app.utils import Loadconfig
 from functools import wraps
 
 
 
-logging.basicConfig(format='%(asctime)s - %(name)s - %(module)s - %(funcName)s - %(levelname)s - %(message)s',
+#logging.basicConfig(format='%(asctime)s - %(name)s - %(module)s - %(funcName)s - %(levelname)s - %(message)s',
+                    #level=logging.INFO)
+logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                     level=logging.INFO)
 
 logger = logging.getLogger(__name__)
@@ -13,35 +15,34 @@ logger = logging.getLogger(__name__)
 CHOOSE,GIRL,ACG,GITUPDATE = range(4)
 
 
-class Config(object):
-    def  __init__(self):
-        self.allconfig = read_config()
-        self.ifproxy = self.allconfig['ifproxy'] 
-        self.proxy = self.allconfig['proxy'] 
-        self.iftb = self.allconfig['tb'] 
-        self.TOKEN = self.allconfig['token']
-        users = self.allconfig['userid'] 
-        userid = users.split(',')
-        userss = []
-        #userid = ','.join(userid)
-        for i in userid:
-            userss.append(int(i))
-        #print(userid)
-        #userids = ','.join(userss)
-        self.LIST_OF_ADMINS = userss
-        self.REQUEST_KWARGS={
-                # "USERNAME:PASSWORD@" is optional, if you need authentication:
-            'proxy_url': 'http://%s/'%self.proxy,
-        }   
-config = Config()
+class Config(Loadconfig):
+
+    users = Loadconfig.userid
+    userid = users.split(',')
+    userss = []
+    #userid = ','.join(userid)
+    for i in userid:
+        userss.append(int(i))
+    #print(userid)
+    #userids = ','.join(userss)
+    LIST_OF_ADMINS = userss
+    REQUEST_KWARGS={
+            # "USERNAME:PASSWORD@" is optional, if you need authentication:
+        'proxy_url': 'http://%s/'%Loadconfig.proxy,
+    }   
+
 
 def error(update, context):
+    
+    logger.error(msg="\n******Bot Error,please issued this content******:", exc_info=context.error)
     logger.warning('Update "%s" caused error "%s"', update, context.error)
     #update.message.reply_text(str(update.message.text))
+    error = '''*Bot Error：*{} 
+    `如果要详细错误信息请查看后台`'''.format(str(context.error))
     try:
-        update.message.reply_text(str(context.error))
+         update.message.reply_markdown(error)
     except:
-        update.callback_query.edit_message_text(str(context.error))
+        update.callback_query.edit_message_text(error)
 
 def send_typing_action(func):
     """Sends typing action while processing func command."""
@@ -56,7 +57,7 @@ def restricted(func):
     @wraps(func)
     def wrapped(update, context, *args, **kwargs):
         user_id = update.effective_user.id
-        if user_id not in config.LIST_OF_ADMINS:
+        if user_id not in Config.LIST_OF_ADMINS:
             error = "Unauthorized access denied for you!!you user id:{}.".format(user_id)
             update.message.reply_markdown(error)
             print(error)

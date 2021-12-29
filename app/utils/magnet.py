@@ -123,6 +123,4 @@ def sukebei(searchid):
     temp_out = template_magnet(alldata, usetime,searchid)
     return temp_out
 
-if __name__ == "__main__":
-    print(sukebei('SSNI-848'))
-    
+

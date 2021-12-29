@@ -2,11 +2,11 @@ import requests
 from cfscrape import get_cookie_string
 from re import search
 from requests_html import HTMLSession
-from app.utils.loadini import read_config
+from app.utils import Loadconfig
 
-allconfig = read_config()
-ifproxy = allconfig['ifproxy'] 
-proxy = allconfig['proxy'] 
+
+ifproxy = Loadconfig.ifproxy
+proxy = Loadconfig.proxy
 
 proxies = {'http': 'http://%s'%proxy, 'https': 'http://%s'%proxy}
 headers = {'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.89 Safari/537.36'}

@@ -4,13 +4,13 @@ import threading
 import time
 from queue import Queue
 import prettytable as pt
-from app.utils.loadini import read_config
+from app.utils import Loadconfig
 
 
 
-allconfig = read_config()
-ifproxy = allconfig['ifproxy'] 
-proxy = allconfig['proxy'] 
+ifproxy = Loadconfig.ifproxy
+proxy = Loadconfig.proxy
+
 
 proxies = {'http': 'http://%s'%proxy, 'https': 'http://%s'%proxy}
 headers = {'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.89 Safari/537.36'}
@@ -101,11 +101,6 @@ def abp(input1):
         f.close()
     
 
-#abp()
-
-if __name__ == "__main__":
-    id = 'ssni520,ssni521,ssni802,13gvg00349,jbd00194'
-    monthly(id)
 
 
 

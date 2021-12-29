@@ -5,13 +5,13 @@ import time
 import threading 
 from queue import Queue
 from app.utils.func_requests import steal_library_header
-from app.utils.loadini import read_config
+from app.utils import Loadconfig
 
 
 
-allconfig = read_config()
-ifproxy = allconfig['ifproxy'] 
-proxy = allconfig['proxy'] 
+ifproxy = Loadconfig.ifproxy
+proxy = Loadconfig.proxy
+ 
 
 proxies = {'http': 'http://%s'%proxy, 'https': 'http://%s'%proxy}
 headers = {'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.89 Safari/537.36'}
@@ -106,56 +106,5 @@ def thread_javlib(inurl):
 
 
 
-
-
-
-if __name__ == '__main__':
-    
-    inurl = 'http://?/cn/vl_star.php?s=aebq4'
-    url, page, headers, actor = javlib_page(inurl)
-    #print('传出页数' + page)
-    start = time.time()
-    queue = Queue(maxsize=10)  
-    result_queue = Queue()
-    #print('queue 开始大小 %d' % queue.qsize())
-    #print(threading.active_count()) 
-
-    producer_thread = threading.Thread(target=producer, args=(queue, url, page))
-    producer_thread.daemon = True
-    producer_thread.start()
-    
-    #print(queue.get())
-    for index in range(int(page)+1):
-        #print(threading.active_count())
-        consumer_thread = threading.Thread(target=javlib, args=(queue, result_queue, headers))
-        consumer_thread.daemon = True
-        consumer_thread.start()
-    print('开启线程数:' + str(threading.active_count()))
-    queue.join()
-    
-    result = []
-    list = []
-    for i in range(1, int(page)+1):
-        while result_queue.empty() is not True: 
-            list += result_queue.get()
-            
-    
-    result = ','.join(list)
-    end = time.time()
-    #print(queue.get())
-    print('''%s的番号有%s页：\n%s''' % (actor,page,result))
-    #result = str(actor) + '在图书馆的番号有:\n' + str(result1)
-    print('总耗时：%s' % (end - start))
-    #print('queue 结束大小 %d' % queue.qsize())
-    #print('result_queue 结束大小 %d' % result_queue.qsize())
-    
-    #result = javlib(inurl)
-    #print(result)
-    #inurl = input('url=')
-    #alllist,actor = javlib(str(inurl))
-    #save(alllist,actor)
-    
-    #alllist,actor = javbus(urlbus)
-    #save(alllist,actor)
 
 
