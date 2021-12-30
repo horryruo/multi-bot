@@ -74,39 +74,39 @@ def monthlyy(update, context):
         if leng1 == 0:
             
             noresult = '无结果  (%s) => %s' %(noresultleng,noresult)
-            msg = func_handler.long_message(update, context, noresult, 'text')
+            msg = func_handler.long_message(update, context, noresult)
         else:
             result1 = '非月额list (%s) => %s' %(leng1,nomon)
             if func_handler.Config.iftb == 'true':
-                msg = func_handler.long_message(update,context,tb,'text')
-            msg = func_handler.long_message(update,context,result1,'text')
+                msg = func_handler.long_message(update,context,tb)
+            msg = func_handler.long_message(update,context,result1)
             if noresultleng>0:
                 
                 noresult = '无结果  (%s) => %s' %(noresultleng,noresult)
-                msg = func_handler.long_message(update, context, noresult, 'text')
+                msg = func_handler.long_message(update, context, noresult)
             update.message.reply_text(usetime)
     else:
         if leng1 == 0:
             if func_handler.Config.iftb == 'true':
-                msg = func_handler.long_message(update,context,tb,'text')
+                msg = func_handler.long_message(update,context,tb)
             result = '月额list (%s) => %s' %(leng,mon)
-            msg = func_handler.long_message(update,context,result,'text')
+            msg = func_handler.long_message(update,context,result)
             if noresultleng>0:
                 
                 noresult = '无结果  (%s) => %s' %(noresultleng,noresult)
-                msg = func_handler.long_message(update, context, noresult, 'text')
+                msg = func_handler.long_message(update, context, noresult)
             update.message.reply_text(usetime)
         else:
             result = '月额list (%s) => %s' %(leng,mon)
             result1 = '非月额list (%s) => %s' %(leng1,nomon)
             if func_handler.Config.iftb == 'true':
-                msg = func_handler.long_message(update,context,tb,'text')
-            msg = func_handler.long_message(update,context,result,'text')
-            msg = func_handler.long_message(update,context,result1,'text')
+                msg = func_handler.long_message(update,context,tb)
+            msg = func_handler.long_message(update,context,result)
+            msg = func_handler.long_message(update,context,result1)
             if noresultleng>0:
                 
                 noresult = '无结果  (%s) => %s' %(noresultleng,noresult)
-                msg = func_handler.long_message(update, context, noresult, 'text')
+                msg = func_handler.long_message(update, context, noresult)
             update.message.reply_text(usetime)
     
 @func_handler.restricted
@@ -123,7 +123,7 @@ def dmmid(update, context):
     if len(result) > 4096:
         mssg = '超出telegram消息限制，将分段截取，取最后10字符用于校验：' + result[-10:]
         update.message.reply_text(mssg)
-    msg = func_handler.long_message(update,context,result,'text')
+    msg = func_handler.long_message(update,context,result)
 
     
 @func_handler.restricted
@@ -172,7 +172,7 @@ def lib(update, context):
     
     result, time = thread_javlib(url)
     text = str(result) + '\n' + str(time)
-    msg = func_handler.long_message(update,context,text,'text')
+    msg = func_handler.long_message(update,context,text)
 
 @func_handler.restricted    
 @func_handler.send_typing_action

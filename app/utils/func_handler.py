@@ -65,7 +65,7 @@ def restricted(func):
         return func(update, context, *args, **kwargs)
     return wrapped
 
-def long_message(update, context, text: str,mtype):
+def long_message(update, context, text: str,mtype='text'):
     max_length = telegram.constants.MAX_MESSAGE_LENGTH
     if len(text) <= max_length:
         if mtype=='markdown':
