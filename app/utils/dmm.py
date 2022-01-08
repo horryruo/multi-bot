@@ -124,27 +124,34 @@ def ciddata(html):
 
     ciddata = {}
     perfordata = {}
-    allper = soup.find(name='span', id='performer').find_all(href=re.compile("actress"))
-    for i in allper:
-        id = re.findall(r'/digital/videoa/-/list/=/article=actress/id=(.*)/',i.get('href'))
-        perfordata[id[0]] = i.string
-    if perfordata != None:
-        ciddata['performers'] = perfordata
-    else:
+    keyworddata = {}
+    try:
+        allper = soup.find(name='span', id='performer').find_all(href=re.compile("actress"))
+        for i in allper:
+            id = re.findall(r'/digital/videoa/-/list/=/article=actress/id=(.*)/',i.get('href'))
+            perfordata[id[0]] = i.string
+        if perfordata != None:
+            ciddata['performers'] = perfordata
+        else:
+            ciddata['performers'] = '---'
+    except:
         ciddata['performers'] = '---'
     body = soup.find('table', attrs = {'class':'mg-b20'})
-    allkey = body.find_all('a', href = re.compile('article=keyword'))
-    keyworddata = {}
-    for i in allkey:
-        id = re.findall(r'/digital/videoa/-/list/=/article=keyword/id=(.*)/',i.get('href'))
-        keyworddata[id[0]] = i.string
-    if perfordata != None:
-        ciddata['keyword'] = keyworddata
-    else:
+    try:
+        allkey = body.find_all('a', href = re.compile('article=keyword'))
+        for i in allkey:
+            id = re.findall(r'/digital/videoa/-/list/=/article=keyword/id=(.*)/',i.get('href'))
+            keyworddata[id[0]] = i.string
+        if keyworddata != None:
+            ciddata['keyword'] = keyworddata
+        else:
+            ciddata['keyword'] = '---'
+    except:
         ciddata['keyword'] = '---'
     
-    scoregif = body.find_all('img')
+    
     try:
+        scoregif = body.find_all('img')
         score = re.findall(r'https://.*/(\d)_?(\d)?.gif',str(scoregif))[0]
         ciddata['score'] = score
     except:
