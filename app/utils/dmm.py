@@ -133,9 +133,9 @@ def ciddata(html):
         if perfordata != None:
             ciddata['performers'] = perfordata
         else:
-            ciddata['performers'] = '---'
+            ciddata['performers'] = {'None':'None'}
     except:
-        ciddata['performers'] = '---'
+        ciddata['performers'] = {'None':'None'}
     body = soup.find('table', attrs = {'class':'mg-b20'})
     try:
         allkey = body.find_all('a', href = re.compile('article=keyword'))
@@ -145,9 +145,9 @@ def ciddata(html):
         if keyworddata != None:
             ciddata['keyword'] = keyworddata
         else:
-            ciddata['keyword'] = '---'
+            ciddata['keyword'] = {'None':'None'}
     except:
-        ciddata['keyword'] = '---'
+        ciddata['keyword'] = {'None':'None'}
     
     
     try:
