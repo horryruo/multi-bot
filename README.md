@@ -69,7 +69,7 @@
 
 ## docker
 （如果有能力自己安装python，安装chrome的，还是用上面的方法，本方法只适用于本来就喜欢用docker的人）
-1. 你需要安装docker `curl -sSL https://get.docker.com/ | sh `,   `systemctl start docker`,   `systemctl enable docker`
+1. 你需要安装docker `curl -sSL https://get.docker.com/ | sh `
 2. 克隆项目`git clone https://github.com/horryruo/multi-bot.git && chmod +x multi-bot && cd multi-bot`   
 3. 复制一份配置 | `cp app/config/config.ini.example app/config/config.ini` 
 4. telegram内通过 **@BotFather**  创建机器人后获取token（具体也可以谷歌如何创建telegram机器人并获得token，教程很多），然后telegram内 私聊 **@get_id_bot**  获取chat id，获取的这两个都要填到下一步的配置文件里。
