@@ -36,7 +36,7 @@ class Javmost():
             else:
                 searchstr = ' '.join(self.context[:])
             return self.search(searchstr)
-    def player(self,id,times=10):
+    def player(self,id,times=3):
         self.chrome = Chrome(True)
         url = 'https://www5.javmost.com/%s'%id
     # 开启无头模式提取视频m3u8路径地址
@@ -48,18 +48,27 @@ class Javmost():
         self.chrome.dr.execute_script("arguments[0].click();", checkbox)
         time.sleep(times)
         print('获取播放链接')
-        logs = []
-        for entry in self.chrome.dr.get_log('browser'):
-            logs.append(entry['message'])
+        request_log = self.chrome.dr.get_log('performance')
+        for i in range(len(request_log)):
+            message = json.loads(request_log[i]['message'])
+            message = message['message']['params']
+            # .get() 方式获取是了避免字段不存在时报错
+            request = message.get('request')
+            if request is None:
+                continue
+        
+            url = request.get('url')
+            if url == 'https://www5.javmost.com/ri3123o235r/':
+                # 得到requestId
+                #print(message['requestId'])
+                # 通过requestId获取接口内容
+                content = self.chrome.dr.execute_cdp_cmd('Network.getResponseBody', {'requestId': message['requestId']})
+                #print(content)
+                break
+        url = json.loads(content.get('body')).get('data')[0]
+        print(url)
         self.chrome.dr.close()
-        for log in logs:
-            m3u8 = re.findall(r'.*(https://.*m3u8)\"',log)
-            if m3u8 != []:
-                m3u8 = m3u8[0]
-                m3u8 = m3u8.replace('/hls/,','/')
-                m3u8 = m3u8.replace(',.urlset/master.m3u8','/v.mp4')
-                print(m3u8)
-                return m3u8
+        return url
     def search(self,id):
         url = 'https://www5.javmost.com/search/%s'%id
         response = get_html_html(url).content
@@ -104,7 +113,7 @@ class Chrome(object):
         chrome_options.add_argument('log-level=1')
         capabilities = webdriver.DesiredCapabilities().CHROME
         capabilities['acceptSslCerts'] = True
-        capabilities['goog:loggingPrefs'] = {'browser': 'ALL'}
+        capabilities['goog:loggingPrefs'] = {'browser': 'ALL','performance': 'ALL'}
         if ifproxy == 'true':
             chrome_options.add_argument('proxy-server=' + proxy)
 
