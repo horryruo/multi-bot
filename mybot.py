@@ -42,6 +42,7 @@ def main():
     dp.add_handler(CommandHandler("top", task.top30,run_async=True))
     dp.add_handler(CommandHandler("cf", task.cf,run_async=True))
     dp.add_handler(CommandHandler("all", task.searchall,run_async=True))
+    dp.add_handler(CommandHandler("stream", task.stream,run_async=True))
     
     conv_handler = ConversationHandler(
         entry_points=[CommandHandler('face',task.startface),

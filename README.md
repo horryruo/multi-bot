@@ -1,11 +1,11 @@
-# iMulti-bot  3.2 beta
+# iMulti-bot  3.3 beta
 [![iMulti-Telegram BOT](https://img.shields.io/badge/iMulti-Telegram%20BOT-red?style=flat-square&logo=appveyor)](https://github.com/horryruo/multi-bot/)
 [![Python 3.6](https://img.shields.io/badge/LANGUAGE-Python%203.6%2B-success?style=flat-square&logo=appveyor)](https://www.python.org/downloads/)
 [![BSD-3](https://img.shields.io/badge/LICENSE-BSD3-brightgreen.svg)](https://github.com/horryruo/multi-bot/blob/master/LICENSE)
 
-**发送命令到 [Telegram](http://telegram.org) BOT，以获得有关dmm、libray、ikoa、magnet的信息以及控制cloudflare api。**
+**发送命令到 [Telegram](http://telegram.org) BOT，获得信息**
 
-**Send commands to [Telegram](http://telegram.org) BOT for get a information way which communicate with about dmm, libray, ikoa, magnet, and control cloudflare api compatibility!**  
+**Send commands to [Telegram](http://telegram.org) BOT for get a information**
 
 
 ## 免责声明：本代码仅用于学习，下载后请勿用于商业以及违反使用者所在地法律用途，本人对此有最终解释权。
@@ -13,6 +13,8 @@
 <details>
 <summary>
 更新日志|Update log</summary>
+
+**2022/2/11**     3.3beta——修复部分bug，新增/stream 命令，在/help查看
 
 **2021/11/21**     3.2beta——uid指令支持输入link遍历uid(仅支持dmm列表页面link)
 
@@ -56,7 +58,7 @@
 1. 需要python3.6以上版本| Python 3.6+ is Required  
 2. 克隆项目（windows用户可直接github页面下载zip解压使用）| `git clone https://github.com/horryruo/multi-bot.git && chmod -R 755 multi-bot && cd multi-bot`   
 3. 安装依赖（pip3这个3取决与你的系统关联的python名字，比如系统python就等于python3，那么就不需要加这个3） | `pip3 install -r requirements.txt`
-4. **安装google chrome** ，如不需要准确预览视频地址可不安装(本引擎是获取正确预览视频链接的关键，当没有安装chrome时，会进行正则规律类比获得链接，因此番号奇特以及年代久远的影片可能无法获取正确的链接，windows用户可自行谷歌下载安装最新版chrome) | install chrome (If you don't need accurate preview video function, you can skip it)  
+4. **安装google chrome** ，如不需要准确视频地址可不安装(本引擎是获取正确视频链接的依赖，当没有安装chrome时，会进行正则规律类比获得链接，因此番号奇特以及年代久远的影片可能无法获取正确的链接，windows用户可自行谷歌下载安装最新版chrome) | install chrome (If you don't need accurate preview video function, you can skip it)  
    centos:`yum install https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm`   
    debian or ubuntu:`wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && sudo apt install ./google-chrome-stable_current_amd64.deb`
 5. 复制一份配置 | `cp app/config/config.ini.example app/config/config.ini` 
@@ -84,3 +86,5 @@
   2. ctrl+z停止项目，使用screen的先`screen -r multi-bot`进入screen进程再停止。然后在项目文件夹`git pull`即可更新，然后再启动。本方法适用于只配置了config.ini而没有更改其他任何参与git的文件的用户，如果更改过，git pull会冲突，输入`git reset --hard origin/main ` （本条命令将放弃本地所有更改）后再进行git pull。
    
   3. 用docker部署的更新依旧是来到克隆目录下`git pull`或者程序内更新后`docker restart multi-bot`即可，因为docker镜像只打包了运行环境，项目文件直接映射在宿主机上。
+### 其他错误
+  1. 由于chrome版本众多无法统一适配，chromedriver版本如与你安装chrome不同，请根据报错提示自行下载对应系统对应版本的chromedriver，放入/app/bin中，并重命名替换原本的程序，赋予新程序755以上权限即可。或可直接使用docker版本。

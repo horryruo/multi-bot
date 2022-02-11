@@ -6,6 +6,7 @@ from app.utils.magnet import sukebei
 from app.utils.func_requests import get_file
 from app.utils.dmm import dmm_thread, prevideo, prephotos, dmmonecid, dmmsearch, dmmlinks, truevideo, dmmsearchall, precid
 from app.utils.faleno import Faleno
+from app.utils.playerlist import Javmost
 from app.utils.cloudflare import CloudFlare_handler
 from app.utils.get_update import Version
 from app.utils.identify import girl, acg
@@ -41,6 +42,7 @@ def help(update, context):
     *search* -  `搜索关键词在dmm，dmm官方支持正则，例如当长字符无结果，可利用空格分割`
     *all* -  `搜索关键词在dmm所有区域的内容，dmm官方支持正则，例如当长字符无结果，可利用空格分割`
     *faleno* - `搜索faleno，支持名字，标题，不支持cid、num(官方不支持),二级命令功能看下面`
+    *stream* - `获取播放直链,只支持num`
     *links* -  `输入dmm list链接获取内容`
     *face* - `根据提示发送图片进行人脸识别`
     *new* -  `dmm new video `
@@ -48,8 +50,9 @@ def help(update, context):
     *update* - `更新机器人`
     *restart* - `重启机器人`
     *cancel* - `处在对话命令内时，提前结束对话`
-    *faleno* - faleno 输入命令查看二级指令
-    *cf* - cloudflare 输入命令查看二级指令
+    *faleno* - `faleno 输入命令查看二级指令`
+    *cf* - `cloudflare 输入命令查看二级指令`
+    *stream* - `stream 输入命令查看二级指令`
     '''
     update.message.reply_markdown(text)
 
@@ -162,7 +165,14 @@ def dmmcid(update,context):
         else:
             update.message.reply_markdown(text)
         time.sleep(1)
-        
+
+@func_handler.restricted    
+@func_handler.send_typing_action 
+def stream(update, context):
+    args = context.args
+    javmost = Javmost(args)
+    result = javmost.option()
+    msg = func_handler.long_message(update,context,result,'markdown')
 @func_handler.restricted    
 @func_handler.send_typing_action 
 def lib(update, context):
