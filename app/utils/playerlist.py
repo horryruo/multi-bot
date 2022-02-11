@@ -1,10 +1,12 @@
 import re,time,json,os
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
 from app.utils import Loadconfig
 from bs4 import BeautifulSoup
 from app.utils.func_requests import get_html_html
 from jinja2 import PackageLoader,Environment
+
 
 ifproxy = Loadconfig.ifproxy
 proxy = Loadconfig.proxy
@@ -42,8 +44,8 @@ class Javmost():
         self.chrome.dr.get(url)
         videoName = self.chrome.dr.title   # 获取当前页面title值
         print(videoName)
-        checkbox = self.chrome.dr.find_element_by_css_selector("[class='play-btn']")
-        checkbox.click()
+        checkbox = self.chrome.dr.find_element(By.CSS_SELECTOR,"[class='play-btn']")
+        self.chrome.dr.execute_script("arguments[0].click();", checkbox)
         time.sleep(times)
         print('获取播放链接')
         logs = []
