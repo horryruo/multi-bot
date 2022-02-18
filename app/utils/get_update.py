@@ -5,7 +5,7 @@ from datetime import datetime, timedelta
 from app.utils.func_requests import get_html
 
 class Version(object):
-    def __init__(self, repo_url, branch='master'):
+    def __init__(self, repo_url, branch='main'):
         self.local_path = os.getcwd()
         self.repo_url = repo_url
         self.repo = None

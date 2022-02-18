@@ -67,7 +67,7 @@ class Javmost():
                 break
         url = json.loads(content.get('body')).get('data')[0]
         print(url)
-        self.chrome.dr.close()
+        self.chrome.dr.quit()
         return url
     def search(self,id):
         url = 'https://www5.javmost.com/search/%s'%id
