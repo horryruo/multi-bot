@@ -46,7 +46,7 @@ class Bashshell():
             errors="ignore",
             universal_newlines=True,
         )
-        for line in iter(self.shellprocess.stdout.read, 'b'):
+        for line in iter(self.shellprocess.stdout.readline, 'b'):
             #line = self.shellprocess.stdout.read().strip()
             if not line:
                 break
