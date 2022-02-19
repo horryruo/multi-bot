@@ -26,12 +26,12 @@ class Bashshell():
         for output in self.run(self.args):
             if func_handler.Task.Msg[self.message_id]==1:
                 self.shellprocess.kill()
-                tou = tou +'\n' + 'shell已终止'
+                tou = tou +'\n' + '--------Shell Stopped--------'
                 self.context.bot.edit_message_text(chat_id=self.chat_id, message_id= self.message_id, text=str(tou),  disable_web_page_preview=True)
                 break
             if output:
                 tou = tou +'\n' +output
-                if len(tou) > 500:
+                if len(tou) > 1000:
                     tou = tou[100:] 
                 self.context.bot.edit_message_text(chat_id=self.chat_id, message_id= self.message_id, text=str(tou),  disable_web_page_preview=True)
                
