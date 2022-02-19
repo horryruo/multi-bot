@@ -46,11 +46,11 @@ class Bashshell():
             errors="ignore",
             universal_newlines=True,
         )
-        while True:
-            line = self.shellprocess.stdout.read().strip()
+        for line in iter(self.shellprocess.stdout.read, 'b'):
+            #line = self.shellprocess.stdout.read().strip()
             if not line:
                 break
-            yield line
+            yield line.strip()
         
         self.shellprocess.communicate()
 
