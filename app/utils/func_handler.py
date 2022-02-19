@@ -1,6 +1,7 @@
-import  logging, telegram, time,traceback
+import  logging, telegram, time
 #from telegram.ext import Updater, CommandHandler, MessageHandler, ConversationHandler
 from app.utils import Loadconfig
+
 from functools import wraps
 
 
@@ -15,6 +16,10 @@ logger = logging.getLogger(__name__)
 CHOOSE,GIRL,ACG,GITUPDATE = range(4)
 
 
+class TASK():
+    def __init__(self):
+        self.Msg = dict()
+Task = TASK()
 class Config(Loadconfig):
 
     users = Loadconfig.userid

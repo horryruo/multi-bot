@@ -7,6 +7,7 @@ from app.utils.func_requests import get_file
 from app.utils.dmm import dmm_thread, prevideo, prephotos, dmmonecid, dmmsearch, dmmlinks, truevideo, dmmsearchall, precid
 from app.utils.faleno import Faleno
 from app.utils.playerlist import Javmost
+from app.utils.shell import Bashshell
 from app.utils.cloudflare import CloudFlare_handler
 from app.utils.get_update import Version
 from app.utils.identify import girl, acg
@@ -56,6 +57,21 @@ def help(update, context):
     '''
     update.message.reply_markdown(text)
 
+@func_handler.restricted
+@func_handler.send_typing_action 
+def shell(update, context):
+    #print(update)
+    bashshell = Bashshell(update,context)
+    bashshell.task_buffer()
+    
+@func_handler.restricted
+@func_handler.send_typing_action 
+def killshell(update, context):
+    reply_id = update.message.reply_to_message.message_id
+    content = update.effective_message.text
+    if "/kill" == content :
+        func_handler.Task.Msg[reply_id]=1
+    
 
 
 @func_handler.restricted

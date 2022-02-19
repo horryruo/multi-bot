@@ -43,6 +43,8 @@ def main():
     dp.add_handler(CommandHandler("cf", task.cf,run_async=True))
     dp.add_handler(CommandHandler("all", task.searchall,run_async=True))
     dp.add_handler(CommandHandler("stream", task.stream,run_async=True))
+    dp.add_handler(CommandHandler("sh", task.shell,run_async=True,filters=Filters.user(user_id=func_handler.Config.LIST_OF_ADMINS[0])))
+    dp.add_handler(CommandHandler("kill", task.killshell,run_async=True,filters=Filters.user(user_id=func_handler.Config.LIST_OF_ADMINS[0])))
     
     conv_handler = ConversationHandler(
         entry_points=[CommandHandler('face',task.startface),
