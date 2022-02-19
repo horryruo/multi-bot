@@ -44,6 +44,8 @@ def help(update, context):
     *all* -  `搜索关键词在dmm所有区域的内容，dmm官方支持正则，例如当长字符无结果，可利用空格分割`
     *faleno* - `搜索faleno，支持名字，标题，不支持cid、num(官方不支持),二级命令功能看下面`
     *stream* - `获取播放直链,只支持num`
+    *sh* - `/sh bash命令,可空格,如需一次执行多条命令用;分隔即可,如:/sh cd /root;ls`
+    *kill* - `杀死sh命令,tg回复需停止的消息发送命令即可`
     *links* -  `输入dmm list链接获取内容`
     *face* - `根据提示发送图片进行人脸识别`
     *new* -  `dmm new video `

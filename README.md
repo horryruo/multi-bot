@@ -1,4 +1,4 @@
-# iMulti-bot  3.3 beta
+# iMulti-bot  3.4 beta
 [![iMulti-Telegram BOT](https://img.shields.io/badge/iMulti-Telegram%20BOT-red?style=flat-square&logo=appveyor)](https://github.com/horryruo/multi-bot/)
 [![Python 3.6](https://img.shields.io/badge/LANGUAGE-Python%203.6%2B-success?style=flat-square&logo=appveyor)](https://www.python.org/downloads/)
 [![BSD-3](https://img.shields.io/badge/LICENSE-BSD3-brightgreen.svg)](https://github.com/horryruo/multi-bot/blob/master/LICENSE)
@@ -13,6 +13,8 @@
 <details>
 <summary>
 更新日志|Update log</summary>
+
+**2022/2/19**     3.4beta——新增/sh命令，可简单控制宿主机bash(docker部署无法控制宿主机，仅首位管理员可操作)，在/help查看
 
 **2022/2/11**     3.3beta——修复部分bug，新增/stream 命令，在/help查看
 

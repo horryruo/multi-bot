@@ -26,18 +26,16 @@ class Bashshell():
         for output in self.run(self.args):
             if func_handler.Task.Msg[self.message_id]==1:
                 self.shellprocess.kill()
-                tou = tou +'\n' + '--------Shell Stopped--------'
-                self.context.bot.edit_message_text(chat_id=self.chat_id, message_id= self.message_id, text=str(tou),  disable_web_page_preview=True)
                 break
             if output:
                 tou = tou +'\n' +output
-                if len(tou) > 1000:
+                if len(tou) > 2000:
                     tou = tou[100:] 
                 self.context.bot.edit_message_text(chat_id=self.chat_id, message_id= self.message_id, text=str(tou),  disable_web_page_preview=True)
-            else:
-                tou = tou +'\n' + '--------Shell Stopped--------'
-                self.context.bot.edit_message_text(chat_id=self.chat_id, message_id= self.message_id, text=str(tou),  disable_web_page_preview=True)
-    
+        tou = tou +'\n' + '         --------Shell Stopped--------'
+        self.context.bot.edit_message_text(chat_id=self.chat_id, message_id= self.message_id, text=str(tou),  disable_web_page_preview=True)
+
+
     def run(self,command):
         self.shellprocess = subprocess.Popen(
             command,
