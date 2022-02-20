@@ -32,7 +32,7 @@ class Bashshell():
                 if len(tou) > 2000:
                     tou = tou[100:] 
                 self.context.bot.edit_message_text(chat_id=self.chat_id, message_id= self.message_id, text=str(tou),  disable_web_page_preview=True)
-               # time.sleep(1)
+                time.sleep(1)
         tou = tou +'\n' + '         --------Shell Stopped--------'
         self.context.bot.edit_message_text(chat_id=self.chat_id, message_id= self.message_id, text=str(tou),  disable_web_page_preview=True)
 
