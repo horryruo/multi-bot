@@ -74,11 +74,11 @@
 ## docker
 （如果有能力自己安装python，安装chrome的，还是用上面的方法，本方法只适用于本来就喜欢用docker的人）
 1. 你需要安装docker `curl -sSL https://get.docker.com/ | sh `
-2. 克隆项目`git clone https://github.com/horryruo/multi-bot.git && chmod +x multi-bot && cd multi-bot`   
+2. 克隆项目`git clone https://github.com/horryruo/multi-bot.git && chmod -R 755 multi-bot && cd multi-bot`   
 3. 复制一份配置 | `cp app/config/config.ini.example app/config/config.ini` 
 4. telegram内通过 **@BotFather**  创建机器人后获取token（具体也可以谷歌如何创建telegram机器人并获得token，教程很多），然后telegram内 私聊 **@get_id_bot**  获取chat id，获取的这两个都要填到下一步的配置文件里。
 5. 根据配置文件(在app/config/config.ini)描述配置设置（自行谷歌linux如何编辑文件，一般是使用vim或者nano） | &nbsp;Edit `vi app/config/config.ini`
-6. 回到目录/multi-bot,运行 `docker run -dit --restart=always --name=multi-bot -v "$(pwd)":/bot --privileged=true horryruo/multi-bot` 
+6. 回到目录/multi-bot,运行命令 `docker run -dit --restart=always --name=multi-bot -v "$(pwd)":/bot --privileged=true horryruo/multi-bot` 
 
 
  **看到这里你也发现了，如果你是第一次使用docker，并不比上面容易多少，甚至很多步骤都是差不多的，所以不熟悉的情况下还是建议使用上面的方法。**
@@ -87,6 +87,6 @@
   
   2. ctrl+z停止项目，使用screen的先`screen -r multi-bot`进入screen进程再停止。然后在项目文件夹`git pull`即可更新，然后再启动。本方法适用于只配置了config.ini而没有更改其他任何参与git的文件的用户，如果更改过，git pull会冲突，输入`git reset --hard origin/main ` （本条命令将放弃本地所有更改）后再进行git pull。
    
-  3. 用docker部署的更新依旧是来到克隆目录下`git pull`或者程序内更新后`docker restart multi-bot`即可，因为docker镜像只打包了运行环境，项目文件直接映射在宿主机上。
+  3. 用docker部署的更新依旧是来到程序目录下`git pull`或者程序内更新即可，因为docker镜像只打包了运行环境，项目文件直接映射在宿主机上。
 ### 其他错误
-  1. 由于chrome版本众多无法统一适配，chromedriver版本如与你安装chrome不同，请根据报错提示自行下载对应系统对应版本的chromedriver，放入/app/bin中，并重命名替换原本的程序，赋予新程序755以上权限即可。或可直接使用docker版本。
+  1. 由于chrome版本众多无法统一适配，chromedriver版本如与你安装的chrome不同，请根据报错提示自行下载对应系统对应版本的chromedriver，放入/app/bin中，并重命名替换原本的程序，赋予新程序755以上权限即可。或可直接使用docker版本。
