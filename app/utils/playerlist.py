@@ -38,7 +38,10 @@ class Javmost():
             return self.search(searchstr)
     def player(self,id,times=3):
         self.chrome = Chrome(True)
-        url = 'https://www5.javmost.com/%s'%id
+        if 'javmost' in id:
+            url = id
+        else:
+            url = 'https://www.javmost.xyz/%s/'%id
     # 开启无头模式提取视频m3u8路径地址
         self.chrome.dr.execute_cdp_cmd("Page.addScriptToEvaluateOnNewDocument", {"source": open(os.path.abspath(os.path.join('app',"bin",'hook.js')), encoding='utf-8').read()})
         self.chrome.dr.get(url)
@@ -58,19 +61,21 @@ class Javmost():
                 continue
         
             url = request.get('url')
-            if url == 'https://www5.javmost.com/ri3123o235r/':
+            
+            if 'ri3123o235r' in url:
                 # 得到requestId
                 #print(message['requestId'])
                 # 通过requestId获取接口内容
                 content = self.chrome.dr.execute_cdp_cmd('Network.getResponseBody', {'requestId': message['requestId']})
                 #print(content)
                 break
+        
         url = json.loads(content.get('body')).get('data')[0]
         print(url)
         self.chrome.dr.quit()
         return url
     def search(self,id):
-        url = 'https://www5.javmost.com/search/%s'%id
+        url = 'https://www.javmost.xyz/search/%s'%id
         response = get_html_html(url).content
         html = response.decode("utf-8", "ignore")
         soup = BeautifulSoup(html,'lxml')
