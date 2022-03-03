@@ -20,8 +20,8 @@ class Javmost():
             return '''
     请附带搜索内容或命令
       *stream help* ==>  
-       /stream v num 等待时间 `单番号视频链接,不能是cid,等待时间不填默认10秒`
-       /stream 搜索内容  `搜索内容,不要cid`
+       /stream v num/url time - 获得直接播放链接,不能是cid,时间可不填默认10秒
+       /stream 搜索内容 
             '''
         option = self.context[0]
         args = self.context[1:]
