@@ -7,3 +7,4 @@ python_telegram_bot>=13.2
 beautifulsoup4>=4.9.3
 selenium>=3.141.0
 GitPython>=3.1.13
+MarkupSafe<2.1.0
