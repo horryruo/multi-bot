@@ -66,5 +66,5 @@ jobs:
           push: ${{ github.event_name != 'pull_request' }}
         # 给清单打上多个标签
           tags: |
-            
-            horryruo/multi-bot:${{ steps.date.outputs.today }}           
+            horryruo/multi-bot:arm
+            # horryruo/multi-bot:${{ steps.date.outputs.today }}           
