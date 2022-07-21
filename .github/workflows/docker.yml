@@ -65,6 +65,7 @@ jobs:
         # 镜像推送时间
           push: ${{ github.event_name != 'pull_request' }}
         # 给清单打上多个标签
+        # horryruo/multi-bot:${{ steps.date.outputs.today }}
           tags: |
             horryruo/multi-bot:arm
-            # horryruo/multi-bot:${{ steps.date.outputs.today }}           
+                       
