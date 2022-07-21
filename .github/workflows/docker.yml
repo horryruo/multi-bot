@@ -8,34 +8,14 @@ env:
   VERSION: latest
 
 jobs:
-  # 运行测试，如果需要的话，将注释取消掉并且修改为自己需要的内容
-  # See also https://docs.docker.com/docker-hub/builds/automated-testing/
-  #  test:
-  #    runs-on: ubuntu-latest
-  #
-  #    steps:
-  #      - uses: actions/checkout@v2
-  #
-  #      - name: Run tests
-  #        run: |
-  #          if [ -f docker-compose.test.yml ]; then
-  #            docker-compose --file docker-compose.test.yml build
-  #            docker-compose --file docker-compose.test.yml run sut
-  #          else
-  #            docker build . --file Dockerfile
-  #          fi
-
-  # Push image to GitHub Packages.
-  # See also https://docs.docker.com/docker-hub/builds/
-  push:
-    # 如果需要在构建前进行测试的话需要取消下面的注释和上面对应的 test 动作的注释。
-    # needs: test
-
+  buildx:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - 
+        name: Checkout
         uses: actions/checkout@v2
-      - name: Get current date
+      - 
+        name: Get current date
         id: date
         run: echo "::set-output name=today::$(date +'%Y-%m-%d')"
         #配置 buildx
@@ -67,5 +47,5 @@ jobs:
         # 给清单打上多个标签
         # horryruo/multi-bot:${{ steps.date.outputs.today }}
           tags: |
-            horryruo/multi-bot:arm
+            horryruo/multi-bot:latest
                        
